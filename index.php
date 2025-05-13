@@ -170,25 +170,25 @@ $pageTitle = SYSTEM_NAME;
             <hr class="sidebar-divider">
 
             <!-- Cabeçalho - Configurações -->
-            <div class="sidebar-heading">
+            <!-- <div class="sidebar-heading">
                 Configurações
-            </div>
+            </div> -->
 
             <!-- Módulo de Usuários -->
-            <li class="nav-item <?php echo $module == 'usuarios' ? 'active' : ''; ?>">
+            <!-- <li class="nav-item <?php echo $module == 'usuarios' ? 'active' : ''; ?>">
                 <a class="nav-link" href="index.php?module=usuarios">
                     <i class="fas fa-fw fa-users-cog"></i>
                     <span>Usuários</span>
                 </a>
-            </li>
+            </li> -->
 
             <!-- Módulo de Configurações -->
-            <li class="nav-item <?php echo $module == 'configuracoes' ? 'active' : ''; ?>">
+            <!-- <li class="nav-item <?php echo $module == 'configuracoes' ? 'active' : ''; ?>">
                 <a class="nav-link" href="index.php?module=configuracoes">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Configurações</span>
                 </a>
-            </li>
+            </li> -->
 
             <!-- Divisor -->
             <hr class="sidebar-divider d-none d-md-block">
