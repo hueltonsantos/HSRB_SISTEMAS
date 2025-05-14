@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Arquivo de inclusão do módulo de especialidades
  * Carrega os modelos e classes necessárias
@@ -7,7 +8,7 @@
 // Inclui os modelos
 require_once MODULES_PATH . '/especialidades/models/EspecialidadeModel.php';
 require_once MODULES_PATH . '/especialidades/models/ValorProcedimentoModel.php';
-require_once MODULES_PATH . '/especialidades/models/ProcedimentoModel.php'; 
+require_once MODULES_PATH . '/especialidades/models/ProcedimentoModel.php';
 
 // Define as constantes do módulo
 define('ESPECIALIDADES_MODULE_PATH', MODULES_PATH . '/especialidades');
@@ -18,12 +19,13 @@ define('ESPECIALIDADES_TEMPLATE_PATH', ESPECIALIDADES_MODULE_PATH . '/templates'
  * @param string $action
  * @return string
  */
-function especialidadesProcessAction($action = '') {
+function especialidadesProcessAction($action = '')
+{
     // Se a ação não for informada, usa a padrão
     if (empty($action)) {
         $action = isset($_GET['action']) ? $_GET['action'] : 'list';
     }
-    
+
     // Define o arquivo a ser incluído
     switch ($action) {
         case 'new':
@@ -66,8 +68,12 @@ function especialidadesProcessAction($action = '') {
         default:
             $file = ESPECIALIDADES_MODULE_PATH . '/controllers/listar.php';
             break;
+
+        case 'batch_procedimentos':
+            $file = ESPECIALIDADES_MODULE_PATH . '/controllers/batch_procedimentos.php';
+            break;
     }
-    
+
     // Inclui o arquivo e captura a saída
     ob_start();
     include $file;

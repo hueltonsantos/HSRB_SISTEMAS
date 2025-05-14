@@ -25,7 +25,7 @@ $totalAgendamentos = $agendamentoModel->count();
 
 // Obtém agendamentos recentes
 // Versão corrigida
-$agendamentosRecentes = $agendamentoModel->searchAgendamentos([], 2);
+$agendamentosRecentes = $agendamentoModel->searchAgendamentos([], 20);
 // Obtém dados para o gráfico de especialidades
 $dadosGrafico = $agendamentoModel->getAgendamentosPorEspecialidade();
 // O HTML do template começa aqui
