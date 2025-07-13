@@ -37,7 +37,7 @@ Este é um sistema web desenvolvido para auxiliar instituições de saúde no **
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/hueltonsantos/sistema-clinico.git
+   git clone https://github.com/hueltonsantos/HSRB_SISTEMAS.git
 
 
 1. Configure seu servidor local (Apache + MySQL).
@@ -58,5 +58,5 @@ Este projeto está licenciado sob a licença MIT – veja o arquivo LICENSE para
 Huelton dos Santos Ribeiro Borges
 🔗 GitHub: https://github.com/hueltonsantos
 ✉️ Contato: 
-[linkdin](www.linkedin.com/in/huelton-santosdvs)
-[contato@huelton.com](mailto:hueltonti@gmail.com)
+[linkdin] www.linkedin.com/in/huelton-santosdvs
+[contato@huelton.com] Email: hueltonti@gmail.com
