@@ -462,7 +462,7 @@ $pageTitle = SYSTEM_NAME;
     </div>
 
     <!-- Botão WhatsApp flutuante -->
-    <a href="https://wa.me/5500000000000?text=Olá,%20preciso%20de%20suporte%20no%20sistema." class="whatsapp-float" target="_blank">
+    <a href="https://wa.me/5577999882930?text=Olá,%20preciso%20de%20suporte%20no%20sistema." class="whatsapp-float" target="_blank">
         <img src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/whatsapp.svg" alt="WhatsApp" style="filter: invert(1);">
     </a>
 
