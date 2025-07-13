@@ -1,0 +1,17 @@
+# Configuração para GitHub Sponsors
+
+github: [hueltonsantos]  # Substitua HSRB_SISTEMAS pelo seu nome de usuário do GitHub
+
+# Outras plataformas (desabilitadas)
+# patreon: # Substitua por um único nome de usuário do Patreon
+# open_collective: # Substitua por um único nome de usuário do Open Collective
+# ko_fi: # Substitua por um único nome de usuário do Ko-fi
+# tidelift: # Substitua por um único nome-da-plataforma/nome-do-pacote do Tidelift ex., npm/babel
+# community_bridge: # Substitua por um único nome-do-projeto do Community Bridge ex., cloud-foundry
+# liberapay: # Substitua por um único nome de usuário do Liberapay
+# issuehunt: # Substitua por um único nome de usuário do IssueHunt
+# lfx_crowdfunding: # Substitua por um único nome-do-projeto do LFX Crowdfunding ex., cloud-foundry
+# polar: # Substitua por um único nome de usuário do Polar
+# buy_me_a_coffee: # Substitua por um único nome de usuário do Buy Me a Coffee
+# thanks_dev: # Substitua por um único nome de usuário do thanks.dev
+# custom: # Substitua por até 4 URLs personalizadas de patrocínio ex., ['link1', 'link2
