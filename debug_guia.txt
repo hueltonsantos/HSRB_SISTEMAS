@@ -1,0 +1,9 @@
+Parâmetros recebidos: Array
+(
+    [module] => especialidades
+    [action] => gerar_guia
+    [procedimento_id] => 24
+    [paciente_id] => 4
+    [data_agendamento] => 20/02/2026
+    [horario_agendamento] => 11:30:00
+)
