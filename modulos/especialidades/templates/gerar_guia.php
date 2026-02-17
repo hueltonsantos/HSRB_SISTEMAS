@@ -25,7 +25,7 @@
                 <div class="col-md-6">
                     <h5>Procedimento</h5>
                     <p><strong><?php echo htmlspecialchars($procedimento['procedimento']); ?></strong></p>
-                    <p><strong>Valor:</strong> R$ <?php echo number_format($procedimento['valor'], 2, ',', '.'); ?></p>
+                    <!-- Preço ocultado no encaminhamento -->
                     <p><strong>Especialidade:</strong> <?php echo htmlspecialchars($procedimento['especialidade_nome']); ?></p>
                 </div>
                 <div class="col-md-6">
