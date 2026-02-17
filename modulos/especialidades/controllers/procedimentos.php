@@ -42,7 +42,12 @@ $procedimentos = $especialidadeModel->getValoresProcedimentos($id);
 
 // Formata os valores para exibição
 foreach ($procedimentos as &$procedimento) {
-    $procedimento['valor_formatado'] = $valorProcedimentoModel->formatDecimalToCurrency($procedimento['valor']);
+    $valor = isset($procedimento['valor_paciente']) ? $procedimento['valor_paciente'] : 0;
+    $procedimento['valor_formatado'] = $valorProcedimentoModel->formatDecimalToCurrency($valor);
+    
+    // Assegura que outras chaves existam para evitar warnings
+    $procedimento['valor_paciente'] = $valor;
+    $procedimento['valor_repasse'] = isset($procedimento['valor_repasse']) ? $procedimento['valor_repasse'] : 0;
 }
 
 // Inclui o template de procedimentos
