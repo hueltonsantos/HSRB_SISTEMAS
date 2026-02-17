@@ -14,8 +14,8 @@ unset($dados['csrf_token']);
 if (isset($_FILES) && !empty($_FILES)) {
     foreach ($_FILES as $chave => $arquivo) {
         if ($arquivo['error'] == 0) {
-            // Define o diretório de upload
-            $diretorio = __DIR__ . '/../../../../uploads/';
+            // Define o diretório de upload usando a constante global
+            $diretorio = UPLOADS_PATH . '/';
             
             // Cria o diretório se não existir
             if (!file_exists($diretorio)) {
