@@ -20,7 +20,7 @@ require_once 'Database.php';
 require_once 'Model.php';
 
 // Determina o módulo a ser carregado
-$module = isset($_GET['module']) ? $_GET['module'] : 'dashboard';
+$module = isset($_GET['module']) ? $_GET['module'] : (isset($_GET['modulo']) ? $_GET['modulo'] : 'dashboard');
 
 // Determina a ação a ser executada
 $action = isset($_GET['action']) ? $_GET['action'] : 'list';
@@ -28,8 +28,14 @@ $action = isset($_GET['action']) ? $_GET['action'] : 'list';
 // Verifica se o módulo existe
 $modulePath = MODULES_PATH . '/' . $module;
 if (!file_exists($modulePath)) {
-    $module = 'dashboard';
-    $modulePath = MODULES_PATH . '/dashboard';
+    // Busca se existe com o parâmetro 'modulo'
+    if (isset($_GET['modulo']) && file_exists(MODULES_PATH . '/' . $_GET['modulo'])) {
+        $module = $_GET['modulo'];
+        $modulePath = MODULES_PATH . '/' . $module;
+    } else {
+        $module = 'dashboard';
+        $modulePath = MODULES_PATH . '/dashboard';
+    }
 }
 
 // Verifica se o arquivo de inclusão do módulo existe
@@ -71,7 +77,7 @@ $pageTitle = SYSTEM_NAME;
 
     <!-- Bootstrap e estilos personalizados -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/clinica/assents/css/style.css" rel="stylesheet">
+    <link href="assents/css/style.css" rel="stylesheet">
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -86,11 +92,47 @@ $pageTitle = SYSTEM_NAME;
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.pt-BR.min.js"></script>
 
+    <!-- DataTables -->
+    <link href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css" rel="stylesheet">
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"></script>
+
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+    // Configuração global para evitar erro de reinicialização do DataTables
+    if ($.fn.DataTable) {
+        $.extend(true, $.fn.dataTable.defaults, {
+            "retrieve": true, // Recupera a instância existente se já inicializada
+            "language": {
+                "sEmptyTable": "Nenhum registro encontrado",
+                "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                "sSearch": "Pesquisar",
+                "oPaginate": { "sNext": "Próximo", "sPrevious": "Anterior" }
+            }
+        });
+    }
+    </script>
+
 
 </head>
 
 <body id="page-top">
     <div id="wrapper">
+        <!-- Backdrop para mobile -->
+        <div class="sidebar-backdrop"></div>
+
         <!-- Barra lateral -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <!-- Logo do sistema -->
@@ -115,11 +157,56 @@ $pageTitle = SYSTEM_NAME;
             <!-- Divisor -->
             <hr class="sidebar-divider">
 
-            <!-- Cabeçalho - Módulos -->
+            <?php if (hasPermission('master_dashboard')): ?>
+            <!-- Minha Clinica (Master) -->
             <div class="sidebar-heading">
-                Módulos
+                Minha Clinica
             </div>
 
+            <li class="nav-item <?php echo $module == 'minha_clinica' ? 'active' : ''; ?>">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMaster"
+                    aria-expanded="true" aria-controls="collapseMaster">
+                    <i class="fas fa-fw fa-clinic-medical"></i>
+                    <span>Minha Clinica</span>
+                </a>
+                <div id="collapseMaster" class="collapse <?php echo $module == 'minha_clinica' ? 'show' : ''; ?>" aria-labelledby="headingMaster">
+                    <div class="py-2 collapse-inner rounded">
+                        <a class="collapse-item <?php echo $module == 'minha_clinica' && $action == 'index' ? 'active' : ''; ?>" href="index.php?module=minha_clinica">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
+                        <?php if (hasPermission('master_agendamentos')): ?>
+                        <a class="collapse-item <?php echo $module == 'minha_clinica' && $action == 'agendamentos' ? 'active' : ''; ?>" href="index.php?module=minha_clinica&action=agendamentos">
+                            <i class="fas fa-calendar-alt"></i> Agendamentos
+                        </a>
+                        <?php endif; ?>
+                        <?php if (hasPermission('master_especialidades')): ?>
+                        <a class="collapse-item <?php echo $module == 'minha_clinica' && $action == 'especialidades' ? 'active' : ''; ?>" href="index.php?module=minha_clinica&action=especialidades">
+                            <i class="fas fa-stethoscope"></i> Especialidades
+                        </a>
+                        <?php endif; ?>
+                        <?php if (hasPermission('master_procedimentos')): ?>
+                        <a class="collapse-item <?php echo $module == 'minha_clinica' && $action == 'procedimentos' ? 'active' : ''; ?>" href="index.php?module=minha_clinica&action=procedimentos">
+                            <i class="fas fa-notes-medical"></i> Procedimentos
+                        </a>
+                        <?php endif; ?>
+                        <?php if (hasPermission('master_profissionais')): ?>
+                        <a class="collapse-item <?php echo $module == 'minha_clinica' && $action == 'profissionais' ? 'active' : ''; ?>" href="index.php?module=minha_clinica&action=profissionais">
+                            <i class="fas fa-user-md"></i> Profissionais
+                        </a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </li>
+
+            <hr class="sidebar-divider">
+            <?php endif; ?>
+
+            <!-- Cabeçalho - Módulos -->
+            <div class="sidebar-heading">
+                Modulos
+            </div>
+
+            <?php if (hasPermission('appointment_view') || hasPermission('appointment_create')): ?>
             <!-- Módulo de Pacientes -->
             <li class="nav-item <?php echo $module == 'pacientes' ? 'active' : ''; ?>">
                 <a class="nav-link" href="index.php?module=pacientes">
@@ -127,7 +214,9 @@ $pageTitle = SYSTEM_NAME;
                     <span>Pacientes</span>
                 </a>
             </li>
+            <?php endif; ?>
 
+            <?php if (hasPermission('role_manage')): // Usando role_manage como proxy para admin em clínicas ?>
             <!-- Módulo de Clínicas -->
             <li class="nav-item <?php echo $module == 'clinicas' ? 'active' : ''; ?>">
                 <a class="nav-link" href="index.php?module=clinicas">
@@ -135,7 +224,9 @@ $pageTitle = SYSTEM_NAME;
                     <span>Clínicas Parceiras</span>
                 </a>
             </li>
+            <?php endif; ?>
 
+            <?php if (hasPermission('role_manage')): // Especialidades restrito a admin/gestor ?>
             <!-- Módulo de Especialidades -->
             <li class="nav-item <?php echo $module == 'especialidades' ? 'active' : ''; ?>">
                 <a class="nav-link" href="index.php?module=especialidades">
@@ -143,7 +234,9 @@ $pageTitle = SYSTEM_NAME;
                     <span>Especialidades</span>
                 </a>
             </li>
+            <?php endif; ?>
 
+            <?php if (hasPermission('appointment_view') || hasPermission('appointment_create')): ?>
             <!-- Módulo de Agendamentos -->
             <li class="nav-item <?php echo $module == 'agendamentos' ? 'active' : ''; ?>">
                 <a class="nav-link" href="index.php?module=agendamentos">
@@ -151,6 +244,7 @@ $pageTitle = SYSTEM_NAME;
                     <span>Agendamentos</span>
                 </a>
             </li>
+            <?php endif; ?>
             <!-- Módulo de Procedimentos -->
             <!-- <li class="nav-item <?php echo $module == 'procedimentos' ? 'active' : ''; ?>">
                 <a class="nav-link" href="index.php?module=procedimentos">
@@ -159,6 +253,7 @@ $pageTitle = SYSTEM_NAME;
                 </a>
             </li> -->
 
+            <?php if (hasPermission('price_manage')): ?>
             <!-- Módulo de Tabela de Preços -->
             <li class="nav-item <?php echo $module == 'tabela_precos' ? 'active' : ''; ?>">
                 <a class="nav-link" href="index.php?module=tabela_precos">
@@ -166,6 +261,7 @@ $pageTitle = SYSTEM_NAME;
                     <span>Consulta de Preços</span>
                 </a>
             </li>
+            <?php endif; ?>
             <!-- Divisor -->
             <hr class="sidebar-divider">
 
@@ -174,14 +270,27 @@ $pageTitle = SYSTEM_NAME;
                 Configurações
             </div> -->
 
+            <?php if (hasPermission('user_manage')): ?>
             <!-- Módulo de Usuários -->
-            <!-- <li class="nav-item <?php echo $module == 'usuarios' ? 'active' : ''; ?>">
+            <li class="nav-item <?php echo $module == 'usuarios' ? 'active' : ''; ?>">
                 <a class="nav-link" href="index.php?module=usuarios">
                     <i class="fas fa-fw fa-users-cog"></i>
                     <span>Usuários</span>
                 </a>
-            </li> -->
+            </li>
+            <?php endif; ?>
 
+            <?php if (hasPermission('role_manage')): ?>
+            <!-- Módulo de Perfis (Permissões) -->
+            <li class="nav-item <?php echo $module == 'perfis' ? 'active' : ''; ?>">
+                <a class="nav-link" href="index.php?module=perfis">
+                    <i class="fas fa-fw fa-id-card"></i>
+                    <span>Permissões</span>
+                </a>
+            </li>
+            <?php endif; ?>
+
+            <?php if (hasPermission('appointment_view') || hasPermission('appointment_create')): ?>
             <!-- Módulo de Guias de Encaminhamento -->
             <li class="nav-item <?php echo $module == 'guias' ? 'active' : ''; ?>">
                 <a class="nav-link" href="index.php?module=guias">
@@ -189,17 +298,58 @@ $pageTitle = SYSTEM_NAME;
                     <span>Guias de Encaminhamento</span>
                 </a>
             </li>
+            <?php endif; ?>
 
+            <?php if (hasPermission('role_manage')): // Configurações restrito a admin ?>
             <!-- Módulo de Configurações -->
-            <!-- <li class="nav-item <?php echo $module == 'configuracoes' ? 'active' : ''; ?>">
+            <li class="nav-item <?php echo $module == 'configuracoes' ? 'active' : ''; ?>">
                 <a class="nav-link" href="index.php?module=configuracoes">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Configurações</span>
                 </a>
-            </li> -->
+            </li>
+            <?php endif; ?>
+
+            <?php if (hasPermission('report_view')): ?>
+            <!-- Módulo de Relatórios -->
+            <li class="nav-item <?php echo $module == 'relatorios' ? 'active' : ''; ?>">
+                <a class="nav-link" href="index.php?module=relatorios">
+                    <i class="fas fa-fw fa-chart-line"></i>
+                    <span>Relatórios</span>
+                </a>
+            </li>
+            <?php endif; ?>
+
+            <?php if (hasPermission('dashboard_realtime')): ?>
+            <!-- Painel em Tempo Real -->
+            <li class="nav-item <?php echo $module == 'dashboard_realtime' ? 'active' : ''; ?>">
+                <a class="nav-link" href="index.php?module=dashboard_realtime">
+                    <i class="fas fa-fw fa-chart-bar"></i>
+                    <span>Painel Tempo Real</span>
+                </a>
+            </li>
+            <?php endif; ?>
+
+            <?php if (hasPermission('kanban_view')): ?>
+            <!-- Módulo Kanban -->
+            <li class="nav-item <?php echo $module == 'kanban' ? 'active' : ''; ?>">
+                <a class="nav-link" href="index.php?module=kanban">
+                    <i class="fas fa-fw fa-columns"></i>
+                    <span>Kanban</span>
+                </a>
+            </li>
+            <?php endif; ?>
 
             <!-- Divisor -->
             <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sobre o Sistema -->
+            <li class="nav-item <?php echo $module == 'sobre' ? 'active' : ''; ?>">
+                <a class="nav-link" href="index.php?module=sobre">
+                    <i class="fas fa-fw fa-info-circle"></i>
+                    <span>Sobre</span>
+                </a>
+            </li>
 
             <!-- Botão para recolher a barra lateral -->
             <div class="text-center d-none d-md-inline">
@@ -229,6 +379,9 @@ $pageTitle = SYSTEM_NAME;
                             </div>
                         </div>
                     </form>
+
+                    <!-- Clock/Date Placeholder -->
+                    <div class="d-none d-md-block mx-3 text-gray-600 small font-weight-bold topbar-clock" id="clock-date" style="text-align: right;"></div>
 
                     <!-- Itens da barra superior -->
                     <ul class="navbar-nav ml-auto">
@@ -390,8 +543,11 @@ $pageTitle = SYSTEM_NAME;
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Administrador</span>
-                                <img class="img-profile rounded-circle" src="assets/img/user.png">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?></span>
+                                <?php
+                                $userFoto = isset($_SESSION['usuario_foto']) && $_SESSION['usuario_foto'] ? 'uploads/usuarios/' . $_SESSION['usuario_foto'] : 'assents/img/user.png';
+                                ?>
+                                <img class="img-profile rounded-circle" src="<?php echo $userFoto; ?>" style="width: 32px; height: 32px; object-fit: cover;">
                             </a>
 
                             <!-- Dropdown de usuário -->
@@ -473,7 +629,7 @@ $pageTitle = SYSTEM_NAME;
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 
     <!-- JavaScript personalizado -->
-    <script src="/clinica/assents/js/scripts.js"></script>
+    <script src="assents/js/scripts.js"></script>
 
 
     <!-- Chart.js JavaScript -->
@@ -504,7 +660,7 @@ $pageTitle = SYSTEM_NAME;
 
     <script>
         $(document).ready(function() {
-            // Adiciona o evento de clique ao link "Marcar todas como lidas"
+            // Marcar todas como lidas via AJAX
             $(document).on('click', '#marcar-todas-link', function(e) {
                 e.preventDefault();
 
@@ -513,15 +669,10 @@ $pageTitle = SYSTEM_NAME;
                         url: 'index.php?module=sistema&action=notificacoes&acao=marcar_todas&ajax=1',
                         type: 'GET',
                         success: function(response) {
-                            // Oculta todas as notificações do dropdown
                             $('.dropdown-list[aria-labelledby="alertsDropdown"] .dropdown-item:not(.text-center)').remove();
-
-                            // Adiciona mensagem de "sem notificações"
                             $('.dropdown-list[aria-labelledby="alertsDropdown"] h6').after(
                                 '<span class="dropdown-item text-center small text-gray-500">Não há novas notificações</span>'
                             );
-
-                            // Remove o contador
                             $('.badge-counter').hide();
                         },
                         error: function() {
@@ -530,6 +681,28 @@ $pageTitle = SYSTEM_NAME;
                     });
                 }
             });
+
+            // Polling de notificações a cada 30 segundos
+            setInterval(function() {
+                $.ajax({
+                    url: 'index.php?module=sistema&action=notificacoes&acao=contar&ajax=1',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        var badge = $('.badge-counter');
+                        if (response.total > 0) {
+                            var texto = response.total > 9 ? '9+' : response.total;
+                            if (badge.length) {
+                                badge.text(texto).show();
+                            } else {
+                                $('#alertsDropdown').append('<span class="badge badge-danger badge-counter">' + texto + '</span>');
+                            }
+                        } else {
+                            badge.hide();
+                        }
+                    }
+                });
+            }, 30000);
         });
     </script>
 </body>
