@@ -1,0 +1,32 @@
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Arquivos de ambiente
+.env
+
+# Logs e debug
+*.log
+debug*.txt
+debug*.php
+
+# Arquivos desnecessários
+README.md
+FUNDING.yml
+*.md
+
+# Cache
+.cache
+tmp/
+
+# Node (se houver)
+node_modules/
+
+# Backups de banco antigos
+Banco_atual/
