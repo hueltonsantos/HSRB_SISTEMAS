@@ -4,6 +4,26 @@
  */
 require_once 'config.php';
 
+// Verificar se precisa de configuração inicial (primeiro acesso sem admin)
+try {
+    $pdoCheck = new PDO(
+        'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4',
+        DB_USER,
+        DB_PASS,
+        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+    );
+    $stmtCheck = $pdoCheck->prepare("SELECT COUNT(*) as total FROM usuarios WHERE perfil_id = 1");
+    $stmtCheck->execute();
+    $resultCheck = $stmtCheck->fetch(PDO::FETCH_ASSOC);
+    if ((int)$resultCheck['total'] === 0) {
+        header('Location: setup.php');
+        exit;
+    }
+    $pdoCheck = null;
+} catch (PDOException $e) {
+    // Tabela pode não existir ainda - ignora
+}
+
 // Verificar se já está logado
 if (isset($_SESSION['usuario_id'])) {
     header('Location: index.php');
@@ -12,6 +32,16 @@ if (isset($_SESSION['usuario_id'])) {
 
 // Processar formulário de login
 $mensagem = '';
+
+// Mensagem de sucesso da configuração inicial
+if (isset($_SESSION['setup_success'])) {
+    $mensagem = '<div class="alert alert-success" style="background-color: #d4edda; color: #155724; border-radius: 15px; padding: 15px 20px; border: none;">
+        <i class="fas fa-check-circle mr-2"></i>
+        Sistema configurado com sucesso! Faça login com as credenciais cadastradas.
+    </div>';
+    unset($_SESSION['setup_success']);
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = isset($_POST['email']) ? trim($_POST['email']) : '';
     $senha = isset($_POST['senha']) ? trim($_POST['senha']) : '';
@@ -29,8 +59,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
             );
             
-            // Buscar usuário pelo email
-            $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE email = ? AND status = 1");
+            // Buscar usuário pelo email com perfil
+            $stmt = $pdo->prepare("
+                SELECT u.*, p.nome as perfil_nome 
+                FROM usuarios u 
+                LEFT JOIN perfis p ON u.perfil_id = p.id 
+                WHERE u.email = ? AND u.status = 1
+            ");
             $stmt->execute([$email]);
             $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
             
@@ -40,12 +75,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['usuario_id'] = $usuario['id'];
                 $_SESSION['usuario_nome'] = $usuario['nome'];
                 $_SESSION['usuario_email'] = $usuario['email'];
-                $_SESSION['usuario_nivel'] = $usuario['nivel_acesso'];
-                
+                $_SESSION['perfil_id'] = $usuario['perfil_id'];
+                $_SESSION['perfil_nome'] = $usuario['perfil_nome'];
+                $_SESSION['clinica_id'] = $usuario['clinica_id'];
+                $_SESSION['usuario_foto'] = isset($usuario['foto']) ? $usuario['foto'] : null;
+
+                // Buscar permissões do perfil
+                $stmtPerm = $pdo->prepare("
+                    SELECT pm.chave 
+                    FROM permissoes pm
+                    JOIN perfil_permissoes pp ON pp.permissao_id = pm.id
+                    WHERE pp.perfil_id = ?
+                ");
+                $stmtPerm->execute([$usuario['perfil_id']]);
+                $_SESSION['permissoes'] = $stmtPerm->fetchAll(PDO::FETCH_COLUMN);
+
                 // Atualizar data do último acesso
                 $stmt = $pdo->prepare("UPDATE usuarios SET ultimo_acesso = NOW() WHERE id = ?");
                 $stmt->execute([$usuario['id']]);
-                
+
+                // Registrar log de login (ignora se tabela não existir)
+                try {
+                    $stmtLog = $pdo->prepare("INSERT INTO logs_sistema (usuario_id, usuario_nome, acao, modulo, descricao, ip, user_agent, data_hora) VALUES (?, ?, 'login', 'auth', 'Login realizado com sucesso', ?, ?, NOW())");
+                    $stmtLog->execute([
+                        $usuario['id'],
+                        $usuario['nome'],
+                        $_SERVER['REMOTE_ADDR'] ?? null,
+                        $_SERVER['HTTP_USER_AGENT'] ?? null
+                    ]);
+                } catch (Exception $e) {
+                    // Ignora erro de log - tabela pode não existir ainda
+                }
+
                 // Redirecionar para a página inicial
                 header('Location: index.php');
                 exit;
@@ -67,9 +128,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Login - <?php echo SYSTEM_NAME; ?></title>
     
     <!-- Estilos -->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <!-- SB Admin 2 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/startbootstrap-sb-admin-2@4.1.4/css/sb-admin-2.min.css" rel="stylesheet">
     <style>
         :root {
             --primary-color:rgb(255, 255, 255);
@@ -103,8 +165,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         
         .bg-login-image {
-            background: url('img/clinic-background.jpg');
-            background-position: center;
+            /* Imagem de fundo via CDN ou cor sólida */
+            background: url('https://images.unsplash.com/photo-1519494026892-8095a61a7c79?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80') center center no-repeat;
             background-size: cover;
             position: relative;
         }
@@ -124,8 +186,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         
         .login-logo {
-            width: 80px;
-            height: 80px;
+            font-size: 80px;
+            color: white;
             margin-bottom: 1.5rem;
         }
         
@@ -188,11 +250,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             .login-content {
                 padding: 2rem !important;
             }
+            .card-body {
+                padding: 0;
+            }
         }
         
         @media (max-width: 768px) {
             .bg-login-image {
-                height: 200px;
+                display: none !important; /* Hide image completely on mobile to save space */
+            }
+            .card {
+                margin-top: 2rem !important;
+                margin-bottom: 2rem !important;
+            }
+            .login-content {
+                padding: 1.5rem !important;
+            }
+            .h4 {
+                font-size: 1.25rem;
             }
         }
         
@@ -230,7 +305,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="row">
                                 <div class="col-lg-6 d-none d-lg-block bg-login-image">
                                     <div class="d-flex h-100 align-items-center justify-content-center">
-                                        <img src="img/logo.png" alt="Logo" class="login-logo" style="opacity: 0; /* Oculto até você adicionar o logo */">
+                                        <!-- Logo substituto usando ícone -->
+                                        <i class="fas fa-clinic-medical login-logo"></i>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -273,9 +349,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             </div>
                                         </form>
                                         
+                                        <!-- Credenciais de teste -->
+                                        <div class="mt-3 fade-in delay-3">
+                                            <div class="text-center mb-2">
+                                                <small class="text-muted font-weight-bold">Acesso de demonstração</small>
+                                            </div>
+                                            <div class="bg-light rounded p-2 text-center" style="border: 1px dashed #d1d3e2; cursor: pointer;" onclick="document.querySelector('[name=email]').value='hsrbsistemas@gmail.com'; document.querySelector('[name=senha]').value='123Mudar@';" title="Clique para preencher">
+                                                <small class="d-block text-gray-600"><i class="fas fa-envelope mr-1"></i> hsrbsistemas@gmail.com</small>
+                                                <small class="d-block text-gray-600"><i class="fas fa-key mr-1"></i> 123Mudar@</small>
+                                            </div>
+                                        </div>
+
                                         <div class="text-center mt-4 fade-in delay-3">
                                             <p class="text-muted small">
-                                                © <?php echo date('Y'); ?> <?php echo SYSTEM_NAME; ?>. Todos os direitos reservados.
+                                                &copy; <?php echo date('Y'); ?> <?php echo SYSTEM_NAME; ?>. Todos os direitos reservados.
                                             </p>
                                         </div>
                                     </div>
@@ -288,10 +375,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="js/sb-admin-2.min.js"></script>
+    <!-- Scripts via CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/startbootstrap-sb-admin-2@4.1.4/js/sb-admin-2.min.js"></script>
 </body>
 </html>
