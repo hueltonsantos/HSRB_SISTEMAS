@@ -4,6 +4,15 @@
  * Controlador para gerar guia de encaminhamento
  */
 
+// Habilitar exibição de erros para debug
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+// Garantir que Database está carregado
+if (!class_exists('Database')) {
+    require_once __DIR__ . '/../../../Database.php';
+}
+
 // Verifica se os parâmetros necessários foram informados
 if (!isset($_GET['procedimento_id']) || empty($_GET['procedimento_id'])) {
     $_SESSION['mensagem'] = [
@@ -20,33 +29,21 @@ if (!isset($_GET['procedimento_id']) || empty($_GET['procedimento_id'])) {
 $procedimentoId = (int) $_GET['procedimento_id'];
 
 try {
-    // Conecta ao banco de dados
-    $db = new PDO('mysql:host=localhost;dbname=clinica_encaminhamento', 'root', '');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // Conecta ao banco de dados usando as configurações do sistema
+    $db = Database::getInstance()->getConnection();
 
 
-    // Busca informações do procedimento
+    // Busca informações do procedimento e de UMA clínica associada (via especialidade)
     $stmt = $db->prepare("
-    SELECT p.*, e.nome as especialidade_nome, c.nome as clinica_nome,
-           c.endereco, c.telefone
-    FROM valores_procedimentos p
-    INNER JOIN especialidades e ON p.especialidade_id = e.id
-    LEFT JOIN clinicas_parceiras c ON e.id = c.id
-    WHERE p.id = ?
-    LIMIT 1
-");
-
-
-    // Busca informações do procedimento
-    // $stmt = $db->prepare("
-    //     SELECT p.*, e.nome as especialidade_nome, c.nome as clinica_nome, 
-    //            c.endereco, c.telefone, c.observacoes as clinica_observacoes
-    //     FROM valores_procedimentos p
-    //     INNER JOIN especialidades e ON p.especialidade_id = e.id
-    //     LEFT JOIN clinicas_parceiras c ON e.id = c.id
-    //     WHERE p.id = ?
-    //     LIMIT 1
-    // ");
+        SELECT p.*, e.nome as especialidade_nome, c.nome as clinica_nome,
+               c.endereco, c.telefone
+        FROM valores_procedimentos p
+        INNER JOIN especialidades e ON p.especialidade_id = e.id
+        LEFT JOIN especialidades_clinicas ec ON e.id = ec.especialidade_id
+        LEFT JOIN clinicas_parceiras c ON ec.clinica_id = c.id
+        WHERE p.id = ?
+        LIMIT 1
+    ");
     $stmt->execute([$procedimentoId]);
     $procedimento = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -110,11 +107,31 @@ try {
         // Gerar código único para a guia (opcional)
         $codigo = 'G' . date('Ymd') . str_pad(mt_rand(1, 9999), 4, '0', STR_PAD_LEFT);
 
+        // Verificar se tabela existe, se não criar
+        try {
+            $db->exec("
+                CREATE TABLE IF NOT EXISTS `guias_encaminhamento` (
+                    `id` int(11) NOT NULL AUTO_INCREMENT,
+                    `paciente_id` int(11) NOT NULL,
+                    `procedimento_id` int(11) NOT NULL,
+                    `data_agendamento` date NOT NULL,
+                    `horario_agendamento` time DEFAULT NULL,
+                    `observacoes` text DEFAULT NULL,
+                    `status` varchar(20) DEFAULT 'agendado',
+                    `data_emissao` datetime DEFAULT NULL,
+                    `codigo` varchar(20) DEFAULT NULL,
+                    PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+            ");
+        } catch (Exception $tableError) {
+            // Ignora se já existe
+        }
+
         // Salvar a guia no banco
         $stmtSalvarGuia = $db->prepare("
             INSERT INTO guias_encaminhamento (
-                paciente_id, procedimento_id, data_agendamento, 
-                horario_agendamento, observacoes, status, 
+                paciente_id, procedimento_id, data_agendamento,
+                horario_agendamento, observacoes, status,
                 data_emissao, codigo
             ) VALUES (
                 ?, ?, ?, ?, ?, 'agendado', NOW(), ?
@@ -145,13 +162,18 @@ try {
             'data_emissao' => date('d/m/Y')
         ];
 
+        // Limpar todos os buffers de saída antes de renderizar a guia
+        while (ob_get_level()) {
+            ob_end_clean();
+        }
+
         // Renderizar o template da guia para impressão
-        include ESPECIALIDADES_TEMPLATE_PATH . '/guia_impressao.php';
+        include __DIR__ . '/../templates/guia_impressao.php';
         exit;
     }
 
     // Se chegou aqui, exibir o formulário para preencher dados do paciente
-    include ESPECIALIDADES_TEMPLATE_PATH . '/gerar_guia.php';
+    include MODULES_PATH . '/especialidades/templates/gerar_guia.php';
 } catch (Exception $e) {
     $_SESSION['mensagem'] = [
         'tipo' => 'danger',
@@ -161,5 +183,3 @@ try {
     header('Location: index.php?module=especialidades&action=list');
     exit;
 }
-// Para depuração
-file_put_contents('debug_guia.txt', "Parâmetros recebidos: " . print_r($_GET, true));
