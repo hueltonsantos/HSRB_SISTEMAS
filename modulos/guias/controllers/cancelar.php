@@ -31,10 +31,9 @@ if (!isset($_POST['id']) || empty($_POST['id'])) {
 $guiaId = (int) $_POST['id'];
 
 try {
-    // Conecta ao banco de dados
-    $db = new PDO('mysql:host=localhost;dbname=clinica_encaminhamento', 'root', '');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
+    // Usa o Database singleton (suporta Docker e localhost)
+    $db = Database::getInstance()->getConnection();
+
     // Verifica se a guia existe
     $stmt = $db->prepare("SELECT id, status FROM guias_encaminhamento WHERE id = ?");
     $stmt->execute([$guiaId]);
