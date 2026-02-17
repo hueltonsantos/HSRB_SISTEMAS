@@ -23,7 +23,7 @@
         <div class="card-body">
             <div class="mb-4">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-sm-12 col-md-6 mb-2 mb-md-0">
                         <a href="index.php?module=especialidades&action=add_procedimento&especialidade_id=<?php echo $especialidade['id']; ?>" class="btn btn-primary">
                             <i class="fas fa-plus"></i> Adicionar Procedimento
                         </a>
@@ -32,7 +32,7 @@
                         </a>
                     </div>
 
-                    <div class="col-md-6 text-right">
+                    <div class="col-sm-12 col-md-6 text-right text-sm-left text-md-right">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Filtrar procedimentos..." id="searchInput">
                             <div class="input-group-append">
@@ -51,7 +51,9 @@
                         <tr>
                             <th>ID</th>
                             <th>Procedimento</th>
-                            <th>Valor</th>
+                            <th>Valor Paciente</th>
+                            <th>Valor Clínica</th>
+                            <th>Lucro Previsto</th>
                             <th>Status</th>
                             <th>Ações</th>
                         </tr>
@@ -59,14 +61,18 @@
                     <tbody>
                         <?php if (empty($procedimentos)): ?>
                             <tr>
-                                <td colspan="5" class="text-center">Nenhum procedimento cadastrado para esta especialidade.</td>
+                                <td colspan="7" class="text-center">Nenhum procedimento cadastrado para esta especialidade.</td>
                             </tr>
                         <?php else: ?>
-                            <?php foreach ($procedimentos as $procedimento): ?>
+                            <?php foreach ($procedimentos as $procedimento): 
+                                $lucro = $procedimento['valor_paciente'] - $procedimento['valor_repasse'];
+                            ?>
                                 <tr>
                                     <td><?php echo $procedimento['id']; ?></td>
                                     <td><?php echo htmlspecialchars($procedimento['procedimento']); ?></td>
-                                    <td><?php echo $procedimento['valor_formatado']; ?></td>
+                                    <td class="text-success">R$ <?php echo number_format($procedimento['valor_paciente'], 2, ',', '.'); ?></td>
+                                    <td class="text-danger">R$ <?php echo number_format($procedimento['valor_repasse'], 2, ',', '.'); ?></td>
+                                    <td class="font-weight-bold">R$ <?php echo number_format($lucro, 2, ',', '.'); ?></td>
                                     <td>
                                         <?php if ($procedimento['status'] == 1): ?>
                                             <span class="badge badge-success">Ativo</span>
@@ -75,19 +81,7 @@
                                         <?php endif; ?>
                                     </td>
                                     <td>
-                                        <!-- <div class="btn-group" role="group">
-                                            <a href="index.php?module=especialidades&action=edit_procedimento&id=<?php echo $procedimento['id']; ?>" 
-                                                class="btn btn-warning btn-sm" title="Editar">
-                                                <i class="fas fa-edit"></i>
-                                            </a> -->
-
-                                        <!-- <div class="btn-group" role="group">
-                                            <a href="index.php?module=especialidades&action=edit_procedimento&id=<?php echo $procedimento['id']; ?>" 
-                                                class="btn btn-warning btn-sm" title="Editar">
-                                                <i class="fas fa-edit"></i>
-                                            </a> -->
-
-                                        <a href="index.php?module=especialidades&action=edit&id=<?php echo $especialidade['id']; ?>"
+                                        <a href="index.php?module=especialidades&action=edit_procedimento&id=<?php echo $procedimento['id']; ?>&especialidade_id=<?php echo $especialidade['id']; ?>" 
                                             class="btn btn-warning btn-sm" title="Editar">
                                             <i class="fas fa-edit"></i>
                                         </a>
