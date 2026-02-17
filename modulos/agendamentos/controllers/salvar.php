@@ -15,51 +15,53 @@ $agendamentoModel = new AgendamentoModel();
 
 
 // Obtém os dados do formulário
+// Obtém os dados do formulário
 $id = isset($_POST['id']) ? (int) $_POST['id'] : null;
+
+// Procedimentos e Pagamento
+$procedimentos = isset($_POST['procedimentos']) ? $_POST['procedimentos'] : [];
+$valor_total = isset($_POST['valor_total']) ? $_POST['valor_total'] : 0;
+// Se valor_total vier formatado (R$ 1.000,00), limpar
+if (is_string($valor_total)) {
+    $valor_total = str_replace('.', '', $valor_total); // Remove milhar
+    $valor_total = str_replace(',', '.', $valor_total); // Troca vírgula por ponto
+}
+
 $data = [
     'paciente_id' => isset($_POST['paciente_id']) ? (int) $_POST['paciente_id'] : null,
     'clinica_id' => isset($_POST['clinica_id']) ? (int) $_POST['clinica_id'] : null,
     'especialidade_id' => isset($_POST['especialidade_id']) ? (int) $_POST['especialidade_id'] : null,
-    'procedimento_id' => isset($_POST['procedimento_id']) ? (int) $_POST['procedimento_id'] : null, // NOVA LINHA
+    'procedimento_id' => !empty($procedimentos) ? (int) $procedimentos[0] : null, // Fallback para o primeiro
     'data_consulta' => isset($_POST['data_consulta']) ? trim($_POST['data_consulta']) : null,
     'hora_consulta' => isset($_POST['hora_consulta']) ? trim($_POST['hora_consulta']) : null,
     'status_agendamento' => isset($_POST['status_agendamento']) ? trim($_POST['status_agendamento']) : 'agendado',
-    'observacoes' => isset($_POST['observacoes']) ? trim($_POST['observacoes']) : null
+    'observacoes' => isset($_POST['observacoes']) ? trim($_POST['observacoes']) : null,
+    'valor_total' => $valor_total,
+    'forma_pagamento' => isset($_POST['forma_pagamento']) ? trim($_POST['forma_pagamento']) : null
 ];
-
-
-
-// Obtém os dados do formulário
-// $id = isset($_POST['id']) ? (int) $_POST['id'] : null;
-// $data = [
-//     'paciente_id' => isset($_POST['paciente_id']) ? (int) $_POST['paciente_id'] : null,
-//     'clinica_id' => isset($_POST['clinica_id']) ? (int) $_POST['clinica_id'] : null,
-//     'especialidade_id' => isset($_POST['especialidade_id']) ? (int) $_POST['especialidade_id'] : null,
-//     'procedimento_id' => isset($_POST['procedimento_id']) ? (int) $_POST['procedimento_id'] : null, // Nova linha
-//     'data_consulta' => isset($_POST['data_consulta']) ? trim($_POST['data_consulta']) : null,
-//     'hora_consulta' => isset($_POST['hora_consulta']) ? trim($_POST['hora_consulta']) : null,
-//     'status_agendamento' => isset($_POST['status_agendamento']) ? trim($_POST['status_agendamento']) : 'agendado',
-//     'observacoes' => isset($_POST['observacoes']) ? trim($_POST['observacoes']) : null
-// ];
-// Obtém os dados do formulário
-// $id = isset($_POST['id']) ? (int) $_POST['id'] : null;
-// $data = [
-//     'paciente_id' => isset($_POST['paciente_id']) ? (int) $_POST['paciente_id'] : null,
-//     'clinica_id' => isset($_POST['clinica_id']) ? (int) $_POST['clinica_id'] : null,
-//     'especialidade_id' => isset($_POST['especialidade_id']) ? (int) $_POST['especialidade_id'] : null,
-//     'data_consulta' => isset($_POST['data_consulta']) ? trim($_POST['data_consulta']) : null,
-//     'hora_consulta' => isset($_POST['hora_consulta']) ? trim($_POST['hora_consulta']) : null,
-//     'status_agendamento' => isset($_POST['status_agendamento']) ? trim($_POST['status_agendamento']) : 'agendado',
-//     'observacoes' => isset($_POST['observacoes']) ? trim($_POST['observacoes']) : null
-// ];
 
 // Se for uma edição, adiciona o ID aos dados
 if ($id) {
     $data['id'] = $id;
 }
 
-// Salva os dados
+// Salva os dados principais
 $result = $agendamentoModel->saveAgendamento($data);
+
+// Se salvou com sucesso, salva os procedimentos
+if ($result['success'] && !empty($procedimentos)) {
+    $agendamentoModel->saveAgendamentoProcedimentos($result['id'], $procedimentos);
+}
+
+// Registra log da ação
+if ($result['success']) {
+    require_once ROOT_PATH . '/modulos/log/models/LogModel.php';
+    $acao = $id ? 'editar' : 'criar';
+    $descricao = $id
+        ? "Agendamento #{$result['id']} atualizado para {$data['data_consulta']} às {$data['hora_consulta']}"
+        : "Novo agendamento #{$result['id']} criado para {$data['data_consulta']} às {$data['hora_consulta']}";
+    LogModel::registrar($acao, 'agendamentos', $descricao, $result['id'], null, $data);
+}
 
 // Prepara a mensagem para exibição
 if ($result['success']) {
@@ -71,17 +73,13 @@ if ($result['success']) {
     // Obter o procedimento_id baseado na especialidade
     // Precisamos obter um procedimento relacionado à especialidade para poder gerar a guia
     try {
-        $db = new PDO('mysql:host=localhost;dbname=clinica_encaminhamento', 'root', '');
-        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        
-        $stmt = $db->prepare("
-            SELECT id FROM valores_procedimentos 
-            WHERE especialidade_id = ? 
+        $dbConn = Database::getInstance();
+        $procedimento = $dbConn->fetchOne("
+            SELECT id FROM valores_procedimentos
+            WHERE especialidade_id = ?
             LIMIT 1
-        ");
-        $stmt->execute([$data['especialidade_id']]);
-        $procedimento = $stmt->fetch(PDO::FETCH_ASSOC);
-        
+        ", [$data['especialidade_id']]);
+
         $procedimento_id = $procedimento ? $procedimento['id'] : null;
     } catch (Exception $e) {
         $procedimento_id = null;
