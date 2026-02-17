@@ -118,7 +118,10 @@ abstract class Model {
         if (isset($data[$this->primaryKey]) && $data[$this->primaryKey]) {
             $id = $data[$this->primaryKey];
             unset($data[$this->primaryKey]);
-            return $this->update($id, $data);
+            $this->update($id, $data);
+            // Retorna o ID original do registro ao invés do rowCount do update(),
+            // para manter consistência com o insert() que retorna o lastInsertId
+            return $id;
         } else {
             if (isset($data[$this->primaryKey])) {
                 unset($data[$this->primaryKey]);
