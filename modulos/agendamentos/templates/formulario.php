@@ -24,7 +24,7 @@
 
                 <div class="row">
                     <!-- Paciente -->
-                    <div class="col-md-6 form-group">
+                    <div class="col-sm-12 col-md-6 form-group">
                         <label for="paciente_id">Paciente</label>
                         <div class="input-group">
                             <input type="text" class="form-control <?php echo isset($formErrors['paciente_id']) ? 'is-invalid' : ''; ?>"
@@ -45,7 +45,7 @@
                     </div>
 
                     <!-- Clínica -->
-                    <div class="col-md-6 form-group">
+                    <div class="col-sm-12 col-md-6 form-group">
                         <label for="clinica_id">Clínica</label>
                         <select class="form-control <?php echo isset($formErrors['clinica_id']) ? 'is-invalid' : ''; ?>"
                             id="clinica_id" name="clinica_id" required>
@@ -66,7 +66,7 @@
 
                 <div class="row">
                     <!-- Especialidade -->
-                    <div class="col-md-6 form-group">
+                    <div class="col-sm-6 col-md-4 form-group">
                         <label for="especialidade_id">Especialidade</label>
                         <select class="form-control <?php echo isset($formErrors['especialidade_id']) ? 'is-invalid' : ''; ?>"
                             id="especialidade_id" name="especialidade_id" required>
@@ -86,52 +86,8 @@
                         <?php endif; ?>
                     </div>
 
-                    <!-- Procedimento -->
-                    <div class="col-md-6 form-group">
-                        <label for="procedimento_id">Procedimento</label>
-                        <select class="form-control <?php echo isset($formErrors['procedimento_id']) ? 'is-invalid' : ''; ?>" 
-                            id="procedimento_id" name="procedimento_id" required>
-                            <option value="">Selecione uma especialidade primeiro</option>
-                            <?php if (!empty($procedimentos)): ?>
-                                <?php foreach ($procedimentos as $proc): ?>
-                                    <option value="<?php echo $proc['id']; ?>" <?php echo (isset($formData['procedimento_id']) && $formData['procedimento_id'] == $proc['id']) ? 'selected' : ''; ?>>
-                                        <?php echo htmlspecialchars($proc['procedimento']); ?>
-                                        <?php if (isset($proc['valor'])): ?>
-                                            - R$ <?php echo number_format($proc['valor'], 2, ',', '.'); ?>
-                                        <?php endif; ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
-                        </select>
-                        <?php if (isset($formErrors['procedimento_id'])): ?>
-                            <div class="invalid-feedback">
-                                <?php echo $formErrors['procedimento_id']; ?>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <!-- Status do Agendamento -->
-                    <div class="col-md-6 form-group">
-                        <label for="status_agendamento">Status do Agendamento</label>
-                        <select class="form-control <?php echo isset($formErrors['status_agendamento']) ? 'is-invalid' : ''; ?>"
-                            id="status_agendamento" name="status_agendamento">
-                            <?php foreach ($statusAgendamento as $key => $value): ?>
-                                <option value="<?php echo $key; ?>" <?php echo (isset($formData['status_agendamento']) && $formData['status_agendamento'] == $key) ? 'selected' : ''; ?>>
-                                    <?php echo $value; ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                        <?php if (isset($formErrors['status_agendamento'])): ?>
-                            <div class="invalid-feedback">
-                                <?php echo $formErrors['status_agendamento']; ?>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-
                     <!-- Data da Consulta -->
-                    <div class="col-md-6 form-group">
+                    <div class="col-sm-6 col-md-4 form-group">
                         <label for="data_consulta">Data da Consulta</label>
                         <input type="text" class="form-control datepicker <?php echo isset($formErrors['data_consulta']) ? 'is-invalid' : ''; ?>"
                             id="data_consulta" name="data_consulta" value="<?php echo isset($formData['data_consulta']) ? htmlspecialchars($formData['data_consulta']) : ''; ?>"
@@ -142,11 +98,9 @@
                             </div>
                         <?php endif; ?>
                     </div>
-                </div>
 
-                <div class="row">
                     <!-- Hora da Consulta -->
-                    <div class="col-md-6 form-group">
+                    <div class="col-sm-12 col-md-4 form-group">
                         <label for="hora_consulta">Hora da Consulta</label>
                         <select class="form-control <?php echo isset($formErrors['hora_consulta']) ? 'is-invalid' : ''; ?>"
                             id="hora_consulta" name="hora_consulta" required>
@@ -163,12 +117,94 @@
                             </div>
                         <?php endif; ?>
                     </div>
+                </div>
+
+                <div class="row">
+                    <!-- Seleção de Procedimentos -->
+                    <div class="col-md-12 form-group">
+                        <label>Procedimentos</label>
+                        <div class="card p-3 bg-light">
+                            <div class="row">
+                                <div class="col-sm-8 col-md-10 mb-2 mb-md-0">
+                                    <select class="form-control" id="procedimento_select">
+                                        <option value="">Selecione uma especialidade primeiro</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-4 col-md-2">
+                                    <button type="button" class="btn btn-success btn-block" id="btn_add_procedimento">
+                                        <i class="fas fa-plus"></i> Adicionar
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="table-responsive mt-3">
+                                <table class="table table-bordered table-striped bg-white" id="tabela_procedimentos">
+                                    <thead>
+                                        <tr>
+                                            <th>Procedimento</th>
+                                            <th width="150">Valor (R$)</th>
+                                            <th width="50">Ação</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Linhas adicionadas via JS -->
+                                        <tr id="linha_vazia">
+                                            <td colspan="3" class="text-center text-muted">Nenhum procedimento selecionado</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="font-weight-bold">
+                                            <td class="text-right">TOTAL:</td>
+                                            <td id="valor_total_display">R$ 0,00</td>
+                                            <td></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <!-- Inputs ocultos para envio -->
+                            <div id="procedimentos_container"></div>
+                            <input type="hidden" name="valor_total" id="valor_total_input" value="0.00">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                     <!-- Forma de Pagamento -->
+                     <div class="col-sm-6 col-md-4 form-group">
+                        <label for="forma_pagamento">Forma de Pagamento</label>
+                        <select class="form-control" id="forma_pagamento" name="forma_pagamento">
+                            <option value="">Selecione...</option>
+                            <option value="Dinheiro">Dinheiro</option>
+                            <option value="Cartão de Crédito">Cartão de Crédito</option>
+                            <option value="Cartão de Débito">Cartão de Débito</option>
+                            <option value="PIX">PIX</option>
+                            <option value="Plano de Saúde">Plano de Saúde</option>
+                        </select>
+                    </div>
+
+                    <!-- Status do Agendamento -->
+                    <div class="col-sm-6 col-md-4 form-group">
+                        <label for="status_agendamento">Status do Agendamento</label>
+                        <select class="form-control <?php echo isset($formErrors['status_agendamento']) ? 'is-invalid' : ''; ?>"
+                            id="status_agendamento" name="status_agendamento">
+                            <?php foreach ($statusAgendamento as $key => $value): ?>
+                                <option value="<?php echo $key; ?>" <?php echo (isset($formData['status_agendamento']) && $formData['status_agendamento'] == $key) ? 'selected' : ''; ?>>
+                                    <?php echo $value; ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                        <?php if (isset($formErrors['status_agendamento'])): ?>
+                            <div class="invalid-feedback">
+                                <?php echo $formErrors['status_agendamento']; ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
 
                     <!-- Observações -->
-                    <div class="col-md-6 form-group">
+                    <div class="col-sm-12 col-md-4 form-group">
                         <label for="observacoes">Observações</label>
                         <textarea class="form-control <?php echo isset($formErrors['observacoes']) ? 'is-invalid' : ''; ?>"
-                            id="observacoes" name="observacoes" rows="3"><?php echo isset($formData['observacoes']) ? htmlspecialchars($formData['observacoes']) : ''; ?></textarea>
+                            id="observacoes" name="observacoes" rows="2"><?php echo isset($formData['observacoes']) ? htmlspecialchars($formData['observacoes']) : ''; ?></textarea>
                         <?php if (isset($formErrors['observacoes'])): ?>
                             <div class="invalid-feedback">
                                 <?php echo $formErrors['observacoes']; ?>
@@ -183,13 +219,13 @@
                 </div>
                 
                 <!-- DEBUG - Remover após testes -->
-                <div class="form-group mt-2 border-top pt-3" style="background-color: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <!-- <div class="form-group mt-2 border-top pt-3" style="background-color: #f8f9fa; padding: 15px; border-radius: 5px;">
                     <h6 class="text-muted">🔧 Debug - Testes dos Endpoints</h6>
                     <button type="button" class="btn btn-sm btn-info" onclick="testarEspecialidades()">Testar Especialidades</button>
                     <button type="button" class="btn btn-sm btn-info" onclick="testarProcedimentos()">Testar Procedimentos</button>
                     <button type="button" class="btn btn-sm btn-warning" onclick="limparConsole()">Limpar Console</button>
                     <div id="debug-result" class="mt-2" style="max-height: 200px; overflow-y: auto;"></div>
-                </div>
+                </div> -->
             </form>
         </div>
     </div>
@@ -197,7 +233,7 @@
 
 <!-- Modal de Busca de Pacientes -->
 <div class="modal fade" id="pacienteModal" tabindex="-1" role="dialog" aria-labelledby="pacienteModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="pacienteModalLabel">Buscar Paciente</h5>
@@ -306,7 +342,9 @@ $(document).ready(function() {
                 
                 if (especialidades && especialidades.length > 0) {
                     $.each(especialidades, function(index, especialidade) {
-                        options += '<option value="' + especialidade.id + '">' + especialidade.nome + '</option>';
+                        console.log('Especialidade JSON:', JSON.stringify(especialidade));
+                        var nome = especialidade.nome || especialidade.Nome || especialidade.NOME || especialidade.especialidade || 'Sem nome';
+                        options += '<option value="' + especialidade.id + '">' + nome + '</option>';
                     });
                 }
                 
@@ -326,87 +364,144 @@ $(document).ready(function() {
         });
     }
 
+    // Variável para armazenar procedimentos selecionados
+    var procedimentosSelecionados = [];
+
     // Função para carregar procedimentos
     function carregarProcedimentos(especialidadeId) {
-        console.log('=== INICIANDO CARREGAMENTO DE PROCEDIMENTOS ===');
-        console.log('Especialidade ID:', especialidadeId);
-        
         if (!especialidadeId) {
-            console.log('Nenhuma especialidade fornecida');
-            $('#procedimento_id').html('<option value="">Selecione uma especialidade primeiro</option>').prop('disabled', true);
+            $('#procedimento_select').html('<option value="">Selecione uma especialidade primeiro</option>');
             return;
         }
 
-        $('#procedimento_id').html('<option value="">Carregando procedimentos...</option>').prop('disabled', true);
-
-        // URL de debug
-        var url = 'index.php?module=agendamentos&action=get_procedimentos&especialidade_id=' + especialidadeId + '&debug=1';
-        console.log('URL da requisição:', url);
+        $('#procedimento_select').html('<option value="">Carregando...</option>');
 
         $.ajax({
-            url: url,
+            url: 'index.php?module=agendamentos&action=get_procedimentos',
             type: 'GET',
+            data: { especialidade_id: especialidadeId },
             dataType: 'json',
             success: function(data) {
-                console.log('=== RESPOSTA RECEBIDA ===');
-                console.log('Tipo da resposta:', typeof data);
-                console.log('Dados recebidos:', data);
-                
                 var options = '<option value="">Selecione um procedimento</option>';
                 
-                // Verifica se há erro na resposta
-                if (data.error) {
-                    console.error('Erro retornado pelo servidor:', data.error);
-                    $('#procedimento_id').html('<option value="">Erro: ' + data.error + '</option>').prop('disabled', true);
-                    return;
-                }
-                
-                // Verifica se é um array válido
                 if (Array.isArray(data) && data.length > 0) {
-                    console.log('Processando', data.length, 'procedimentos');
-                    
                     $.each(data, function(index, proc) {
-                        console.log('Processando procedimento:', proc);
+                        var valor = parseFloat(proc.valor || proc.valor_paciente || 0); // Try both keys
+                        var valorFormatado = valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
                         
-                        var valor = parseFloat(proc.valor || 0).toLocaleString('pt-BR', {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2
-                        });
-                        
-                        var optionText = proc.procedimento + ' - R$ ' + valor;
-                        options += '<option value="' + proc.id + '">' + optionText + '</option>';
+                        // Store full object in data attribute for easy access
+                        options += `<option value="${proc.id}" data-valor="${valor}" data-nome="${proc.procedimento}">${proc.procedimento} - R$ ${valorFormatado}</option>`;
                     });
-                    
-                    $('#procedimento_id').html(options).prop('disabled', false);
-                    console.log('Procedimentos carregados com sucesso!');
-                    
-                    // Se já tiver um procedimento selecionado previamente
-                    <?php if (isset($formData['procedimento_id']) && !empty($formData['procedimento_id'])): ?>
-                        console.log('Selecionando procedimento pré-definido:', '<?php echo $formData['procedimento_id']; ?>');
-                        $('#procedimento_id').val('<?php echo $formData['procedimento_id']; ?>');
-                    <?php endif; ?>
-                    
                 } else {
-                    console.log('Nenhum procedimento encontrado ou dados inválidos');
-                    $('#procedimento_id').html('<option value="">Nenhum procedimento encontrado</option>').prop('disabled', true);
+                    options = '<option value="">Nenhum procedimento encontrado</option>';
                 }
+                
+                $('#procedimento_select').html(options);
             },
-            error: function(xhr, status, error) {
-                console.error('=== ERRO NA REQUISIÇÃO AJAX ===');
-                console.error('Status:', status);
-                console.error('Erro:', error);
-                console.error('Status Code:', xhr.status);
-                console.error('Response Text:', xhr.responseText);
-                
-                var errorMsg = 'Erro ao carregar procedimentos';
-                if (xhr.status === 404) {
-                    errorMsg = 'Endpoint não encontrado (404)';
-                } else if (xhr.status === 500) {
-                    errorMsg = 'Erro interno do servidor (500)';
-                }
-                
-                $('#procedimento_id').html('<option value="">' + errorMsg + '</option>').prop('disabled', true);
+            error: function() {
+                $('#procedimento_select').html('<option value="">Erro ao carregar</option>');
             }
+        });
+    }
+
+    // Adicionar procedimento à tabela
+    $('#btn_add_procedimento').click(function() {
+        var select = $('#procedimento_select option:selected');
+        var id = select.val();
+        var nome = select.data('nome');
+        var valor = parseFloat(select.data('valor'));
+
+        if (!id) {
+            alert('Selecione um procedimento para adicionar.');
+            return;
+        }
+
+        // Verifica se já existe
+        if (procedimentosSelecionados.find(p => p.id == id)) {
+            alert('Este procedimento já foi adicionado.');
+            return;
+        }
+
+        procedimentosSelecionados.push({ id: id, nome: nome, valor: valor });
+        atualizarTabelaProcedimentos();
+    });
+
+    // Atualizar tabela e total
+    function atualizarTabelaProcedimentos() {
+        var tbody = $('#tabela_procedimentos tbody');
+        var container = $('#procedimentos_container');
+        var total = 0;
+
+        tbody.empty();
+        container.empty();
+
+        if (procedimentosSelecionados.length === 0) {
+            tbody.html('<tr id="linha_vazia"><td colspan="3" class="text-center text-muted">Nenhum procedimento selecionado</td></tr>');
+        } else {
+            procedimentosSelecionados.forEach(function(proc, index) {
+                total += proc.valor;
+                var valorFormatado = proc.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+
+                var row = `
+                    <tr>
+                        <td>${proc.nome}</td>
+                        <td>R$ ${valorFormatado}</td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-danger btn-remover-proc" data-index="${index}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+                tbody.append(row);
+
+                // Inputs ocultos
+                container.append(`<input type="hidden" name="procedimentos[]" value="${proc.id}">`);
+            });
+        }
+
+        $('#valor_total_display').text('R$ ' + total.toLocaleString('pt-BR', { minimumFractionDigits: 2 }));
+        $('#valor_total_input').val(total.toFixed(2));
+    }
+
+    // Remover procedimento
+    $(document).on('click', '.btn-remover-proc', function() {
+        var index = $(this).data('index');
+        procedimentosSelecionados.splice(index, 1);
+        atualizarTabelaProcedimentos();
+    });
+
+    // Atualizar validação do formulário
+    $('#agendamentoForm').submit(function(e) {
+        var valid = true;
+        $('.form-control').removeClass('is-invalid');
+
+        if (!$('#paciente_id').val()) { $('#paciente_nome').addClass('is-invalid'); valid = false; }
+        if (!$('#clinica_id').val()) { $('#clinica_id').addClass('is-invalid'); valid = false; }
+        if (!$('#especialidade_id').val()) { $('#especialidade_id').addClass('is-invalid'); valid = false; }
+        if (!$('#data_consulta').val()) { $('#data_consulta').addClass('is-invalid'); valid = false; }
+        if (!$('#hora_consulta').val()) { $('#hora_consulta').addClass('is-invalid'); valid = false; }
+        
+        // Validação de procedimentos
+        if (procedimentosSelecionados.length === 0) {
+            alert('Selecione pelo menos um procedimento.');
+            valid = false;
+        }
+
+        if (!valid) {
+            alert('Por favor, preencha todos os campos obrigatórios.');
+        }
+        
+        return valid;
+    });
+
+    // Ajustar limpar console debug
+    window.testarEspecialidades = function() {
+        var clinicaId = $('#clinica_id').val();
+        if(!clinicaId) return alert('Selecione clínica');
+        $.post('index.php?module=agendamentos&action=get_especialidades', {clinica_id: clinicaId}, function(res){
+            console.log(res);
+            alert('Veja console');
         });
     }
 
@@ -545,10 +640,13 @@ $(document).ready(function() {
             valid = false;
         }
         
+        /* 
+        // Campo procedimento_id removido (substituído por tabela)
         if (!$('#procedimento_id').val()) {
             $('#procedimento_id').addClass('is-invalid');
             valid = false;
         }
+        */
         
         if (!$('#data_consulta').val()) {
             $('#data_consulta').addClass('is-invalid');
