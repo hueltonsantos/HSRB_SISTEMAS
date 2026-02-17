@@ -1,7 +1,6 @@
 <?php
-/**
- * Controlador para listagem de especialidades
- */
+require_once 'auth.php';
+verificar_acesso('role_manage');
 
 // Instancia o modelo de especialidades
 $especialidadeModel = new EspecialidadeModel();
