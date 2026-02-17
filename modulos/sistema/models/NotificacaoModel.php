@@ -90,12 +90,7 @@ class NotificacaoModel extends Model
      */
     public function marcarTodasComoLidas($usuario_id = null)
     {
-        $sql = "
-            UPDATE {$this->table}
-            SET lida = 1
-            WHERE lida = 0
-        ";
-
+        $sql = "UPDATE {$this->table} SET lida = 1 WHERE lida = 0";
         $params = [];
 
         if ($usuario_id) {
@@ -103,19 +98,49 @@ class NotificacaoModel extends Model
             $params[] = $usuario_id;
         }
 
-        // // Debug para verificar a consulta SQL e parâmetros
-        // error_log("SQL: " . $sql);
-        // error_log("Params: " . print_r($params, true));
-
-        // Executar a consulta
-        return $this->db->query($sql, $params);
-
-        // Debug para verificar quantas linhas foram afetadas
-        // error_log("Linhas afetadas: " . $stmt->rowCount());
-
-        // return $this->db->execute($sql, $params);
-        // Retorna true se pelo menos uma linha foi afetada
+        $stmt = $this->db->query($sql, $params);
         return $stmt->rowCount() > 0;
+    }
+
+    /**
+     * Obtém notificações com paginação
+     * @param int $pagina Página atual
+     * @param int $porPagina Itens por página
+     * @param string $filtro 'todas' ou 'nao_lidas'
+     * @param int $usuario_id ID do usuário (opcional)
+     * @return array [notificacoes, total, totalPaginas]
+     */
+    public function getNotificacoesPaginadas($pagina = 1, $porPagina = 15, $filtro = 'todas', $usuario_id = null)
+    {
+        $where = "WHERE 1=1";
+        $params = [];
+
+        if ($filtro === 'nao_lidas') {
+            $where .= " AND lida = 0";
+        }
+
+        if ($usuario_id) {
+            $where .= " AND (usuario_id = ? OR usuario_id IS NULL)";
+            $params[] = $usuario_id;
+        }
+
+        // Total de registros
+        $sqlCount = "SELECT COUNT(*) as total FROM {$this->table} {$where}";
+        $resultCount = $this->db->fetchOne($sqlCount, $params);
+        $total = (int) $resultCount['total'];
+        $totalPaginas = ceil($total / $porPagina);
+
+        // Busca paginada
+        $offset = ($pagina - 1) * $porPagina;
+        $sql = "SELECT * FROM {$this->table} {$where} ORDER BY data_criacao DESC LIMIT {$porPagina} OFFSET {$offset}";
+        $notificacoes = $this->db->fetchAll($sql, $params);
+
+        return [
+            'notificacoes' => $notificacoes,
+            'total' => $total,
+            'totalPaginas' => $totalPaginas,
+            'paginaAtual' => $pagina
+        ];
     }
 
     /**
