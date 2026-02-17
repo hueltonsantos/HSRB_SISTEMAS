@@ -39,15 +39,22 @@ class ConfiguracaoModel extends Model {
                 ['intervalo_consultas', '30', 'numero', 'Intervalo entre consultas em minutos'],
                 ['hora_inicio_atendimento', '08:00', 'hora', 'Hora de início do atendimento'],
                 ['hora_fim_atendimento', '18:00', 'hora', 'Hora de término do atendimento'],
-                ['dias_atendimento', '1,2,3,4,5', 'lista', 'Dias da semana com atendimento (1=Segunda a 7=Domingo)']
+                ['dias_atendimento', '1,2,3,4,5', 'lista', 'Dias da semana com atendimento (1=Segunda a 7=Domingo)'],
+                ['percentual_repasse_padrao', '50', 'numero', 'Percentual padrão de repasse (%)']
             ];
             
             $sql = "INSERT INTO {$this->table} (chave, valor, tipo, descricao) VALUES (?, ?, ?, ?)";
             $stmt = $this->pdo->prepare($sql);
             
             foreach ($configPadrao as $config) {
+                // Try catch to avoid duplicate key error if partially exists (though logic says count=0)
+                try {
                 $stmt->execute($config);
+                } catch(PDOException $e) {}
             }
+        } else {
+             // Ensure new configs exist even if table is not empty
+             $this->adicionarConfiguracao('percentual_repasse_padrao', '50', 'numero', 'Percentual padrão de repasse (%)');
         }
     }
     
