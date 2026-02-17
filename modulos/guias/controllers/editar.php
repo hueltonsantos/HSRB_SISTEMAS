@@ -19,10 +19,9 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 $guiaId = (int) $_GET['id'];
 
 try {
-    // Conecta ao banco de dados
-    $db = new PDO('mysql:host=localhost;dbname=clinica_encaminhamento', 'root', '');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
+    // Usa o Database singleton (suporta Docker e localhost)
+    $db = Database::getInstance()->getConnection();
+
     // Busca informações da guia
     $stmt = $db->prepare("
         SELECT g.*, p.nome as paciente_nome, vp.procedimento as procedimento_nome
