@@ -25,9 +25,9 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-8 col-md-12">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-sm-6 col-md-6">
                             <div class="info-box mb-4">
                                 <p class="font-weight-bold mb-1">ID:</p>
                                 <p><?php echo $paciente['id']; ?></p>
@@ -64,19 +64,19 @@
                     </div>
                     
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-sm-6 col-md-4">
                             <div class="info-box mb-4">
                                 <p class="font-weight-bold mb-1">CPF:</p>
                                 <p><?php echo htmlspecialchars($paciente['cpf']); ?></p>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-sm-6 col-md-4">
                             <div class="info-box mb-4">
                                 <p class="font-weight-bold mb-1">RG:</p>
                                 <p><?php echo htmlspecialchars($paciente['rg']); ?></p>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-sm-12 col-md-4">
                             <div class="info-box mb-4">
                                 <p class="font-weight-bold mb-1">Sexo:</p>
                                 <p>
@@ -98,19 +98,19 @@
                     
                     <h5 class="mt-4 mb-3">Endereço</h5>
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-sm-6 col-md-3">
                             <div class="info-box mb-4">
                                 <p class="font-weight-bold mb-1">CEP:</p>
                                 <p><?php echo htmlspecialchars($paciente['cep']); ?></p>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-sm-12 col-md-6">
                             <div class="info-box mb-4">
                                 <p class="font-weight-bold mb-1">Endereço:</p>
                                 <p><?php echo htmlspecialchars($paciente['endereco']); ?></p>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-sm-6 col-md-3">
                             <div class="info-box mb-4">
                                 <p class="font-weight-bold mb-1">Número:</p>
                                 <p><?php echo htmlspecialchars($paciente['numero']); ?></p>
@@ -119,19 +119,19 @@
                     </div>
                     
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-sm-6 col-md-4">
                             <div class="info-box mb-4">
                                 <p class="font-weight-bold mb-1">Complemento:</p>
                                 <p><?php echo htmlspecialchars($paciente['complemento']); ?></p>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-sm-6 col-md-4">
                             <div class="info-box mb-4">
                                 <p class="font-weight-bold mb-1">Bairro:</p>
                                 <p><?php echo htmlspecialchars($paciente['bairro']); ?></p>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-sm-12 col-md-4">
                             <div class="info-box mb-4">
                                 <p class="font-weight-bold mb-1">Cidade/UF:</p>
                                 <p><?php echo htmlspecialchars($paciente['cidade']); ?>/<?php echo htmlspecialchars($paciente['estado']); ?></p>
@@ -141,19 +141,19 @@
                     
                     <h5 class="mt-4 mb-3">Contato</h5>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-sm-6 col-md-4">
                             <div class="info-box mb-4">
                                 <p class="font-weight-bold mb-1">Telefone Fixo:</p>
                                 <p><?php echo htmlspecialchars($paciente['telefone_fixo']); ?></p>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-sm-6 col-md-4">
                             <div class="info-box mb-4">
                                 <p class="font-weight-bold mb-1">Celular:</p>
                                 <p><?php echo htmlspecialchars($paciente['celular']); ?></p>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-sm-12 col-md-4">
                             <div class="info-box mb-4">
                                 <p class="font-weight-bold mb-1">E-mail:</p>
                                 <p><?php echo htmlspecialchars($paciente['email']); ?></p>
@@ -163,13 +163,13 @@
                     
                     <h5 class="mt-4 mb-3">Convênio</h5>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-sm-6 col-md-6">
                             <div class="info-box mb-4">
                                 <p class="font-weight-bold mb-1">Convênio:</p>
                                 <p><?php echo htmlspecialchars($paciente['convenio']); ?></p>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-sm-6 col-md-6">
                             <div class="info-box mb-4">
                                 <p class="font-weight-bold mb-1">Número da Carteirinha:</p>
                                 <p><?php echo htmlspecialchars($paciente['numero_carteirinha']); ?></p>
@@ -187,7 +187,7 @@
                     </div>
                 </div>
                 
-                <div class="col-lg-4">
+                <div class="col-lg-4 col-md-12 mt-4 mt-lg-0">
                     <div class="card border-left-info shadow h-100 py-2">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
@@ -237,7 +237,181 @@
             </div>
         </div>
     </div>
+    <!-- Total Gasto e Gráfico -->
+    <div class="row mb-4 mt-4">
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Total Investido (Est. Financeiro)</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                R$ <?php 
+                                    $totalGasto = 0;
+                                    $chartData = [];
+                                    $chartLabels = [];
+                                    if(isset($historicoAgendamentos)) {
+                                        // Ordenar por data crescente para o gráfico
+                                        $historicoOrdenado = array_reverse($historicoAgendamentos);
+                                        foreach($historicoAgendamentos as $h) {
+                                            if(in_array($h['status'], ['realizado', 'confirmado'])) {
+                                                $totalGasto += $h['valor_total'];
+                                            }
+                                        }
+                                        foreach($historicoOrdenado as $h) {
+                                            if(in_array($h['status'], ['realizado', 'confirmado'])) {
+                                                $chartLabels[] = date('d/m/Y', strtotime($h['data_consulta']));
+                                                $chartData[] = $h['valor_total'];
+                                            }
+                                        }
+                                    }
+                                    echo number_format($totalGasto, 2, ',', '.');
+                                ?>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-8 col-md-6 mb-4">
+            <div class="card shadow h-100">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Linha do Tempo (Financeiro)</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="myAreaChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Histórico de Exames e Financeiro</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Data/Hora</th>
+                            <th>Procedimentos</th>
+                            <th>Valor Total</th>
+                            <th>Forma Pagamento</th>
+                            <th>Status/Ação</th>
+                            <th class="text-center">Contato</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (isset($historicoAgendamentos) && !empty($historicoAgendamentos)): ?>
+                            <?php foreach ($historicoAgendamentos as $agendamento): ?>
+                                <tr>
+                                    <td>
+                                        <?php echo date('d/m/Y', strtotime($agendamento['data_consulta'])); ?>
+                                        <br>
+                                        <small><?php echo substr($agendamento['hora_consulta'], 0, 5); ?></small>
+                                        
+                                        <!-- Validação de Tempo (> 1 ano) -->
+                                        <?php 
+                                            $dataConsulta = new DateTime($agendamento['data_consulta']);
+                                            $hoje = new DateTime();
+                                            $intervalo = $hoje->diff($dataConsulta);
+                                            if ($intervalo->y >= 1 && $agendamento['status'] == 'realizado'): 
+                                        ?>
+                                            <br><span class="badge badge-warning mt-1">Refazer? (+1 ano)</span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo htmlspecialchars($agendamento['procedimentos_nomes'] ?? 'Nenhum procedimento'); ?>
+                                        <br>
+                                        <small class="text-muted"><?php echo htmlspecialchars($agendamento['especialidade_nome']); ?> - <?php echo htmlspecialchars($agendamento['clinica_nome']); ?></small>
+                                    </td>
+                                    <td>R$ <?php echo number_format($agendamento['valor_total'], 2, ',', '.'); ?></td>
+                                    <td><?php echo htmlspecialchars($agendamento['forma_pagamento'] ?? '-'); ?></td>
+                                    <td>
+                                        <?php
+                                        $statusClass = '';
+                                        $statusText = '';
+                                        switch ($agendamento['status']) {
+                                            case 'agendado': $statusClass = 'badge-warning'; $statusText = 'Agendado'; break;
+                                            case 'confirmado': $statusClass = 'badge-primary'; $statusText = 'Confirmado'; break;
+                                            case 'realizado': $statusClass = 'badge-success'; $statusText = 'Realizado'; break;
+                                            case 'cancelado': $statusClass = 'badge-danger'; $statusText = 'Cancelado'; break;
+                                            default: $statusClass = 'badge-secondary'; $statusText = $agendamento['status'];
+                                        }
+                                        ?>
+                                        <span class="badge <?php echo $statusClass; ?>"><?php echo $statusText; ?></span>
+                                    </td>
+                                    <td class="text-center">
+                                        <?php 
+                                            // Limpar telefone para link do WhatsApp
+                                            $celular = preg_replace('/[^0-9]/', '', $paciente['celular']);
+                                            if(!empty($celular)):
+                                        ?>
+                                        <a href="https://wa.me/55<?php echo $celular; ?>?text=Olá <?php echo urlencode($paciente['nome']); ?>, referente ao exame do dia <?php echo date('d/m/Y', strtotime($agendamento['data_consulta'])); ?>..." target="_blank" class="btn btn-success btn-circle btn-sm" title="Conversar no WhatsApp">
+                                            <i class="fab fa-whatsapp"></i>
+                                        </a>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="6" class="text-center">Nenhum histórico encontrado.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// Chart.js - Linha do Tempo
+var ctxArea = document.getElementById("myAreaChart");
+var myAreaChart = new Chart(ctxArea, {
+  type: 'line',
+  data: {
+    labels: [<?php echo "'" . implode("', '", $chartLabels) . "'"; ?>],
+    datasets: [{
+      label: "Valor Gasto (R$)",
+      lineTension: 0.3,
+      backgroundColor: "rgba(78, 115, 223, 0.05)",
+      borderColor: "rgba(78, 115, 223, 1)",
+      pointRadius: 3,
+      pointBackgroundColor: "rgba(78, 115, 223, 1)",
+      pointBorderColor: "rgba(78, 115, 223, 1)",
+      pointHoverRadius: 3,
+      pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+      pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+      pointHitRadius: 10,
+      pointBorderWidth: 2,
+      data: [<?php echo implode(", ", $chartData); ?>],
+    }],
+  },
+  options: {
+    maintainAspectRatio: false,
+    layout: { padding: { left: 10, right: 25, top: 25, bottom: 0 } },
+    scales: {
+      x: { grid: { display: false, drawBorder: false }, ticks: { maxTicksLimit: 7 } },
+      y: { ticks: { maxTicksLimit: 5, padding: 10, callback: function(value) { return 'R$ ' + value; } }, grid: { color: "rgb(234, 236, 244)", zeroLineColor: "rgb(234, 236, 244)", drawBorder: false, borderDash: [2], zeroLineBorderDash: [2] } },
+    },
+    plugins: {
+        legend: { display: false },
+        tooltip: { backgroundColor: "rgb(255,255,255)", bodyColor: "#858796", titleColor: '#6e707e', borderColor: '#dddfeb', borderWidth: 1 }
+    }
+  }
+});
+</script>
 
 <!-- Modal de Confirmação de Exclusão -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
