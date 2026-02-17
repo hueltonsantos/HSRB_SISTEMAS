@@ -1,0 +1,82 @@
+version: '3.8'
+
+services:
+  # Aplicação PHP/Apache
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: clinica_app
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - ./uploads:/var/www/html/uploads
+    environment:
+      - DB_HOST=db
+      - DB_NAME=${DB_NAME:-clinica_encaminhamento}
+      - DB_USER=${DB_USER:-clinica_user}
+      - DB_PASS=${DB_PASS:-clinica_pass}
+      - TZ=America/Sao_Paulo
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - clinica_network
+    restart: unless-stopped
+
+  # Banco de dados MariaDB
+  db:
+    image: mariadb:10.4
+    container_name: clinica_db
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-root_password}
+      - MYSQL_DATABASE=${DB_NAME:-clinica_encaminhamento}
+      - MYSQL_USER=${DB_USER:-clinica_user}
+      - MYSQL_PASSWORD=${DB_PASS:-clinica_pass}
+      - TZ=America/Sao_Paulo
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./Banco_sql/clinica_encaminhamento.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ./Banco_sql/migration_v2.sql:/docker-entrypoint-initdb.d/02-migration_v2.sql
+      - ./Banco_sql/migration_v3_foto.sql:/docker-entrypoint-initdb.d/03-migration_v3.sql
+      - ./Banco_sql/migration_v4_logs.sql:/docker-entrypoint-initdb.d/04-migration_v4.sql
+      - ./Banco_sql/migration_kanban.sql:/docker-entrypoint-initdb.d/05-migration_kanban.sql
+      - ./Banco_sql/migration_v5_dashboard.sql:/docker-entrypoint-initdb.d/06-migration_v5.sql
+      - ./Banco_sql/migration_v6_procedimentos.sql:/docker-entrypoint-initdb.d/07-migration_v6.sql
+      - ./Banco_sql/migration_v7_clinica_master.sql:/docker-entrypoint-initdb.d/08-migration_v7.sql
+      - ./Banco_sql/migration_v8_setup.sql:/docker-entrypoint-initdb.d/09-migration_v8.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-root_password}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - clinica_network
+    restart: unless-stopped
+
+  # phpMyAdmin para gerenciar o banco
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: clinica_phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      - PMA_HOST=db
+      - PMA_USER=${DB_USER:-clinica_user}
+      - PMA_PASSWORD=${DB_PASS:-clinica_pass}
+    depends_on:
+      - db
+    networks:
+      - clinica_network
+    restart: unless-stopped
+
+volumes:
+  db_data:
+    driver: local
+
+networks:
+  clinica_network:
+    driver: bridge
