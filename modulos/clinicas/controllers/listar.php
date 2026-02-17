@@ -1,7 +1,6 @@
 <?php
-/**
- * Controlador para listagem de clínicas
- */
+require_once 'auth.php';
+verificar_acesso('role_manage');
 
 // Instancia o modelo de clínicas
 $clinicaModel = new ClinicaModel();
