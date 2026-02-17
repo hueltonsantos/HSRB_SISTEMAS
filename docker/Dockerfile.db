@@ -1,0 +1,15 @@
+# Dockerfile para MariaDB com migrations embutidas
+FROM mariadb:10.4
+
+# Copiar scripts SQL para inicialização automática
+COPY Banco_sql/clinica_encaminhamento.sql /docker-entrypoint-initdb.d/01-schema.sql
+COPY Banco_sql/migration_v2.sql /docker-entrypoint-initdb.d/02-migration_v2.sql
+COPY Banco_sql/migration_v3_foto.sql /docker-entrypoint-initdb.d/03-migration_v3.sql
+COPY Banco_sql/migration_v4_logs.sql /docker-entrypoint-initdb.d/04-migration_v4.sql
+COPY Banco_sql/migration_kanban.sql /docker-entrypoint-initdb.d/05-migration_kanban.sql
+COPY Banco_sql/migration_v5_dashboard.sql /docker-entrypoint-initdb.d/06-migration_v5_dashboard.sql
+COPY Banco_sql/migration_v6_procedimentos.sql /docker-entrypoint-initdb.d/07-migration_v6_procedimentos.sql
+COPY Banco_sql/migration_v7_clinica_master.sql /docker-entrypoint-initdb.d/08-migration_v7_clinica_master.sql
+
+# Garantir permissões
+RUN chmod 644 /docker-entrypoint-initdb.d/*.sql
