@@ -1,6 +1,5 @@
 <?php
-require_once 'auth.php';
-verificar_acesso(['admin']);
+// Verificação de acesso já feita no include.php do módulo
 ?>
 <div class="container-fluid">
     <h1 class="h3 mb-2 text-gray-800">Usuários</h1>
@@ -34,30 +33,34 @@ verificar_acesso(['admin']);
                 <input type="hidden" name="module" value="usuarios">
                 
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-sm-6 col-md-3">
                         <div class="form-group">
                             <label>Nome</label>
                             <input type="text" class="form-control" name="nome" value="<?php echo isset($_GET['nome']) ? $_GET['nome'] : ''; ?>">
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-sm-6 col-md-3">
                         <div class="form-group">
                             <label>E-mail</label>
                             <input type="text" class="form-control" name="email" value="<?php echo isset($_GET['email']) ? $_GET['email'] : ''; ?>">
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-sm-6 col-md-3">
                         <div class="form-group">
-                            <label>Nível de Acesso</label>
+                            <label>Nível de Acesso (Perfil)</label>
                             <select class="form-control" name="nivel_acesso">
                                 <option value="">Todos</option>
-                                <option value="admin" <?php echo (isset($_GET['nivel_acesso']) && $_GET['nivel_acesso'] == 'admin') ? 'selected' : ''; ?>>Administrador</option>
-                                <option value="recepcionista" <?php echo (isset($_GET['nivel_acesso']) && $_GET['nivel_acesso'] == 'recepcionista') ? 'selected' : ''; ?>>Recepcionista</option>
-                                <option value="medico" <?php echo (isset($_GET['nivel_acesso']) && $_GET['nivel_acesso'] == 'medico') ? 'selected' : ''; ?>>Médico</option>
+                                <?php if (isset($perfis)): ?>
+                                    <?php foreach ($perfis as $p): ?>
+                                        <option value="<?php echo $p['id']; ?>" <?php echo (isset($_GET['nivel_acesso']) && $_GET['nivel_acesso'] == $p['id']) ? 'selected' : ''; ?>>
+                                            <?php echo htmlspecialchars($p['nome']); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-sm-6 col-md-3">
                         <div class="form-group">
                             <label>Status</label>
                             <select class="form-control" name="status">
@@ -109,21 +112,10 @@ verificar_acesso(['admin']);
                                     <td><?php echo $usuario['nome']; ?></td>
                                     <td><?php echo $usuario['email']; ?></td>
                                     <td>
-                                        <?php 
-                                        switch ($usuario['nivel_acesso']) {
-                                            case 'admin':
-                                                echo 'Administrador';
-                                                break;
-                                            case 'recepcionista':
-                                                echo 'Recepcionista';
-                                                break;
-                                            case 'medico':
-                                                echo 'Médico';
-                                                break;
-                                            default:
-                                                echo $usuario['nivel_acesso'];
-                                        }
-                                        ?>
+                                        <?php echo htmlspecialchars($usuario['perfil_nome']); ?>
+                                        <?php if ($usuario['clinica_nome']): ?>
+                                            <small class="d-block text-muted"><?php echo htmlspecialchars($usuario['clinica_nome']); ?></small>
+                                        <?php endif; ?>
                                     </td>
                                     <td><?php echo $usuario['ultimo_acesso'] ? date('d/m/Y H:i', strtotime($usuario['ultimo_acesso'])) : 'Nunca acessou'; ?></td>
                                     <td>
