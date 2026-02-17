@@ -1,7 +1,6 @@
 <?php
-/**
- * Controlador para listagem de pacientes
- */
+require_once 'auth.php';
+verificar_acesso('appointment_view');
 
 // Instancia o modelo de pacientes
 $pacienteModel = new PacienteModel();
