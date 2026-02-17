@@ -40,26 +40,31 @@ class UsuarioModel extends Model {
         $params = [];
         
         if (isset($filtros['nome']) && !empty($filtros['nome'])) {
-            $where .= " AND nome LIKE ?";
+            $where .= " AND u.nome LIKE ?";
             $params[] = "%{$filtros['nome']}%";
         }
         
         if (isset($filtros['email']) && !empty($filtros['email'])) {
-            $where .= " AND email LIKE ?";
+            $where .= " AND u.email LIKE ?";
             $params[] = "%{$filtros['email']}%";
         }
         
-        if (isset($filtros['nivel_acesso']) && !empty($filtros['nivel_acesso'])) {
-            $where .= " AND nivel_acesso = ?";
-            $params[] = $filtros['nivel_acesso'];
+        if (isset($filtros['perfil_id']) && !empty($filtros['perfil_id'])) {
+            $where .= " AND u.perfil_id = ?";
+            $params[] = $filtros['perfil_id'];
         }
         
         if (isset($filtros['status']) && $filtros['status'] !== '') {
-            $where .= " AND status = ?";
+            $where .= " AND u.status = ?";
             $params[] = $filtros['status'];
         }
         
-        $sql = "SELECT * FROM {$this->table} {$where} ORDER BY nome ASC";
+        $sql = "SELECT u.*, p.nome as perfil_nome, c.nome as clinica_nome 
+                FROM {$this->table} u 
+                LEFT JOIN perfis p ON u.perfil_id = p.id 
+                LEFT JOIN clinicas_parceiras c ON u.clinica_id = c.id
+                {$where} 
+                ORDER BY u.nome ASC";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($params);
         
@@ -67,7 +72,12 @@ class UsuarioModel extends Model {
     }
     
     public function buscarPorId($id) {
-        $sql = "SELECT * FROM {$this->table} WHERE id = ? LIMIT 1";
+        $sql = "SELECT u.*, p.nome as perfil_nome, c.nome as clinica_nome, parent.nome as supervisor_nome
+                FROM {$this->table} u 
+                LEFT JOIN perfis p ON u.perfil_id = p.id 
+                LEFT JOIN clinicas_parceiras c ON u.clinica_id = c.id
+                LEFT JOIN usuarios parent ON u.parent_id = parent.id
+                WHERE u.id = ? LIMIT 1";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$id]);
         
