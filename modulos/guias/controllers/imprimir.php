@@ -16,13 +16,17 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
     exit;
 }
 
+// Define paths if needed (assuming moduless/configuracoes follows strict structure)
+if (!defined('CONFIGURACOES_MODEL_PATH')) {
+    define('CONFIGURACOES_MODEL_PATH', __DIR__ . '/../../configuracoes/models/');
+}
+
 // Obtém o ID da guia
 $guiaId = (int) $_GET['id'];
 
 try {
-    // Conecta ao banco de dados
-    $db = new PDO('mysql:host=localhost;dbname=clinica_encaminhamento', 'root', '');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // Conecta ao banco de dados usando a classe Database do sistema
+    $db = Database::getInstance()->getConnection();
 
     // Busca informações da guia
     // $stmt = $db->prepare("
@@ -42,21 +46,28 @@ try {
 
 
     // Modifique a consulta SQL para:
-    // Busca informações da guia
-$stmt = $db->prepare("
-    SELECT g.*, p.nome as paciente_nome, p.cpf as paciente_documento,
-           vp.procedimento as procedimento_nome, vp.valor as procedimento_valor,
-           e.nome as especialidade_nome, cp.nome as clinica_nome,
-           cp.endereco, cp.telefone
-    FROM guias_encaminhamento g
-    INNER JOIN pacientes p ON g.paciente_id = p.id
-    INNER JOIN valores_procedimentos vp ON g.procedimento_id = vp.id
-    INNER JOIN especialidades e ON vp.especialidade_id = e.id
-    LEFT JOIN clinicas_parceiras cp ON e.id = cp.id
-    WHERE g.id = ?
-    LIMIT 1
-");
+    // Carrega configurações
+    require_once CONFIGURACOES_MODEL_PATH . 'ConfiguracaoModel.php';
+    $configModel = new ConfiguracaoModel();
+    $configs = [];
+    foreach($configModel->listar() as $c) {
+        $configs[$c['chave']] = $c['valor'];
+    }
 
+    // Busca informações da guia
+    $stmt = $db->prepare("
+        SELECT g.*, p.nome as paciente_nome, p.cpf as paciente_documento,
+               vp.procedimento as procedimento_nome, vp.valor_paciente as procedimento_valor,
+               e.nome as especialidade_nome, cp.nome as clinica_nome,
+               cp.endereco, cp.telefone
+        FROM guias_encaminhamento g
+        INNER JOIN pacientes p ON g.paciente_id = p.id
+        INNER JOIN valores_procedimentos vp ON g.procedimento_id = vp.id
+        INNER JOIN especialidades e ON vp.especialidade_id = e.id
+        LEFT JOIN clinicas_parceiras cp ON e.id = cp.id
+        WHERE g.id = ?
+        LIMIT 1
+    ");
     $stmt->execute([$guiaId]);
     $guia = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -87,6 +98,11 @@ $stmt = $db->prepare("
         'status' => $guia['status'],
         'data_emissao' => date('d/m/Y', strtotime($guia['data_emissao']))
     ];
+
+    // Limpar todos os buffers de saída antes de renderizar
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
 
     // Renderiza o template para impressão
     include GUIAS_TEMPLATE_PATH . '/imprimir.php';
