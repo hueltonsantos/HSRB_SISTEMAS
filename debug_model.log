@@ -1,0 +1,14 @@
+SQL: INSERT INTO usuarios (nome, email, senha, telefone, cpf, perfil_id, clinica_id, nivel_acesso, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Dados: Array
+(
+    [nome] => Huelton S R Borges
+    [email] => hueltonti@gmail.com
+    [senha] => $2y$10$BksIvfolIr0Xty8AtnMuzujqr.PNVMSajsqhw9k/N2THaIA92sJkS
+    [telefone] => (77) 99988-2930
+    [cpf] => 05815555541
+    [perfil_id] => 1
+    [clinica_id] => 7
+    [nivel_acesso] => admin
+    [status] => 1
+)
+
