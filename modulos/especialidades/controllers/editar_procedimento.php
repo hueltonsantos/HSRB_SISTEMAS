@@ -19,7 +19,7 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 $procedimentoId = (int) $_GET['id'];
 
 // Instancia o modelo de procedimentos
-$procedimentoModel = new ProcedimentoModel();
+$procedimentoModel = new ValorProcedimentoModel();
 
 // Busca os dados do procedimento
 $procedimento = $procedimentoModel->getById($procedimentoId);
@@ -61,8 +61,9 @@ if (!$especialidade) {
 $formData = isset($_SESSION['form_data']) ? $_SESSION['form_data'] : [
     'id' => $procedimento['id'],
     'especialidade_id' => $especialidadeId,
-    'nome' => $procedimento['nome'],
-    'valor' => $procedimento['valor'],
+    'procedimento' => $procedimento['procedimento'],
+    'valor_paciente' => isset($procedimento['valor_paciente']) ? number_format($procedimento['valor_paciente'], 2, ',', '.') : '0,00',
+    'valor_repasse' => isset($procedimento['valor_repasse']) ? number_format($procedimento['valor_repasse'], 2, ',', '.') : '0,00',
     'status' => $procedimento['status']
 ];
 $formErrors = isset($_SESSION['form_errors']) ? $_SESSION['form_errors'] : [];
