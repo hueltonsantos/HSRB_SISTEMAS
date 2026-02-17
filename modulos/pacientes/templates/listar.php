@@ -27,36 +27,54 @@
                     <input type="hidden" name="module" value="pacientes">
                     <input type="hidden" name="action" value="list">
                     
-                    <div class="form-group mx-sm-3 mb-2">
+                    <div class="form-group mr-2 mb-2 w-100-mobile">
                         <label for="nome" class="sr-only">Nome</label>
-                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" 
+                        <input type="text" class="form-control w-100" id="nome" name="nome" placeholder="Nome" 
                             value="<?php echo isset($_GET['nome']) ? htmlspecialchars($_GET['nome']) : ''; ?>">
                     </div>
                     
-                    <div class="form-group mx-sm-3 mb-2">
+                    <div class="form-group mr-2 mb-2 w-100-mobile">
                         <label for="cpf" class="sr-only">CPF</label>
-                        <input type="text" class="form-control" id="cpf" name="cpf" placeholder="CPF" 
+                        <input type="text" class="form-control w-100" id="cpf" name="cpf" placeholder="CPF" 
                             value="<?php echo isset($_GET['cpf']) ? htmlspecialchars($_GET['cpf']) : ''; ?>">
                     </div>
                     
-                    <div class="form-group mx-sm-3 mb-2">
+                    <div class="form-group mr-2 mb-2 w-100-mobile">
                         <label for="cidade" class="sr-only">Cidade</label>
-                        <input type="text" class="form-control" id="cidade" name="cidade" placeholder="Cidade" 
+                        <input type="text" class="form-control w-100" id="cidade" name="cidade" placeholder="Cidade" 
                             value="<?php echo isset($_GET['cidade']) ? htmlspecialchars($_GET['cidade']) : ''; ?>">
                     </div>
                     
-                    <div class="form-group mx-sm-3 mb-2">
+                    <div class="form-group mr-2 mb-2 w-100-mobile">
                         <label for="status" class="sr-only">Status</label>
-                        <select class="form-control" id="status" name="status">
+                        <select class="form-control w-100" id="status" name="status">
                             <option value="1" <?php echo (!isset($_GET['status']) || $_GET['status'] == 1) ? 'selected' : ''; ?>>Ativos</option>
                             <option value="0" <?php echo (isset($_GET['status']) && $_GET['status'] == 0) ? 'selected' : ''; ?>>Inativos</option>
                             <option value="" <?php echo (isset($_GET['status']) && $_GET['status'] === '') ? 'selected' : ''; ?>>Todos</option>
                         </select>
                     </div>
                     
-                    <button type="submit" class="btn btn-primary mb-2">Filtrar</button>
-                    <a href="index.php?module=pacientes&action=list" class="btn btn-secondary mb-2 ml-2">Limpar</a>
+                    <button type="submit" class="btn btn-primary mb-2 w-100-mobile">Filtrar</button>
+                    <a href="index.php?module=pacientes&action=list" class="btn btn-secondary mb-2 ml-2 w-100-mobile ml-0-mobile mt-2-mobile">Limpar</a>
                 </form>
+                
+                <style>
+                    @media (max-width: 576px) {
+                        .w-100-mobile {
+                            width: 100% !important;
+                        }
+                        .ml-0-mobile {
+                            margin-left: 0 !important;
+                        }
+                        .mt-2-mobile {
+                            margin-top: 0.5rem !important;
+                        }
+                        .form-inline .form-group {
+                            display: block;
+                            margin-bottom: 1rem;
+                        }
+                    }
+                </style>
             </div>
             
             <!-- Tabela de Pacientes -->
