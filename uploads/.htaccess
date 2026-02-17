@@ -1,0 +1,8 @@
+# Desativa a execução de scripts PHP no diretório de uploads
+<Files *>
+    SetHandler default-handler
+</Files>
+php_flag engine off
+
+# Opcional: Impedir listagem de diretório
+Options -Indexes
