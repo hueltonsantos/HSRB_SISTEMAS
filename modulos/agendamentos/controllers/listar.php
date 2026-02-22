@@ -1,7 +1,6 @@
 <?php
-/**
- * Controlador para listagem de agendamentos
- */
+require_once 'auth.php';
+verificar_acesso('appointment_view');
 
 // Instancia o modelo de agendamentos
 $agendamentoModel = new AgendamentoModel();

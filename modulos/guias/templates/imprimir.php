@@ -1,203 +1,490 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guia de Encaminhamento #<?php echo $guiaData['codigo']; ?></title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', Arial, sans-serif;
+            font-size: 8pt;
+            margin: 0;
+            padding: 10px;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        .guia-container {
+            max-width: 148mm;
+            /* Largura A5 */
+            margin: 0 auto;
+            background: #fff;
+            padding: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+
+        .cabecalho {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            border-bottom: 1.5px solid #0056b3;
+            padding-bottom: 6px;
+        }
+
+        .titulo-principal {
+            text-align: left;
+            flex: 1;
+        }
+
+        .titulo-principal h1 {
+            color: #0056b3;
             font-size: 12pt;
             margin: 0;
-            padding: 0;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
-        .guia {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            border: 1px solid #000;
+
+        .titulo-principal h1 span {
+            font-size: 16pt !important;
         }
-        .cabecalho {
-            text-align: center;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #000;
-            padding-bottom: 10px;
+
+        .titulo-principal h2 {
+            font-size: 7pt;
+            color: #666;
+            margin: 2px 0 0;
+            font-weight: 400;
         }
-        .logo {
-            max-width: 150px;
-            max-height: 80px;
-            float: right;
-        }
-        .titulo {
-            font-size: 18pt;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .subtitulo {
-            font-size: 14pt;
-            margin-bottom: 20px;
-        }
-        .numero-guia {
-            font-size: 12pt;
-            font-weight: bold;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-        .status {
-            font-size: 14pt;
-            text-align: center;
-            padding: 5px;
-            margin: 10px 0;
-            font-weight: bold;
-        }
-        .status.agendado {
-            background-color: #b8daff;
-            color: #004085;
-            border: 1px solid #7abaff;
-        }
-        .status.realizado {
-            background-color: #c3e6cb;
-            color: #155724;
-            border: 1px solid #8fd19e;
-        }
-        .status.cancelado {
-            background-color: #f5c6cb;
-            color: #721c24;
-            border: 1px solid #ed969e;
-        }
-        .secao {
-            margin-bottom: 15px;
-        }
-        .secao h3 {
-            margin: 0 0 5px 0;
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 3px;
-        }
-        .campo {
-            margin-bottom: 8px;
-        }
-        .campo strong {
-            font-weight: bold;
-        }
-        .assinatura {
-            margin-top: 50px;
-            text-align: center;
-        }
-        .linha-assinatura {
-            border-top: 1px solid #000;
-            width: 70%;
-            margin: 10px auto;
-            padding-top: 5px;
-        }
-        .instrucoes {
-            margin-top: 30px;
-            border-top: 1px dashed #000;
-            padding-top: 10px;
-            font-size: 10pt;
-        }
-        .data-emissao {
-            margin-top: 20px;
-            font-style: italic;
+
+        .info-guia {
             text-align: right;
-            font-size: 10pt;
+            min-width: 80px;
         }
+
+        .numero-guia {
+            font-size: 10pt;
+            font-weight: bold;
+            color: #333;
+            background: #e9ecef;
+            padding: 3px 8px;
+            border-radius: 3px;
+            display: inline-block;
+        }
+
+        .data-emissao {
+            font-size: 7pt;
+            color: #666;
+            margin-top: 2px;
+        }
+
+        .secao-box {
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 8px 10px;
+            margin-bottom: 6px;
+            position: relative;
+        }
+
+        .bg-light-blue {
+            background-color: #f8fbff;
+            border-color: #b6d4fe;
+        }
+
+        .titulo-secao {
+            position: absolute;
+            top: -8px;
+            left: 10px;
+            background: #fff;
+            padding: 0 6px;
+            font-size: 7pt;
+            font-weight: bold;
+            color: #0056b3;
+            text-transform: uppercase;
+        }
+
+        .bg-light-blue .titulo-secao {
+            background: #f8fbff;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .campo {
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        .campo:last-child {
+            margin-bottom: 0;
+        }
+
+        .label {
+            font-size: 6.5pt;
+            color: #666;
+            display: block;
+            margin-bottom: 1px;
+            text-transform: uppercase;
+        }
+
+        .valor {
+            font-size: 9pt;
+            font-weight: 500;
+            color: #000;
+        }
+
+        .destaque-clinica {
+            font-size: 9pt;
+            color: #0056b3;
+        }
+
+        .proc-destaque {
+            font-size: 10pt;
+            font-weight: bold;
+        }
+
+        .instrucoes {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            color: #856404;
+            padding: 6px 8px;
+            border-radius: 4px;
+            font-size: 7.5pt;
+            margin-top: 8px;
+            line-height: 1.3;
+        }
+
+        .assinatura-area {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .assinatura-box {
+            text-align: center;
+            width: 55%;
+            border-top: 1px solid #333;
+            padding-top: 4px;
+            font-size: 8pt;
+        }
+
+        .assinatura-box small {
+            font-size: 6.5pt;
+            color: #666;
+        }
+
+        .rodape {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 6.5pt;
+            color: #999;
+            border-top: 1px solid #eee;
+            padding-top: 6px;
+        }
+
         .no-print {
-            margin-top: 20px;
+            margin-top: 15px;
             text-align: center;
         }
+
+        .btn {
+            padding: 6px 12px;
+            border-radius: 3px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            display: inline-block;
+            margin: 0 3px;
+            font-size: 8pt;
+        }
+
+        .btn-primary {
+            background-color: #0056b3;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        .btn-info {
+            background-color: #17a2b8;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px dashed #ccc;
+            margin: 6px 0;
+        }
+
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+
+            .guia-container {
+                padding: 10px;
+                max-width: 100%;
+            }
+
+            .cabecalho {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .info-guia {
+                text-align: center;
+                margin-top: 5px;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+
+            .assinatura-box {
+                width: 80%;
+            }
+
+            .no-print .btn {
+                display: block;
+                width: 100%;
+                margin: 3px 0;
+            }
+        }
+
         @media print {
+            @page {
+                size: A5 portrait;
+                margin: 4mm;
+            }
+
+            body {
+                background: #fff;
+                padding: 0;
+                font-size: 8pt;
+            }
+
+            .guia-container {
+                box-shadow: none;
+                padding: 0;
+                width: 100%;
+                max-width: 100%;
+                margin: 0;
+            }
+
+            .cabecalho {
+                margin-bottom: 6px;
+                padding-bottom: 4px;
+            }
+
+            .titulo-principal h1 {
+                font-size: 11pt;
+            }
+
+            .titulo-principal h1 span {
+                font-size: 14pt !important;
+            }
+
+            .secao-box {
+                padding: 6px 8px;
+                margin-bottom: 5px;
+            }
+
+            .titulo-secao {
+                font-size: 6.5pt;
+                top: -7px;
+            }
+
+            .valor {
+                font-size: 8.5pt;
+            }
+
+            .proc-destaque {
+                font-size: 9pt;
+            }
+
+            .assinatura-area {
+                margin-top: 12px;
+            }
+
+            .rodape {
+                margin-top: 8px;
+                padding-top: 4px;
+            }
+
             .no-print {
-                display: none;
+                display: none !important;
+            }
+
+            .titulo-secao,
+            .bg-light-blue .titulo-secao {
+                background: #fff;
+            }
+
+            .secao-box.bg-light-blue {
+                background-color: #fff !important;
+                border: 1px solid #ccc;
             }
         }
     </style>
+    <base target="_blank">
 </head>
+
 <body>
-    <div class="guia">
+    <div class="guia-container">
+        <!-- Cabeçalho -->
         <div class="cabecalho">
-            <div class="logo">
-                <!-- <img src="caminho/para/seu/logo.png" alt="Logo da Clínica"> -->
-                <!-- Substitua pelo caminho correto do seu logo, se disponível -->
+            <div class="titulo-principal">
+                <h1>
+                    <span>🏥</span>
+                    <?php echo htmlspecialchars($configs['nome_clinica'] ?? 'Guia de Encaminhamento'); ?>
+                </h1>
+                <h2>Documento de Solicitação de Exame/Procedimento</h2>
             </div>
-            <div class="titulo">GUIA DE ENCAMINHAMENTO</div>
-            <div class="subtitulo">Nós cuidamos da sua saúde!</div>
+            <div class="info-guia">
+                <div class="numero-guia">Nº <?php echo $guiaData['codigo']; ?></div>
+                <div class="data-emissao">Emissão: <?php echo $guiaData['data_emissao']; ?></div>
+            </div>
         </div>
-        
-        <div class="numero-guia">
-            Guia Nº: <?php echo $guiaData['codigo']; ?>
+
+        <!-- Seção Paciente e Agendamento -->
+        <div class="grid-2">
+            <div class="secao-box">
+                <div class="titulo-secao">Dados do Paciente</div>
+                <div class="campo">
+                    <span class="label">Nome Completo</span>
+                    <span class="valor"><?php echo htmlspecialchars($guiaData['paciente_nome']); ?></span>
+                </div>
+                <?php if (!empty($guiaData['paciente_documento'])): ?>
+                    <div class="campo">
+                        <span class="label">CPF/Documento</span>
+                        <span class="valor"><?php echo htmlspecialchars($guiaData['paciente_documento']); ?></span>
+                    </div>
+                <?php endif; ?>
+            </div>
+
+            <div class="secao-box bg-light-blue">
+                <div class="titulo-secao">Dados do Agendamento</div>
+                <div class="campo">
+                    <span class="label">Data Prevista</span>
+                    <span class="valor"><?php echo date('d/m/Y', strtotime($guiaData['data_agendamento'])); ?></span>
+                </div>
+                <?php if (!empty($guiaData['horario_agendamento'])): ?>
+                    <div class="campo">
+                        <span class="label">Horário</span>
+                        <span class="valor"><?php echo substr($guiaData['horario_agendamento'], 0, 5); ?></span>
+                    </div>
+                <?php endif; ?>
+            </div>
         </div>
-        
-        <?php if ($guiaData['status'] != 'agendado'): ?>
-        <div class="status <?php echo $guiaData['status']; ?>">
-            <?php if ($guiaData['status'] == 'realizado'): ?>
-                PROCEDIMENTO REALIZADO
-            <?php elseif ($guiaData['status'] == 'cancelado'): ?>
-                PROCEDIMENTO CANCELADO
-            <?php endif; ?>
+
+        <!-- Seção Procedimento e Clínica -->
+        <div class="secao-box">
+            <div class="titulo-secao">Solicitação</div>
+
+            <?php foreach ($guiaData['procedimentos'] as $index => $proc): ?>
+                <?php if ($index > 0)
+                    echo '<hr>'; ?>
+                <div class="grid-2">
+                    <div>
+                        <div class="campo">
+                            <span class="label">Procedimento</span>
+                            <span
+                                class="valor proc-destaque"><?php echo htmlspecialchars($proc['procedimento'] ?? 'N/A'); ?></span>
+                        </div>
+                        <div class="campo">
+                            <span class="label">Especialidade</span>
+                            <span class="valor"><?php echo htmlspecialchars($proc['especialidade_nome'] ?? 'N/A'); ?></span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="campo">
+                            <span class="label">Clínica Executante</span>
+                            <span
+                                class="valor destaque-clinica"><?php echo htmlspecialchars($proc['clinica_nome'] ?? 'A DEFINIR'); ?></span>
+                        </div>
+                        <?php if (!empty($proc['endereco'])): ?>
+                            <div class="campo">
+                                <span class="label">Endereço</span>
+                                <span class="valor"><?php echo htmlspecialchars($proc['endereco']); ?></span>
+                            </div>
+                        <?php endif; ?>
+                        <?php if (!empty($proc['telefone'])): ?>
+                            <div class="campo">
+                                <span class="label">Telefone</span>
+                                <span class="valor"><?php echo htmlspecialchars($proc['telefone']); ?></span>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         </div>
+
+        <!-- Instruções e Observações -->
+        <?php if (!empty($guiaData['observacoes']) || !empty($guiaData['procedimento']['clinica_observacoes'])): ?>
+            <div class="secao-box">
+                <div class="titulo-secao">Observações</div>
+                <?php if (!empty($guiaData['observacoes'])): ?>
+                    <div class="campo">
+                        <span class="label">Instruções do Médico:</span>
+                        <p style="margin: 2px 0; font-size: 8pt;">
+                            <?php echo nl2br(htmlspecialchars($guiaData['observacoes'])); ?>
+                        </p>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (!empty($guiaData['procedimento']['clinica_observacoes'])): ?>
+                    <div class="campo" style="margin-top: 6px;">
+                        <span class="label">Avisos da Clínica:</span>
+                        <p style="margin: 2px 0; font-size: 8pt;">
+                            <?php echo htmlspecialchars($guiaData['procedimento']['clinica_observacoes']); ?>
+                        </p>
+                    </div>
+                <?php endif; ?>
+            </div>
         <?php endif; ?>
-        
-        <div class="secao">
-            <h3>Paciente</h3>
-            <div class="campo"><strong>Nome:</strong> <?php echo htmlspecialchars($guiaData['paciente_nome']); ?></div>
-            <?php if (!empty($guiaData['paciente_documento'])): ?>
-            <div class="campo"><strong>Documento:</strong> <?php echo htmlspecialchars($guiaData['paciente_documento']); ?></div>
-            <?php endif; ?>
-        </div>
-        
-        <div class="secao">
-            <h3>Parceiro</h3>
-            <div class="campo"><strong><?php echo htmlspecialchars($guiaData['procedimento']['clinica_nome'] ?? 'CLÍNICA NÃO DEFINIDA'); ?></strong></div>
-            <?php if (!empty($guiaData['procedimento']['endereco'])): ?>
-            <div class="campo"><strong>Endereço:</strong> <?php echo htmlspecialchars($guiaData['procedimento']['endereco']); ?></div>
-            <?php endif; ?>
-            <?php if (!empty($guiaData['procedimento']['telefone'])): ?>
-            <div class="campo"><strong>Telefone:</strong> <?php echo htmlspecialchars($guiaData['procedimento']['telefone']); ?></div>
-            <?php endif; ?>
-        </div>
-        
-        <div class="secao">
-            <h3>Procedimento</h3>
-            <div class="campo"><strong><?php echo htmlspecialchars($guiaData['procedimento']['procedimento']); ?></strong></div>
-            <div class="campo"><strong>Especialidade:</strong> <?php echo htmlspecialchars($guiaData['procedimento']['especialidade_nome']); ?></div>
-            <div class="campo"><strong>Valor:</strong> R$ <?php echo number_format($guiaData['procedimento']['valor'], 2, ',', '.'); ?></div>
-        </div>
-        
-        <div class="secao">
-            <h3>Agendamento</h3>
-            <div class="campo"><strong>Data:</strong> <?php echo date('d/m/Y', strtotime($guiaData['data_agendamento'])); ?></div>
-            <?php if (!empty($guiaData['horario_agendamento'])): ?>
-            <div class="campo"><strong>Horário:</strong> <?php echo $guiaData['horario_agendamento']; ?></div>
-            <?php endif; ?>
-        </div>
-        
-        <?php if (!empty($guiaData['observacoes'])): ?>
-        <div class="secao">
-            <h3>Instruções/Observações</h3>
-            <div class="campo"><?php echo nl2br(htmlspecialchars($guiaData['observacoes'])); ?></div>
-        </div>
-        <?php endif; ?>
-        
-        <div class="assinatura">
-            <div class="linha-assinatura"></div>
-            <div>Assinatura do Responsável</div>
-        </div>
-        
+
+        <!-- Aviso Importante -->
         <div class="instrucoes">
-            <p><strong>Atenção:</strong> É necessário apresentar esta guia no dia do atendimento. Qualquer dúvida, entre em contato com a clínica parceira informada neste documento.</p>
-            <?php if (!empty($guiaData['procedimento']['clinica_observacoes'])): ?>
-            <p><strong>Observações da Clínica:</strong> <?php echo htmlspecialchars($guiaData['procedimento']['clinica_observacoes']); ?></p>
-            <?php endif; ?>
+            <strong>⚠️ Atenção:</strong> Apresente este documento e documento oficial com foto no dia do atendimento. Em
+            caso de desistência, comunicar com 24h de antecedência.
         </div>
-        
-        <div class="data-emissao">
-            <div>Emissão: <?php echo $guiaData['data_emissao']; ?></div>
+
+        <!-- Assinatura -->
+        <div class="assinatura-area">
+            <div class="assinatura-box">
+                Assinatura do Profissional
+                <br>
+                <small>(Carimbo ou Assinatura Digital)</small>
+            </div>
+        </div>
+
+        <div class="rodape">
+            Sistema HSRB SISTEMAS © <?php echo date('Y'); ?>
         </div>
     </div>
-    
+
     <div class="no-print">
-        <button onclick="window.print();" class="btn btn-primary">Imprimir Guia</button>
-        <button onclick="window.history.back();" class="btn btn-secondary">Voltar</button>
+        <button onclick="window.print();" class="btn btn-primary">🖨️ Imprimir</button>
+        <button onclick="window.history.back();" class="btn btn-secondary">↩️ Voltar</button>
+        <?php if (isset($guiaData['id'])): ?>
+            <a href="index.php?module=guias&action=view&id=<?php echo $guiaData['id']; ?>" class="btn btn-info">📋
+                Detalhes</a>
+        <?php endif; ?>
     </div>
 </body>
+
 </html>

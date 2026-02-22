@@ -51,6 +51,19 @@ if (isset($paciente['ultima_atualizacao']) && !empty($paciente['ultima_atualizac
     $paciente['ultima_atualizacao_formatada'] = $pacienteModel->formatDateForDisplay($paciente['ultima_atualizacao'], true);
 }
 
+// Inclui o arquivo de autenticação para verificação de permissões
+require_once 'auth.php';
+
+// Permite se tiver permissão padrão OU permissão da Minha Clínica
+if (!hasPermission('appointment_view') && !hasPermission('minha_clinica_pacientes')) {
+    verificar_acesso('appointment_view');
+}
+
+// Inclui o modelo AgendamentoModel
+require_once MODULES_PATH . '/agendamentos/models/AgendamentoModel.php';
+$agendamentoModel = new AgendamentoModel();
+$historicoAgendamentos = $agendamentoModel->getHistoricoPaciente($id);
+
 // Define o status como texto
 $paciente['status_texto'] = $paciente['status'] == 1 ? 'Ativo' : 'Inativo';
 

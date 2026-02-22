@@ -1,6 +1,6 @@
 <?php
 require_once 'auth.php';
-verificar_acesso(['admin']);
+verificar_acesso('user_manage');
 
 
 $usuarioModel = new UsuarioModel();
@@ -20,6 +20,13 @@ if (!$usuario) {
     header('Location: index.php?modulo=usuarios&action=listar');
     exit;
 }
+
+// Fetch data for dropdowns
+$db = Database::getInstance();
+$perfis = $db->fetchAll("SELECT * FROM perfis WHERE status=1 ORDER BY nome");
+$clinicas = $db->fetchAll("SELECT * FROM clinicas_parceiras WHERE status=1 ORDER BY nome");
+// Exclude self from supervisors list
+$supervisores = $db->fetchAll("SELECT * FROM usuarios WHERE status=1 AND id != ? ORDER BY nome", [$id]);
 
 require_once USUARIOS_TEMPLATE_PATH . 'formulario.php';
 ?>

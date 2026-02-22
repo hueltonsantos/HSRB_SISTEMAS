@@ -23,20 +23,27 @@
         <div class="card-body">
             <div class="row mb-4">
                 <div class="col-md-6">
-                    <h5>Procedimento</h5>
-                    <p><strong><?php echo htmlspecialchars($procedimento['procedimento']); ?></strong></p>
-                    <p><strong>Valor:</strong> R$ <?php echo number_format($procedimento['valor'], 2, ',', '.'); ?></p>
-                    <p><strong>Especialidade:</strong> <?php echo htmlspecialchars($procedimento['especialidade_nome']); ?></p>
+                    <h5>Procedimento(s)</h5>
+                    <?php foreach($procedimentosAgendamento as $proc): ?>
+                        <div class="mb-2 pb-2 border-bottom">
+                            <p class="mb-1"><strong><?php echo htmlspecialchars($proc['procedimento']); ?></strong></p>
+                            <!-- Preço ocultado no encaminhamento -->
+                            <p class="mb-0"><strong>Especialidade:</strong> <?php echo htmlspecialchars($proc['especialidade_nome']); ?></p>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
                 <div class="col-md-6">
                     <h5>Clínica</h5>
-                    <p><strong><?php echo htmlspecialchars($procedimento['clinica_nome'] ?? 'Não definida'); ?></strong></p>
-                    <p><strong>Endereço:</strong> <?php echo htmlspecialchars($procedimento['endereco'] ?? 'Não definido'); ?></p>
-                    <p><strong>Telefone:</strong> <?php echo htmlspecialchars($procedimento['telefone'] ?? 'Não definido'); ?></p>
+                    <p><strong><?php echo htmlspecialchars($clinicaData['clinica_nome'] ?? 'Não definida'); ?></strong></p>
+                    <p><strong>Endereço:</strong> <?php echo htmlspecialchars($clinicaData['endereco'] ?? 'Não definido'); ?></p>
+                    <p><strong>Telefone:</strong> <?php echo htmlspecialchars($clinicaData['telefone'] ?? 'Não definido'); ?></p>
                 </div>
             </div>
             
             <form action="index.php?module=especialidades&action=gerar_guia&procedimento_id=<?php echo $procedimentoId; ?>" method="post">
+                <?php if ($agendamentoId): ?>
+                <input type="hidden" name="agendamento_id" value="<?php echo $agendamentoId; ?>">
+                <?php endif; ?>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">

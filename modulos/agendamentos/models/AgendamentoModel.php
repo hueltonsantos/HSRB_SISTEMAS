@@ -25,9 +25,9 @@ class AgendamentoModel extends Model
         $errors = [];
 
         // No método validate(), adicione:
-        if (empty($data['procedimento_id'])) {
-            $errors['procedimento_id'] = 'O procedimento é obrigatório';
-        }
+        // if (empty($data['procedimento_id'])) {
+        //     $errors['procedimento_id'] = 'O procedimento é obrigatório';
+        // }
         // Validações básicas
         if (empty($data['paciente_id'])) {
             $errors['paciente_id'] = 'O paciente é obrigatório';
@@ -101,6 +101,43 @@ class AgendamentoModel extends Model
         }
 
         return $data;
+    }
+
+    /**
+     * Salva os procedimentos do agendamento
+     * @param int $agendamentoId
+     * @param array $procedimentosIds
+     * @return bool
+     */
+    public function saveAgendamentoProcedimentos($agendamentoId, $procedimentosIds) {
+        if (empty($procedimentosIds)) return false;
+
+        try {
+            // Limpa procedimentos anteriores (para edição)
+            $this->db->delete('agendamento_procedimentos', 'agendamento_id = ?', [$agendamentoId]);
+
+            // Busca valores atuais para garantir integridade
+            $sqlValor = "SELECT id, valor_paciente FROM valores_procedimentos WHERE id = ?";
+            $stmtValor = $this->db->getConnection()->prepare($sqlValor);
+
+            foreach ($procedimentosIds as $procId) {
+                // Busca valor
+                $stmtValor->execute([$procId]);
+                $valorData = $stmtValor->fetch(PDO::FETCH_ASSOC);
+                $valor = $valorData ? $valorData['valor_paciente'] : 0;
+
+                // Insere
+                $this->db->insert('agendamento_procedimentos', [
+                    'agendamento_id' => $agendamentoId,
+                    'procedimento_id' => $procId,
+                    'valor' => $valor
+                ]);
+            }
+            return true;
+        } catch (Exception $e) {
+            // Log error
+            return false;
+        }
     }
 
     // /**
@@ -744,5 +781,35 @@ class AgendamentoModel extends Model
         }
 
         return false;
+    }
+    /**
+     * Busca o histórico financeiro e de procedimentos do paciente
+     * @param int $pacienteId
+     * @return array
+     */
+    public function getHistoricoPaciente($pacienteId)
+    {
+        $sql = "
+            SELECT 
+                a.id,
+                a.data_consulta,
+                a.hora_consulta,
+                a.valor_total,
+                a.forma_pagamento,
+                a.status_agendamento as status,
+                c.nome as clinica_nome,
+                e.nome as especialidade_nome,
+                GROUP_CONCAT(vp.procedimento SEPARATOR ', ') as procedimentos_nomes
+            FROM {$this->table} a
+            LEFT JOIN clinicas_parceiras c ON a.clinica_id = c.id
+            LEFT JOIN especialidades e ON a.especialidade_id = e.id
+            LEFT JOIN agendamento_procedimentos ap ON a.id = ap.agendamento_id
+            LEFT JOIN valores_procedimentos vp ON ap.procedimento_id = vp.id
+            WHERE a.paciente_id = ?
+            GROUP BY a.id
+            ORDER BY a.data_consulta DESC, a.hora_consulta DESC
+        ";
+
+        return $this->db->fetchAll($sql, [$pacienteId]);
     }
 }

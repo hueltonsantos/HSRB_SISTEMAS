@@ -20,16 +20,15 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 $guiaId = (int) $_GET['id'];
 
 try {
-    // Conecta ao banco de dados
-    $db = new PDO('mysql:host=localhost;dbname=clinica_encaminhamento', 'root', '');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // Conecta ao banco de dados usando a classe Database do sistema
+    $db = Database::getInstance()->getConnection();
 
 
 
     // Modifique a consulta SQL para:
     $stmt = $db->prepare("
     SELECT g.*, p.nome as paciente_nome, p.cpf as paciente_documento,
-           vp.procedimento as procedimento_nome, vp.valor as procedimento_valor,
+           vp.procedimento as procedimento_nome, vp.valor_paciente as procedimento_valor,
            e.nome as especialidade_nome, cp.nome as clinica_nome,
            cp.endereco, cp.telefone
     FROM guias_encaminhamento g

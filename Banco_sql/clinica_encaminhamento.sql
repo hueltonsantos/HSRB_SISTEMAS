@@ -306,11 +306,11 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Extraindo dados da tabela `usuarios`
+-- Dados da tabela `usuarios`
+-- Comentado: o administrador é criado pelo Setup Wizard (setup.php) na primeira execução
 --
-
-INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `nivel_acesso`, `ultimo_acesso`, `status`, `data_cadastro`) VALUES
-(5, 'Administrador', 'hueltonti@gmail.com', '$2y$10$c/nR/6KjVlTk1WBAl16oTOmbGBurOGcUAOHwZT9yG3YfthS/5AAua', 'admin', '2025-07-13 17:33:18', 1, '2025-05-08 23:34:39');
+-- INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `nivel_acesso`, `ultimo_acesso`, `status`, `data_cadastro`) VALUES
+-- (5, 'Administrador', 'hueltonti@gmail.com', '$2y$10$c/nR/6KjVlTk1WBAl16oTOmbGBurOGcUAOHwZT9yG3YfthS/5AAua', 'admin', '2025-07-13 17:33:18', 1, '2025-05-08 23:34:39');
 
 -- --------------------------------------------------------
 

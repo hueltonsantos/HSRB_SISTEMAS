@@ -1,5 +1,7 @@
 <?php
 // Arquivo de inclusão do módulo de configurações
+require_once 'auth.php';
+verificar_acesso('config_view'); // Apenas usuários com permissão podem ver configurações
 define('CONFIGURACOES_PATH', __DIR__);
 define('CONFIGURACOES_TEMPLATE_PATH', CONFIGURACOES_PATH . '/templates/');
 define('CONFIGURACOES_CONTROLLER_PATH', CONFIGURACOES_PATH . '/controllers/');
@@ -9,13 +11,14 @@ define('CONFIGURACOES_MODEL_PATH', CONFIGURACOES_PATH . '/models/');
 require_once CONFIGURACOES_MODEL_PATH . 'ConfiguracaoModel.php';
 
 // Função de processamento de ações do módulo
-function configuracoesProcessAction($action) {
+function configuracoesProcessAction($action)
+{
     // Buffer de saída para capturar o conteúdo
     ob_start();
-    
+
     // Define o arquivo do controlador
     $controller_file = CONFIGURACOES_CONTROLLER_PATH . $action . '.php';
-    
+
     // Verifica se o arquivo existe
     if (file_exists($controller_file)) {
         require_once $controller_file;
@@ -23,7 +26,7 @@ function configuracoesProcessAction($action) {
         // Se o controller não existir, carrega o index como padrão
         require_once CONFIGURACOES_CONTROLLER_PATH . 'index.php';
     }
-    
+
     // Retorna o conteúdo capturado
     return ob_get_clean();
 }

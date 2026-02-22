@@ -16,36 +16,30 @@ $response = [
 ];
 
 // Verifica se foi informado o ID da clínica
-if (!isset($_GET['clinica_id']) || empty($_GET['clinica_id'])) {
+if (!isset($_REQUEST['clinica_id']) || empty($_REQUEST['clinica_id'])) {
     $response['message'] = 'ID da clínica não informado';
     echo json_encode($response);
     exit;
 }
 
 // Obtém o ID da clínica
-$clinicaId = (int) $_GET['clinica_id'];
-
-// Configurações do banco de dados (ajuste conforme suas configurações)
-$host = 'localhost';
-$db = 'clinica_encaminhamento'; // Use o nome exato do seu banco
-$user = 'root';                  // Ajuste conforme seu usuário
-$pass = '';                      // Ajuste conforme sua senha
+$clinicaId = (int) $_REQUEST['clinica_id'];
 
 try {
-    // Conexão direta com o banco
-    $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // Carrega a classe de conexão e as configurações se não estiverem carregadas
+    require_once 'config.php';
+    require_once 'Database.php';
     
-    // Consulta direta para buscar especialidades
+    $db = Database::getInstance();
+    
+    // Consulta para buscar especialidades
     $sql = "SELECT e.id, e.nome 
             FROM especialidades e
             INNER JOIN especialidades_clinicas ec ON e.id = ec.especialidade_id
             WHERE ec.clinica_id = ? AND e.status = 1
             ORDER BY e.nome ASC";
     
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([$clinicaId]);
-    $especialidades = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $especialidades = $db->fetchAll($sql, [$clinicaId]);
     
     if (empty($especialidades)) {
         $response = [

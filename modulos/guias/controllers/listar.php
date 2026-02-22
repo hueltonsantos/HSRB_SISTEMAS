@@ -1,4 +1,6 @@
 <?php
+require_once 'auth.php';
+verificar_acesso('appointment_view');
 
 /**
  * Controlador para listar guias de encaminhamento
@@ -25,9 +27,10 @@ if (isset($_GET['data_fim']) && !empty($_GET['data_fim'])) {
 }
 
 try {
-    // Conecta ao banco de dados
-    $db = new PDO('mysql:host=localhost;dbname=clinica_encaminhamento', 'root', '');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    require_once 'config.php';
+    require_once 'Database.php';
+    
+    $db = Database::getInstance()->getConnection();
 
 
 

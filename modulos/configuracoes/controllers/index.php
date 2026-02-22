@@ -4,12 +4,31 @@ $configuracaoModel = new ConfiguracaoModel();
 $configuracoes = $configuracaoModel->listar();
 
 // Agrupa as configurações por tipo
-$configPorTipo = [];
+// Agrupa as configurações para o template
+$configs_geral = [];
+$configs_horarios = [];
+$configs_numericos = [];
+$configs_opcoes = [];
+
 foreach ($configuracoes as $config) {
-    if (!isset($configPorTipo[$config['tipo']])) {
-        $configPorTipo[$config['tipo']] = [];
+    switch ($config['tipo']) {
+        case 'texto':
+        case 'arquivo':
+            $configs_geral[] = $config;
+            break;
+        case 'hora':
+            $configs_horarios[] = $config;
+            break;
+        case 'numero':
+            $configs_numericos[] = $config;
+            break;
+        case 'booleano':
+        case 'lista':
+            $configs_opcoes[] = $config;
+            break;
+        default:
+            $configs_geral[] = $config;
     }
-    $configPorTipo[$config['tipo']][] = $config;
 }
 
 require_once CONFIGURACOES_TEMPLATE_PATH . 'index.php';

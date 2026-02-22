@@ -29,10 +29,9 @@ if (isset($_GET['especialidade_id'])) {
 }
 
 try {
-    // Conecta ao banco de dados
-    $db = new PDO('mysql:host=localhost;dbname=clinica_encaminhamento', 'root', '');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
+    // Usa o Database singleton (suporta Docker e localhost)
+    $db = Database::getInstance()->getConnection();
+
     // Nome correto da tabela obtido da estrutura do banco de dados
     $tableName = 'valores_procedimentos';
     

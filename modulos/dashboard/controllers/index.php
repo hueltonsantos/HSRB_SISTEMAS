@@ -1,6 +1,6 @@
 <?php
 require_once 'auth.php';
-verificar_acesso(['admin']);
+// Dashboard acessível a qualquer usuário autenticado (auth.php já garante login)
 /**
  * Controlador principal do dashboard
  */

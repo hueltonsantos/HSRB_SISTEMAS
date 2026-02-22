@@ -5,10 +5,10 @@
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">Detalhes do Usuário</h6>
             <div>
-                <a href="index.php?modulo=usuarios&action=editar&id=<?php echo $usuario['id']; ?>" class="btn btn-warning btn-sm">
+                <a href="index.php?module=usuarios&action=editar&id=<?php echo $usuario['id']; ?>" class="btn btn-warning btn-sm">
                     <i class="fas fa-edit"></i> Editar
                 </a>
-                <a href="index.php?modulo=usuarios&action=listar" class="btn btn-secondary btn-sm">
+                <a href="index.php?module=usuarios&action=listar" class="btn btn-secondary btn-sm">
                     <i class="fas fa-arrow-left"></i> Voltar
                 </a>
             </div>
@@ -21,23 +21,9 @@
                     <p><strong>E-mail:</strong> <?php echo $usuario['email']; ?></p>
                 </div>
                 <div class="col-md-6">
-                    <p><strong>Nível de Acesso:</strong> 
-                        <?php 
-                        switch ($usuario['nivel_acesso']) {
-                            case 'admin':
-                                echo 'Administrador';
-                                break;
-                            case 'recepcionista':
-                                echo 'Recepcionista';
-                                break;
-                            case 'medico':
-                                echo 'Médico';
-                                break;
-                            default:
-                                echo $usuario['nivel_acesso'];
-                        }
-                        ?>
-                    </p>
+                    <p><strong>Perfil:</strong> <?php echo htmlspecialchars($usuario['perfil_nome']); ?></p>
+                    <p><strong>Clínica:</strong> <?php echo $usuario['clinica_nome'] ? htmlspecialchars($usuario['clinica_nome']) : 'N/A'; ?></p>
+                    <p><strong>Supervisor:</strong> <?php echo $usuario['supervisor_nome'] ? htmlspecialchars($usuario['supervisor_nome']) : 'N/A'; ?></p>
                     <p><strong>Status:</strong> 
                         <?php if ($usuario['status'] == 1): ?>
                             <span class="badge badge-success">Ativo</span>

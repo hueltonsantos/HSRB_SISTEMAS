@@ -93,31 +93,32 @@ include AGENDAMENTOS_TEMPLATE_PATH . '/visualizar.php';
 // Modal de Confirmação para Gerar Guia
 
 if (isset($showGuiaModal) && $showGuiaModal): ?>
-<div class="modal fade" id="gerarGuiaModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Gerar Guia de Encaminhamento</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Deseja gerar uma guia de encaminhamento para este agendamento?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
-                <a href="index.php?module=especialidades&action=gerar_guia&procedimento_id=<?php echo $guiaParams['procedimento_id']; ?>&paciente_id=<?php echo $guiaParams['paciente_id']; ?>&data_agendamento=<?php echo $guiaParams['data_agendamento']; ?>&horario_agendamento=<?php echo $guiaParams['horario_agendamento']; ?>" class="btn btn-primary">
-                    Sim, gerar guia
-                </a>
+    <div class="modal fade" id="gerarGuiaModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Gerar Guia de Encaminhamento</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Deseja gerar uma guia de encaminhamento para este agendamento?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                    <a href="index.php?module=especialidades&action=gerar_guia&procedimento_id=<?php echo $guiaParams['procedimento_id']; ?>&paciente_id=<?php echo $guiaParams['paciente_id']; ?>&data_agendamento=<?php echo $guiaParams['data_agendamento']; ?>&horario_agendamento=<?php echo $guiaParams['horario_agendamento']; ?>&agendamento_id=<?php echo $id; ?>"
+                        class="btn btn-primary">
+                        Sim, gerar guia
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script>
-    $(document).ready(function() {
-        $('#gerarGuiaModal').modal('show');
-    });
-</script>
+    <script>
+        $(document).ready(function () {
+            $('#gerarGuiaModal').modal('show');
+        });
+    </script>
 <?php endif; ?>

@@ -1,5 +1,9 @@
 <?php
+verificar_acesso('user_manage');
+
 $usuarioModel = new UsuarioModel();
+$perfilModel = new PerfilModel();
+$perfis = $perfilModel->getAll(); // Carrega todos os perfis do banco
 
 // Filtros
 $filtros = [];

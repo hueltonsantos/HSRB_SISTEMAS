@@ -41,21 +41,45 @@
                 </div>
                 
                 <div class="row">
-                    <!-- Valor -->
-                    <div class="col-md-6 form-group">
-                        <label for="valor">Valor (R$)</label>
-                        <input type="text" class="form-control <?php echo isset($formErrors['valor']) ? 'is-invalid' : ''; ?>" 
-                            id="valor" name="valor" value="<?php echo isset($formData['valor']) ? htmlspecialchars($formData['valor']) : ''; ?>" 
+                    <!-- Valor Paciente -->
+                    <div class="col-sm-6 col-md-4 form-group">
+                        <label for="valor_paciente">Valor Paciente (R$)</label>
+                        <input type="text" class="form-control <?php echo isset($formErrors['valor_paciente']) ? 'is-invalid' : ''; ?>" 
+                            id="valor_paciente" name="valor_paciente" value="<?php echo isset($formData['valor_paciente']) ? htmlspecialchars($formData['valor_paciente']) : ''; ?>" 
                             required>
-                        <?php if (isset($formErrors['valor'])): ?>
+                        <small class="form-text text-muted">Valor cobrado do paciente.</small>
+                        <?php if (isset($formErrors['valor_paciente'])): ?>
                             <div class="invalid-feedback">
-                                <?php echo $formErrors['valor']; ?>
+                                <?php echo $formErrors['valor_paciente']; ?>
                             </div>
                         <?php endif; ?>
                     </div>
-                    
+
+                    <!-- Valor Clínica (Repasse/Custo) -->
+                    <div class="col-sm-6 col-md-4 form-group">
+                        <label for="valor_repasse">Valor Clínica (Custo)</label>
+                        <input type="text" class="form-control <?php echo isset($formErrors['valor_repasse']) ? 'is-invalid' : ''; ?>" 
+                            id="valor_repasse" name="valor_repasse" value="<?php echo isset($formData['valor_repasse']) ? htmlspecialchars($formData['valor_repasse']) : ''; ?>" 
+                            required>
+                        <small class="form-text text-muted">Custo para a clínica (ex: repasse ao médico).</small>
+                        <?php if (isset($formErrors['valor_repasse'])): ?>
+                            <div class="invalid-feedback">
+                                <?php echo $formErrors['valor_repasse']; ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+
+                    <!-- Lucro Previsto (Calculado) -->
+                    <div class="col-sm-12 col-md-4 form-group">
+                        <label for="lucro_previsto">Lucro Previsto</label>
+                        <input type="text" class="form-control" id="lucro_previsto" readonly>
+                        <small class="form-text text-muted">Cálculo automático: Paciente - Custo.</small>
+                    </div>
+                </div>
+
+                <div class="row">
                     <!-- Status -->
-                    <div class="col-md-6 form-group">
+                    <div class="col-md-12 form-group">
                         <label for="status">Status</label>
                         <div class="custom-control custom-switch mt-2">
                             <input type="checkbox" class="custom-control-input" id="status" name="status" value="1" 
@@ -81,8 +105,40 @@
 
 <script>
 $(document).ready(function(){
-    // Máscara para campo de valor
-    $('#valor').mask('#.##0,00', {reverse: true});
+    // Máscara para campos de valor
+    $('#valor_paciente, #valor_repasse').mask('#.##0,00', {reverse: true});
+    
+    // Calcula lucro previste
+    function calcularLucro() {
+        var valorPaciente = $('#valor_paciente').val().replace(/\./g, '').replace(',', '.');
+        var valorRepasse = $('#valor_repasse').val().replace(/\./g, '').replace(',', '.');
+        
+        valorPaciente = parseFloat(valorPaciente) || 0;
+        valorRepasse = parseFloat(valorRepasse) || 0;
+        
+        var lucro = valorPaciente - valorRepasse;
+        
+        // Formata para exibição (R$)
+        var lucroFormatado = lucro.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        $('#lucro_previsto').val('R$ ' + lucroFormatado);
+        
+        // Colore conforme o lucro
+        if (lucro > 0) {
+            $('#lucro_previsto').removeClass('text-danger').addClass('text-success font-weight-bold');
+        } else if (lucro < 0) {
+            $('#lucro_previsto').removeClass('text-success').addClass('text-danger font-weight-bold');
+        } else {
+            $('#lucro_previsto').removeClass('text-success text-danger').addClass('font-weight-bold');
+        }
+    }
+    
+    // Eventos para cálculo
+    $('#valor_paciente, #valor_repasse').on('keyup change', function() {
+        calcularLucro();
+    });
+    
+    // Calcula ao carregar
+    calcularLucro();
     
     // Validação do formulário
     $('#procedimentoForm').submit(function(e) {
@@ -97,13 +153,22 @@ $(document).ready(function(){
             $('#procedimento').removeClass('is-invalid');
         }
         
-        // Validar valor (não pode estar vazio e deve ser um número válido)
-        var valor = $('#valor').val().trim();
-        if (valor === '') {
-            $('#valor').addClass('is-invalid');
+        // Validar valor paciente
+        var valorPaciente = $('#valor_paciente').val().trim();
+        if (valorPaciente === '') {
+            $('#valor_paciente').addClass('is-invalid');
             valid = false;
         } else {
-            $('#valor').removeClass('is-invalid');
+            $('#valor_paciente').removeClass('is-invalid');
+        }
+
+        // Validar valor repasse
+        var valorRepasse = $('#valor_repasse').val().trim();
+        if (valorRepasse === '') {
+            $('#valor_repasse').addClass('is-invalid');
+            valid = false;
+        } else {
+            $('#valor_repasse').removeClass('is-invalid');
         }
         
         return valid;

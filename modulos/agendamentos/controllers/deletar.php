@@ -21,7 +21,7 @@ if (!isset($_POST['id']) || empty($_POST['id'])) {
         'tipo' => 'danger',
         'texto' => 'ID do agendamento não informado'
     ];
-    
+
     // Redireciona para a listagem
     header('Location: index.php?module=agendamentos&action=list');
     exit;
@@ -40,7 +40,7 @@ if (!$agendamento) {
         'tipo' => 'danger',
         'texto' => 'Agendamento não encontrado'
     ];
-    
+
     // Redireciona para a listagem
     header('Location: index.php?module=agendamentos&action=list');
     exit;
@@ -49,7 +49,7 @@ if (!$agendamento) {
 // Alternativa à exclusão física: marcar como cancelado
 if (isset($_POST['tipo_exclusao']) && $_POST['tipo_exclusao'] === 'cancelar') {
     $result = $agendamentoModel->atualizarStatus($id, 'cancelado');
-    
+
     if ($result) {
         $_SESSION['mensagem'] = [
             'tipo' => 'success',
@@ -65,7 +65,7 @@ if (isset($_POST['tipo_exclusao']) && $_POST['tipo_exclusao'] === 'cancelar') {
     // Exclusão física
     try {
         $result = $agendamentoModel->delete($id);
-        
+
         if ($result) {
             $_SESSION['mensagem'] = [
                 'tipo' => 'success',
@@ -75,6 +75,18 @@ if (isset($_POST['tipo_exclusao']) && $_POST['tipo_exclusao'] === 'cancelar') {
             $_SESSION['mensagem'] = [
                 'tipo' => 'warning',
                 'texto' => 'Nenhum registro foi afetado.'
+            ];
+        }
+    } catch (PDOException $e) {
+        if ($e->getCode() == '23000') {
+            $_SESSION['mensagem'] = [
+                'tipo' => 'danger',
+                'texto' => 'Não é possível excluir este agendamento pois existem registros financeiros (caixa/repasses) associados a ele. Tente cancelar o agendamento em vez de excluir.'
+            ];
+        } else {
+            $_SESSION['mensagem'] = [
+                'tipo' => 'danger',
+                'texto' => 'Erro ao excluir agendamento: ' . $e->getMessage()
             ];
         }
     } catch (Exception $e) {

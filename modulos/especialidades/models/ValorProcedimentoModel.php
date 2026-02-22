@@ -174,13 +174,14 @@ class ValorProcedimentoModel extends Model
     private function formatCurrencyToDecimal($value)
     {
         // Remove o símbolo de moeda e espaços
-        $value = trim(str_replace('R$', '', $value));
+        $value = trim(str_replace(['R$', ' '], '', $value));
 
-        // Substitui pontos por nada (remove separador de milhares)
-        $value = str_replace('.', '', $value);
-
-        // Substitui vírgula por ponto (decimal)
-        $value = str_replace(',', '.', $value);
+        // Se contém vírgula, está no formato BR (1.000,00)
+        if (strpos($value, ',') !== false) {
+            $value = str_replace('.', '', $value);
+            $value = str_replace(',', '.', $value);
+        }
+        // Se não tem vírgula, já está no formato decimal (345.00)
 
         return (float) $value;
     }

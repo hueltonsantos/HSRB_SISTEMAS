@@ -34,9 +34,9 @@ $linhas = explode("\n", $procedimentosText);
 
 // Prepara a conexão com o banco
 try {
-    $db = new PDO('mysql:host=localhost;dbname=clinica_encaminhamento', 'root', '');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
+    // Usa o Database singleton (suporta Docker e localhost)
+    $db = Database::getInstance()->getConnection();
+
     // Nome correto da tabela
     $tableName = 'valores_procedimentos';
     

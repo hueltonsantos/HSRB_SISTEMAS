@@ -13,7 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // Verifica se os dados necessários foram informados
 if (!isset($_POST['especialidade_id']) || empty($_POST['especialidade_id']) ||
     !isset($_POST['procedimento']) || empty($_POST['procedimento']) ||
-    !isset($_POST['valor'])) {
+    !isset($_POST['valor_paciente']) || 
+    !isset($_POST['valor_repasse'])) {
     
     $_SESSION['mensagem'] = [
         'tipo' => 'danger',
@@ -36,7 +37,8 @@ if (!isset($_POST['especialidade_id']) || empty($_POST['especialidade_id']) ||
 $data = [
     'especialidade_id' => (int) $_POST['especialidade_id'],
     'procedimento' => trim($_POST['procedimento']),
-    'valor' => str_replace(',', '.', $_POST['valor']),
+    'valor_paciente' => str_replace(',', '.', $_POST['valor_paciente']),
+    'valor_repasse' => str_replace(',', '.', $_POST['valor_repasse']),
     'status' => isset($_POST['status']) ? (int) $_POST['status'] : 1
 ];
 
@@ -46,10 +48,9 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
 }
 
 try {
-    // Conecta ao banco de dados
-    $db = new PDO('mysql:host=localhost;dbname=clinica_encaminhamento', 'root', '');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
+    // Usa o Database singleton (suporta Docker e localhost)
+    $db = Database::getInstance()->getConnection();
+
     // Nome correto da tabela
     $tableName = 'valores_procedimentos';
     
@@ -86,15 +87,15 @@ try {
     
     // Se for uma edição, atualiza o registro
     if (isset($data['id'])) {
-        $stmt = $db->prepare("UPDATE $tableName SET procedimento = ?, valor = ?, status = ? WHERE id = ?");
-        $stmt->execute([$data['procedimento'], $data['valor'], $data['status'], $data['id']]);
+        $stmt = $db->prepare("UPDATE $tableName SET procedimento = ?, valor_paciente = ?, valor_repasse = ?, status = ? WHERE id = ?");
+        $stmt->execute([$data['procedimento'], $data['valor_paciente'], $data['valor_repasse'], $data['status'], $data['id']]);
         
         $message = 'Procedimento atualizado com sucesso!';
     } 
     // Senão, insere um novo
     else {
-        $stmt = $db->prepare("INSERT INTO $tableName (especialidade_id, procedimento, valor, status) VALUES (?, ?, ?, ?)");
-        $stmt->execute([$data['especialidade_id'], $data['procedimento'], $data['valor'], $data['status']]);
+        $stmt = $db->prepare("INSERT INTO $tableName (especialidade_id, procedimento, valor_paciente, valor_repasse, status) VALUES (?, ?, ?, ?, ?)");
+        $stmt->execute([$data['especialidade_id'], $data['procedimento'], $data['valor_paciente'], $data['valor_repasse'], $data['status']]);
         
         $message = 'Procedimento adicionado com sucesso!';
     }

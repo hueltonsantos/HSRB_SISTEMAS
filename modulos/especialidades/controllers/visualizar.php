@@ -9,7 +9,7 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
         'tipo' => 'danger',
         'texto' => 'ID da especialidade não informado'
     ];
-    
+
     // Redireciona para a listagem
     header('Location: index.php?module=especialidades&action=list');
     exit;
@@ -31,7 +31,7 @@ if (!$especialidade) {
         'tipo' => 'danger',
         'texto' => 'Especialidade não encontrada'
     ];
-    
+
     // Redireciona para a listagem
     header('Location: index.php?module=especialidades&action=list');
     exit;
@@ -50,7 +50,9 @@ $procedimentos = $especialidadeModel->getValoresProcedimentos($id);
 
 // Formata os valores para exibição
 foreach ($procedimentos as &$procedimento) {
-    $procedimento['valor_formatado'] = $valorProcedimentoModel->formatDecimalToCurrency($procedimento['valor']);
+    // Usa valor_paciente como padrão, ou 0 se não existir
+    $valor = isset($procedimento['valor_paciente']) ? $procedimento['valor_paciente'] : 0;
+    $procedimento['valor_formatado'] = $valorProcedimentoModel->formatDecimalToCurrency($valor);
 }
 
 // Inclui o template de visualização

@@ -1,0 +1,29 @@
+# Impedir listagem de pastas
+Options -Indexes
+
+# Proteger arquivos sensíveis
+<FilesMatch "^\.|\.php$|config\.php|Database\.php|Model\.php">
+    # Note: excluding index.php and login.php would be hard here, 
+    # better to just block specific ones or use a more refined regex.
+</FilesMatch>
+
+# Bloquear acesso direto aos arquivos do sistema
+<Files config.php>
+    Order Allow,Deny
+    Deny from all
+</Files>
+<Files Database.php>
+    Order Allow,Deny
+    Deny from all
+</Files>
+<Files Model.php>
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Otimização básica
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access plus 1 month"
+    ExpiresByType text/html "access plus 0 seconds"
+</IfModule>

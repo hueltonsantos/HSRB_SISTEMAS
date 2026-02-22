@@ -3,6 +3,13 @@
  * Controlador para o formulário de novo paciente
  */
 
+require_once 'auth.php';
+
+// Permite se tiver permissão padrão OU (permissão de paciente E edição geral)
+if (!hasPermission('appointment_create') && !(hasPermission('minha_clinica_pacientes') && hasPermission('minha_clinica_editar'))) {
+    verificar_acesso('appointment_create');
+}
+
 // Verifica se há dados de formulário na sessão (em caso de erro)
 $formData = isset($_SESSION['form_data']) ? $_SESSION['form_data'] : [];
 $formErrors = isset($_SESSION['form_errors']) ? $_SESSION['form_errors'] : [];

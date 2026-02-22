@@ -16,7 +16,7 @@ if (!isset($_POST['id']) || empty($_POST['id'])) {
         'tipo' => 'danger',
         'texto' => 'ID do paciente não informado'
     ];
-    
+
     // Redireciona para a listagem
     header('Location: index.php?module=pacientes&action=list');
     exit;
@@ -41,7 +41,7 @@ try {
         $result = $pacienteModel->deactivate($id);
         $mensagem = 'Paciente desativado com sucesso!';
     }
-    
+
     if ($result) {
         $_SESSION['mensagem'] = [
             'tipo' => 'success',
@@ -54,9 +54,16 @@ try {
         ];
     }
 } catch (Exception $e) {
+    if ($e->getCode() == '23000' || strpos($e->getMessage(), 'Integrity constraint violation') !== false) {
+        $mensagemErro = 'Não é possível excluir este paciente pois existem registros vinculados a ele (agendamentos, evoluções, etc).';
+        $mensagemErro .= '<br>Para manter o histórico, recomendamos apenas <strong>inativar</strong> o cadastro.';
+    } else {
+        $mensagemErro = 'Erro ao excluir paciente: ' . $e->getMessage();
+    }
+
     $_SESSION['mensagem'] = [
         'tipo' => 'danger',
-        'texto' => 'Erro ao excluir paciente: ' . $e->getMessage()
+        'texto' => $mensagemErro
     ];
 }
 

@@ -1,8 +1,7 @@
 <?php
-require_once 'auth.php';
-verificar_acesso(['admin']);
 /**
  * Template para visualização/edição do perfil do usuário atual
+ * Qualquer usuário logado pode acessar seu próprio perfil
  */
 ?>
 <div class="container-fluid">
@@ -39,21 +38,7 @@ verificar_acesso(['admin']);
                         </div>
                         <h5 class="mt-3"><?php echo htmlspecialchars($usuario['nome']); ?></h5>
                         <p class="text-muted">
-                            <?php 
-                            switch ($usuario['tipo']) {
-                                case 'admin':
-                                    echo '<span class="badge badge-primary">Administrador</span>';
-                                    break;
-                                case 'medico':
-                                    echo '<span class="badge badge-success">Médico</span>';
-                                    break;
-                                case 'atendente':
-                                    echo '<span class="badge badge-info">Atendente</span>';
-                                    break;
-                                default:
-                                    echo '<span class="badge badge-secondary">'. ucfirst($usuario['tipo']) .'</span>';
-                            }
-                            ?>
+                            <span class="badge badge-primary"><?php echo isset($usuario['perfil_nome']) ? htmlspecialchars($usuario['perfil_nome']) : 'Usuário'; ?></span>
                         </p>
                     </div>
                     

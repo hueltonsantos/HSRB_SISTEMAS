@@ -24,7 +24,7 @@
                 
                 <div class="row">
                     <!-- Nome -->
-                    <div class="col-md-8 form-group">
+                    <div class="col-sm-12 col-md-8 form-group">
                         <label for="nome">Nome Completo</label>
                         <input type="text" class="form-control <?php echo isset($formErrors['nome']) ? 'is-invalid' : ''; ?>" 
                             id="nome" name="nome" value="<?php echo isset($formData['nome']) ? htmlspecialchars($formData['nome']) : ''; ?>" 
@@ -37,7 +37,7 @@
                     </div>
                     
                     <!-- Data de Nascimento -->
-                    <div class="col-md-4 form-group">
+                    <div class="col-sm-12 col-md-4 form-group">
                         <label for="data_nascimento">Data de Nascimento</label>
                         <input type="text" class="form-control <?php echo isset($formErrors['data_nascimento']) ? 'is-invalid' : ''; ?>" 
                             id="data_nascimento" name="data_nascimento" 
@@ -53,7 +53,7 @@
                 
                 <div class="row">
                     <!-- CPF -->
-                    <div class="col-md-4 form-group">
+                    <div class="col-sm-6 col-md-4 form-group">
                         <label for="cpf">CPF</label>
                         <input type="text" class="form-control <?php echo isset($formErrors['cpf']) ? 'is-invalid' : ''; ?>" 
                             id="cpf" name="cpf" value="<?php echo isset($formData['cpf']) ? htmlspecialchars($formData['cpf']) : ''; ?>" 
@@ -66,7 +66,7 @@
                     </div>
                     
                     <!-- RG -->
-                    <div class="col-md-4 form-group">
+                    <div class="col-sm-6 col-md-4 form-group">
                         <label for="rg">RG</label>
                         <input type="text" class="form-control <?php echo isset($formErrors['rg']) ? 'is-invalid' : ''; ?>" 
                             id="rg" name="rg" value="<?php echo isset($formData['rg']) ? htmlspecialchars($formData['rg']) : ''; ?>">
@@ -78,7 +78,7 @@
                     </div>
                     
                     <!-- Sexo -->
-                    <div class="col-md-4 form-group">
+                    <div class="col-sm-12 col-md-4 form-group">
                         <label for="sexo">Sexo</label>
                         <select class="form-control <?php echo isset($formErrors['sexo']) ? 'is-invalid' : ''; ?>" 
                             id="sexo" name="sexo" required>
@@ -99,7 +99,7 @@
                 
                 <div class="row">
                     <!-- CEP -->
-                    <div class="col-md-3 form-group">
+                    <div class="col-sm-6 col-md-3 form-group">
                         <label for="cep">CEP</label>
                         <input type="text" class="form-control <?php echo isset($formErrors['cep']) ? 'is-invalid' : ''; ?>" 
                             id="cep" name="cep" value="<?php echo isset($formData['cep']) ? htmlspecialchars($formData['cep']) : ''; ?>">
@@ -111,7 +111,7 @@
                     </div>
                     
                     <!-- Endereço -->
-                    <div class="col-md-6 form-group">
+                    <div class="col-sm-12 col-md-6 form-group">
                         <label for="endereco">Endereço</label>
                         <input type="text" class="form-control <?php echo isset($formErrors['endereco']) ? 'is-invalid' : ''; ?>" 
                             id="endereco" name="endereco" value="<?php echo isset($formData['endereco']) ? htmlspecialchars($formData['endereco']) : ''; ?>">
@@ -123,7 +123,7 @@
                     </div>
                     
                     <!-- Número -->
-                    <div class="col-md-3 form-group">
+                    <div class="col-sm-6 col-md-3 form-group">
                         <label for="numero">Número</label>
                         <input type="text" class="form-control <?php echo isset($formErrors['numero']) ? 'is-invalid' : ''; ?>" 
                             id="numero" name="numero" value="<?php echo isset($formData['numero']) ? htmlspecialchars($formData['numero']) : ''; ?>">
@@ -137,7 +137,7 @@
                 
                 <div class="row">
                     <!-- Complemento -->
-                    <div class="col-md-4 form-group">
+                    <div class="col-sm-6 col-md-4 form-group">
                         <label for="complemento">Complemento</label>
                         <input type="text" class="form-control <?php echo isset($formErrors['complemento']) ? 'is-invalid' : ''; ?>" 
                             id="complemento" name="complemento" value="<?php echo isset($formData['complemento']) ? htmlspecialchars($formData['complemento']) : ''; ?>">
@@ -149,7 +149,7 @@
                     </div>
                     
                     <!-- Bairro -->
-                    <div class="col-md-4 form-group">
+                    <div class="col-sm-6 col-md-4 form-group">
                         <label for="bairro">Bairro</label>
                         <input type="text" class="form-control <?php echo isset($formErrors['bairro']) ? 'is-invalid' : ''; ?>" 
                             id="bairro" name="bairro" value="<?php echo isset($formData['bairro']) ? htmlspecialchars($formData['bairro']) : ''; ?>">
@@ -161,7 +161,7 @@
                     </div>
                     
                     <!-- Cidade -->
-                    <div class="col-md-3 form-group">
+                    <div class="col-sm-6 col-md-3 form-group">
                         <label for="cidade">Cidade</label>
                         <input type="text" class="form-control <?php echo isset($formErrors['cidade']) ? 'is-invalid' : ''; ?>" 
                             id="cidade" name="cidade" value="<?php echo isset($formData['cidade']) ? htmlspecialchars($formData['cidade']) : ''; ?>" 
@@ -174,7 +174,7 @@
                     </div>
                     
                     <!-- Estado -->
-                    <div class="col-md-1 form-group">
+                    <div class="col-sm-6 col-md-1 form-group">
                         <label for="estado">UF</label>
                         <select class="form-control <?php echo isset($formErrors['estado']) ? 'is-invalid' : ''; ?>" 
                             id="estado" name="estado" required>
@@ -197,7 +197,7 @@
                 
                 <div class="row">
                     <!-- Telefone Fixo -->
-                    <div class="col-md-4 form-group">
+                    <div class="col-sm-6 col-md-4 form-group">
                         <label for="telefone_fixo">Telefone Fixo</label>
                         <input type="text" class="form-control <?php echo isset($formErrors['telefone_fixo']) ? 'is-invalid' : ''; ?>" 
                             id="telefone_fixo" name="telefone_fixo" value="<?php echo isset($formData['telefone_fixo']) ? htmlspecialchars($formData['telefone_fixo']) : ''; ?>">
@@ -209,7 +209,7 @@
                     </div>
                     
                     <!-- Celular -->
-                    <div class="col-md-4 form-group">
+                    <div class="col-sm-6 col-md-4 form-group">
                         <label for="celular">Celular</label>
                         <input type="text" class="form-control <?php echo isset($formErrors['celular']) ? 'is-invalid' : ''; ?>" 
                             id="celular" name="celular" value="<?php echo isset($formData['celular']) ? htmlspecialchars($formData['celular']) : ''; ?>" 
@@ -222,7 +222,7 @@
                     </div>
                     
                     <!-- Email -->
-                    <div class="col-md-4 form-group">
+                    <div class="col-sm-12 col-md-4 form-group">
                         <label for="email">E-mail</label>
                         <input type="email" class="form-control <?php echo isset($formErrors['email']) ? 'is-invalid' : ''; ?>" 
                             id="email" name="email" value="<?php echo isset($formData['email']) ? htmlspecialchars($formData['email']) : ''; ?>">
@@ -238,7 +238,7 @@
                 
                 <div class="row">
                     <!-- Convênio -->
-                    <div class="col-md-6 form-group">
+                    <div class="col-sm-6 col-md-6 form-group">
                         <label for="convenio">Convênio</label>
                         <input type="text" class="form-control <?php echo isset($formErrors['convenio']) ? 'is-invalid' : ''; ?>" 
                             id="convenio" name="convenio" value="<?php echo isset($formData['convenio']) ? htmlspecialchars($formData['convenio']) : ''; ?>">
@@ -250,7 +250,7 @@
                     </div>
                     
                     <!-- Número da Carteirinha -->
-                    <div class="col-md-6 form-group">
+                    <div class="col-sm-6 col-md-6 form-group">
                         <label for="numero_carteirinha">Número da Carteirinha</label>
                         <input type="text" class="form-control <?php echo isset($formErrors['numero_carteirinha']) ? 'is-invalid' : ''; ?>" 
                             id="numero_carteirinha" name="numero_carteirinha" value="<?php echo isset($formData['numero_carteirinha']) ? htmlspecialchars($formData['numero_carteirinha']) : ''; ?>">

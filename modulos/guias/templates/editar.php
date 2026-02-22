@@ -22,7 +22,7 @@
         </div>
         <div class="card-body">
             <div class="row mb-4">
-                <div class="col-md-6">
+                <div class="col-sm-12 col-md-6">
                     <h5>Informações da Guia</h5>
                     <p><strong>Código:</strong> <?php echo htmlspecialchars($guia['codigo']); ?></p>
                     <p><strong>Paciente:</strong> <?php echo htmlspecialchars($guia['paciente_nome']); ?></p>
@@ -33,7 +33,7 @@
                         <?php endif; ?>
                     </p>
                 </div>
-                <div class="col-md-6">
+                <div class="col-sm-12 col-md-6">
                     <h5>Status Atual</h5>
                     <?php if ($guia['status'] == 'agendado'): ?>
                         <div class="alert alert-primary">

@@ -1,7 +1,10 @@
 <?php
-/**
- * Controlador para listagem de pacientes
- */
+require_once 'auth.php';
+
+// Permite se tiver permissão padrão OU permissão da Minha Clínica
+if (!hasPermission('appointment_view') && !hasPermission('minha_clinica_pacientes')) {
+    verificar_acesso('appointment_view');
+}
 
 // Instancia o modelo de pacientes
 $pacienteModel = new PacienteModel();

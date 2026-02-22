@@ -4,6 +4,12 @@
  */
 
 // Verifica se o ID foi informado
+// Permite se tiver permissão padrão OU (permissão de paciente E edição geral)
+require_once 'auth.php';
+if (!hasPermission('appointment_edit') && !(hasPermission('minha_clinica_pacientes') && hasPermission('minha_clinica_editar'))) {
+    verificar_acesso('appointment_edit');
+}
+
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     $_SESSION['mensagem'] = [
         'tipo' => 'danger',

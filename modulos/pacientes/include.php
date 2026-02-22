@@ -42,6 +42,9 @@ function pacientesProcessAction($action = '') {
         case 'search':
             $file = PACIENTES_MODULE_PATH . '/controllers/buscar.php';
             break;
+        case 'ajax_search':
+            $file = PACIENTES_MODULE_PATH . '/controllers/ajax_search.php';
+            break;
         case 'list':
         default:
             $file = PACIENTES_MODULE_PATH . '/controllers/listar.php';

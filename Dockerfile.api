@@ -1,0 +1,63 @@
+# Dockerfile para API REST
+FROM php:8.2-apache
+
+# Instalar dependências do sistema
+RUN apt-get update && apt-get install -y \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libzip-dev \
+    zip \
+    unzip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Configurar e instalar extensões PHP
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) \
+    pdo \
+    pdo_mysql \
+    mysqli \
+    gd \
+    zip
+
+# Habilitar módulos Apache necessários
+RUN a2enmod rewrite headers
+
+# Configurar PHP para produção
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+
+# Configurações customizadas do PHP
+RUN echo "upload_max_filesize = 10M" >> "$PHP_INI_DIR/conf.d/custom.ini" \
+    && echo "post_max_size = 10M" >> "$PHP_INI_DIR/conf.d/custom.ini" \
+    && echo "max_execution_time = 300" >> "$PHP_INI_DIR/conf.d/custom.ini" \
+    && echo "memory_limit = 256M" >> "$PHP_INI_DIR/conf.d/custom.ini" \
+    && echo "display_errors = Off" >> "$PHP_INI_DIR/conf.d/custom.ini" \
+    && echo "log_errors = On" >> "$PHP_INI_DIR/conf.d/custom.ini"
+
+# Configurar Apache para permitir .htaccess
+RUN sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
+
+# Criar diretório da API
+WORKDIR /var/www/html
+
+# Copiar apenas arquivos necessários para a API
+COPY api/ /var/www/html/api/
+COPY Database.php /var/www/html/
+COPY config.php /var/www/html/
+COPY auth.php /var/www/html/
+
+# Criar arquivo de teste
+RUN echo '<?php phpinfo(); ?>' > /var/www/html/info.php
+
+# Ajustar permissões
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html
+
+# Expor porta 80
+EXPOSE 80
+
+# Healthcheck
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost/info.php || exit 1
+
+CMD ["apache2-foreground"]

@@ -31,14 +31,14 @@
                     <input type="hidden" name="action" value="list">
                     
                     <div class="row mb-3">
-                        <div class="col-md-4">
+                        <div class="col-sm-6 col-md-4">
                             <label for="paciente_nome">Paciente</label>
                             <input type="text" class="form-control" id="paciente_nome" name="paciente_nome" 
                                 value="<?php echo isset($_GET['paciente_nome']) ? htmlspecialchars($_GET['paciente_nome']) : ''; ?>"
                                 placeholder="Nome do paciente">
                         </div>
                         
-                        <div class="col-md-4">
+                        <div class="col-sm-6 col-md-4">
                             <label for="clinica_id">Clínica</label>
                             <select class="form-control" id="clinica_id" name="clinica_id">
                                 <option value="">Todas</option>
@@ -50,7 +50,7 @@
                             </select>
                         </div>
                         
-                        <div class="col-md-4">
+                        <div class="col-sm-12 col-md-4">
                             <label for="especialidade_id">Especialidade</label>
                             <select class="form-control" id="especialidade_id" name="especialidade_id">
                                 <option value="">Todas</option>
@@ -64,21 +64,21 @@
                     </div>
                     
                     <div class="row mb-3">
-                        <div class="col-md-3">
+                        <div class="col-sm-6 col-md-3">
                             <label for="data_inicio">Data Início</label>
                             <input type="text" class="form-control datepicker" id="data_inicio" name="data_inicio" 
                                 value="<?php echo isset($_GET['data_inicio']) ? htmlspecialchars($_GET['data_inicio']) : ''; ?>"
                                 placeholder="DD/MM/AAAA">
                         </div>
                         
-                        <div class="col-md-3">
+                        <div class="col-sm-6 col-md-3">
                             <label for="data_fim">Data Fim</label>
                             <input type="text" class="form-control datepicker" id="data_fim" name="data_fim" 
                                 value="<?php echo isset($_GET['data_fim']) ? htmlspecialchars($_GET['data_fim']) : ''; ?>"
                                 placeholder="DD/MM/AAAA">
                         </div>
                         
-                        <div class="col-md-3">
+                        <div class="col-sm-6 col-md-3">
                             <label for="status_agendamento">Status</label>
                             <select class="form-control" id="status_agendamento" name="status_agendamento">
                                 <option value="">Todos</option>
@@ -90,7 +90,7 @@
                             </select>
                         </div>
                         
-                        <div class="col-md-3 d-flex align-items-end">
+                        <div class="col-sm-6 col-md-3 d-flex align-items-end">
                             <button type="submit" class="btn btn-primary mb-2 mr-2">Filtrar</button>
                             <a href="index.php?module=agendamentos&action=list" class="btn btn-secondary mb-2">Limpar</a>
                         </div>

@@ -1,6 +1,7 @@
 <?php
 require_once 'auth.php';
-verificar_acesso(['admin']);
+// Verificação de acesso específica é feita em cada controller
+// pois profile é acessível a qualquer usuário logado
 // Arquivo de inclusão do módulo de usuários
 define('USUARIOS_PATH', __DIR__);
 define('USUARIOS_TEMPLATE_PATH', USUARIOS_PATH . '/templates/');
@@ -14,6 +15,11 @@ if (!class_exists('Model')) {
 
 // Carrega o modelo de usuários
 require_once USUARIOS_MODEL_PATH . 'UsuarioModel.php';
+
+// Carrega o modelo de perfis
+if (!class_exists('PerfilModel')) {
+    require_once __DIR__ . '/../perfis/models/PerfilModel.php';
+}
 
 // Função de processamento de ações do módulo
 function usuariosProcessAction($action) {

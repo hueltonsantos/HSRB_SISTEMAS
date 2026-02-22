@@ -74,7 +74,7 @@
             <h6 class="m-0 font-weight-bold text-primary">Agendamentos Recentes</h6>
             <div>
                 <a href="index.php?module=agendamentos&action=list" class="btn btn-primary btn-sm">
-                    <i class="fas fa-list"></i> Ver Todos taojfpasjfpaosjfpojas
+                    <i class="fas fa-list"></i> Ver Todos
                 </a>
             </div>
         </div>

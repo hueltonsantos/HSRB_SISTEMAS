@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  app:
+    image: notleuh/hsrb_sistemas_clinicas:app-latest
+    environment:
+      - DB_HOST=db
+      - DB_NAME=clinica_encaminhamento
+      - DB_USER=huelton
+      - DB_PASS=123Mudar@
+      - BASE_URL=https://clinicas.hueltonsites.com.br
+    volumes:
+      - uploads_data:/var/www/html/uploads
+    networks:
+      - rede_production
+    depends_on:
+      - db
+    deploy:
+      restart_policy:
+        condition: on-failure
+      labels:
+        - "traefik.enable=true"
+        # Regra de Host
+        - "traefik.http.routers.clinica-app.rule=Host(`clinicas.hueltonsites.com.br`)"
+        # Entrypoint seguro (443) definido no seu Traefik
+        - "traefik.http.routers.clinica-app.entrypoints=websecure"
+        # O nome EXATO do resolver que está no seu traefik.yml/command
+        - "traefik.http.routers.clinica-app.tls.certresolver=letsencryptresolver"
+        # Porta interna do seu container PHP (Apache)
+        - "traefik.http.services.clinica-app.loadbalancer.server.port=80"
+
+  db:
+    image: notleuh/hsrb_sistemas_clinicas:db-latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=123Mudar@
+      - MYSQL_DATABASE=clinica_encaminhamento
+      - MYSQL_USER=huelton
+      - MYSQL_PASSWORD=123Mudar@
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p123Mudar@"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - rede_production
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+volumes:
+  db_data:
+  uploads_data:
+
+networks:
+  # Usando a rede que o seu Traefik já gerencia
+  rede_production:
+    external: true

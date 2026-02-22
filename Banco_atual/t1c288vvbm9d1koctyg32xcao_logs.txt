@@ -1,0 +1,100 @@
+I, [2026-02-04T23:18:04.017871 #1]  INFO -- : [e2c60426-694f-4e1a-8909-724e4a16f0a4] Processing by DashboardController#index as HTML
+I, [2026-02-04T23:18:04.017981 #1]  INFO -- : [e2c60426-694f-4e1a-8909-724e4a16f0a4]   Parameters: {"params" => "auth/signup"}
+I, [2026-02-04T23:18:04.144570 #1]  INFO -- : [e2c60426-694f-4e1a-8909-724e4a16f0a4]   Rendered layout layouts/vueapp.html.erb (Duration: 6.2ms | Allocations: 2145)
+I, [2026-02-04T23:18:04.145045 #1]  INFO -- : [e2c60426-694f-4e1a-8909-724e4a16f0a4] Completed 200 OK in 127ms (Views: 7.0ms | ActiveRecord: 1.1ms | Allocations: 32632)
+I, [2026-02-04T23:18:04.501812 #1]  INFO -- : [7ea84131-3bb3-4632-a291-83078ab4994a] Started GET "/app/" for 167.249.191.135 at 2026-02-04 23:18:04 +0000
+Passing 'call' command to redis as is; blind passthrough has been deprecated and will be removed in redis-namespace 2.0 (at /gems/ruby/3.4.0/gems/activesupport-7.1.5.2/lib/active_support/cache/redis_cache_store.rb:454:in 'block (2 levels) in ActiveSupport::Cache::RedisCacheStore#change_counter')
+I, [2026-02-04T23:18:04.507048 #1]  INFO -- : [7ea84131-3bb3-4632-a291-83078ab4994a] Processing by DashboardController#index as HTML
+I, [2026-02-04T23:18:04.644024 #1]  INFO -- : [7ea84131-3bb3-4632-a291-83078ab4994a] Redirected to https://hsrbsistemas.hueltonsites.com.br/app/auth/signup
+I, [2026-02-04T23:18:04.644183 #1]  INFO -- : [7ea84131-3bb3-4632-a291-83078ab4994a] Filter chain halted as :redirect_to_signup_if_no_users rendered or redirected
+I, [2026-02-04T23:18:04.644398 #1]  INFO -- : [7ea84131-3bb3-4632-a291-83078ab4994a] Completed 302 Found in 137ms (ActiveRecord: 1.2ms | Allocations: 30361)
+I, [2026-02-04T23:18:04.790575 #1]  INFO -- : [006634a3-02c5-4a7a-be1e-bfce82fd2d6c] Started GET "/app/auth/signup" for 167.249.191.135 at 2026-02-04 23:18:04 +0000
+Passing 'call' command to redis as is; blind passthrough has been deprecated and will be removed in redis-namespace 2.0 (at /gems/ruby/3.4.0/gems/activesupport-7.1.5.2/lib/active_support/cache/redis_cache_store.rb:454:in 'block (2 levels) in ActiveSupport::Cache::RedisCacheStore#change_counter')
+I, [2026-02-04T23:18:04.798529 #1]  INFO -- : [006634a3-02c5-4a7a-be1e-bfce82fd2d6c] Processing by DashboardController#index as HTML
+I, [2026-02-04T23:18:04.798648 #1]  INFO -- : [006634a3-02c5-4a7a-be1e-bfce82fd2d6c]   Parameters: {"params" => "auth/signup"}
+I, [2026-02-04T23:18:04.928024 #1]  INFO -- : [006634a3-02c5-4a7a-be1e-bfce82fd2d6c]   Rendered layout layouts/vueapp.html.erb (Duration: 7.2ms | Allocations: 2145)
+I, [2026-02-04T23:18:04.928509 #1]  INFO -- : [006634a3-02c5-4a7a-be1e-bfce82fd2d6c] Completed 200 OK in 130ms (Views: 7.9ms | ActiveRecord: 0.8ms | Allocations: 32616)
+I, [2026-02-04T23:18:05.262808 #1]  INFO -- : [bc28d458-8429-42f9-b1c5-40b658607418] Started GET "/app/" for 167.249.191.135 at 2026-02-04 23:18:05 +0000
+Passing 'call' command to redis as is; blind passthrough has been deprecated and will be removed in redis-namespace 2.0 (at /gems/ruby/3.4.0/gems/activesupport-7.1.5.2/lib/active_support/cache/redis_cache_store.rb:454:in 'block (2 levels) in ActiveSupport::Cache::RedisCacheStore#change_counter')
+I, [2026-02-04T23:18:05.267805 #1]  INFO -- : [bc28d458-8429-42f9-b1c5-40b658607418] Processing by DashboardController#index as HTML
+I, [2026-02-04T23:18:05.402597 #1]  INFO -- : [bc28d458-8429-42f9-b1c5-40b658607418] Redirected to https://hsrbsistemas.hueltonsites.com.br/app/auth/signup
+I, [2026-02-04T23:18:05.402781 #1]  INFO -- : [bc28d458-8429-42f9-b1c5-40b658607418] Filter chain halted as :redirect_to_signup_if_no_users rendered or redirected
+I, [2026-02-04T23:18:05.403050 #1]  INFO -- : [bc28d458-8429-42f9-b1c5-40b658607418] Completed 302 Found in 135ms (ActiveRecord: 3.8ms | Allocations: 30389)
+I, [2026-02-04T23:18:05.549227 #1]  INFO -- : [cdb36785-8ded-4165-a9f3-4d91cf6f058b] Started GET "/app/auth/signup" for 167.249.191.135 at 2026-02-04 23:18:05 +0000
+Passing 'call' command to redis as is; blind passthrough has been deprecated and will be removed in redis-namespace 2.0 (at /gems/ruby/3.4.0/gems/activesupport-7.1.5.2/lib/active_support/cache/redis_cache_store.rb:454:in 'block (2 levels) in ActiveSupport::Cache::RedisCacheStore#change_counter')
+I, [2026-02-04T23:18:05.554634 #1]  INFO -- : [cdb36785-8ded-4165-a9f3-4d91cf6f058b] Processing by DashboardController#index as HTML
+I, [2026-02-04T23:18:05.554744 #1]  INFO -- : [cdb36785-8ded-4165-a9f3-4d91cf6f058b]   Parameters: {"params" => "auth/signup"}
+I, [2026-02-04T23:18:05.690650 #1]  INFO -- : [cdb36785-8ded-4165-a9f3-4d91cf6f058b]   Rendered layout layouts/vueapp.html.erb (Duration: 7.4ms | Allocations: 2145)
+I, [2026-02-04T23:18:05.691160 #1]  INFO -- : [cdb36785-8ded-4165-a9f3-4d91cf6f058b] Completed 200 OK in 136ms (Views: 8.1ms | ActiveRecord: 0.9ms | Allocations: 32610)
+I, [2026-02-04T23:18:06.024657 #1]  INFO -- : [96180c1b-8f30-4251-bd94-cd194c9ce9d5] Started GET "/app/" for 167.249.191.135 at 2026-02-04 23:18:06 +0000
+Passing 'call' command to redis as is; blind passthrough has been deprecated and will be removed in redis-namespace 2.0 (at /gems/ruby/3.4.0/gems/activesupport-7.1.5.2/lib/active_support/cache/redis_cache_store.rb:454:in 'block (2 levels) in ActiveSupport::Cache::RedisCacheStore#change_counter')
+I, [2026-02-04T23:18:06.029567 #1]  INFO -- : [96180c1b-8f30-4251-bd94-cd194c9ce9d5] Processing by DashboardController#index as HTML
+I, [2026-02-04T23:18:06.158807 #1]  INFO -- : [96180c1b-8f30-4251-bd94-cd194c9ce9d5] Redirected to https://hsrbsistemas.hueltonsites.com.br/app/auth/signup
+I, [2026-02-04T23:18:06.159009 #1]  INFO -- : [96180c1b-8f30-4251-bd94-cd194c9ce9d5] Filter chain halted as :redirect_to_signup_if_no_users rendered or redirected
+I, [2026-02-04T23:18:06.159255 #1]  INFO -- : [96180c1b-8f30-4251-bd94-cd194c9ce9d5] Completed 302 Found in 130ms (ActiveRecord: 1.1ms | Allocations: 30373)
+I, [2026-02-04T23:18:06.304355 #1]  INFO -- : [42ddad5d-f673-4342-8021-9a67d9f74714] Started GET "/app/auth/signup" for 167.249.191.135 at 2026-02-04 23:18:06 +0000
+Passing 'call' command to redis as is; blind passthrough has been deprecated and will be removed in redis-namespace 2.0 (at /gems/ruby/3.4.0/gems/activesupport-7.1.5.2/lib/active_support/cache/redis_cache_store.rb:454:in 'block (2 levels) in ActiveSupport::Cache::RedisCacheStore#change_counter')
+I, [2026-02-04T23:18:06.317601 #1]  INFO -- : [42ddad5d-f673-4342-8021-9a67d9f74714] Processing by DashboardController#index as HTML
+I, [2026-02-04T23:18:06.318218 #1]  INFO -- : [42ddad5d-f673-4342-8021-9a67d9f74714]   Parameters: {"params" => "auth/signup"}
+I, [2026-02-04T23:18:06.437190 #1]  INFO -- : [42ddad5d-f673-4342-8021-9a67d9f74714]   Rendered layout layouts/vueapp.html.erb (Duration: 5.8ms | Allocations: 2145)
+I, [2026-02-04T23:18:06.437658 #1]  INFO -- : [42ddad5d-f673-4342-8021-9a67d9f74714] Completed 200 OK in 118ms (Views: 6.5ms | ActiveRecord: 0.8ms | Allocations: 32638)
+I, [2026-02-04T23:18:06.808682 #1]  INFO -- : [02690299-4348-4a7d-a75f-473f2bf3e580] Started GET "/app/" for 167.249.191.135 at 2026-02-04 23:18:06 +0000
+Passing 'call' command to redis as is; blind passthrough has been deprecated and will be removed in redis-namespace 2.0 (at /gems/ruby/3.4.0/gems/activesupport-7.1.5.2/lib/active_support/cache/redis_cache_store.rb:454:in 'block (2 levels) in ActiveSupport::Cache::RedisCacheStore#change_counter')
+I, [2026-02-04T23:18:06.813686 #1]  INFO -- : [02690299-4348-4a7d-a75f-473f2bf3e580] Processing by DashboardController#index as HTML
+I, [2026-02-04T23:18:06.942602 #1]  INFO -- : [02690299-4348-4a7d-a75f-473f2bf3e580] Redirected to https://hsrbsistemas.hueltonsites.com.br/app/auth/signup
+I, [2026-02-04T23:18:06.942746 #1]  INFO -- : [02690299-4348-4a7d-a75f-473f2bf3e580] Filter chain halted as :redirect_to_signup_if_no_users rendered or redirected
+I, [2026-02-04T23:18:06.943174 #1]  INFO -- : [02690299-4348-4a7d-a75f-473f2bf3e580] Completed 302 Found in 129ms (ActiveRecord: 1.2ms | Allocations: 30358)
+I, [2026-02-04T23:18:07.087297 #1]  INFO -- : [0cef70fa-ad1e-43cb-ab6c-2715194a02a6] Started GET "/app/auth/signup" for 167.249.191.135 at 2026-02-04 23:18:07 +0000
+Passing 'call' command to redis as is; blind passthrough has been deprecated and will be removed in redis-namespace 2.0 (at /gems/ruby/3.4.0/gems/activesupport-7.1.5.2/lib/active_support/cache/redis_cache_store.rb:454:in 'block (2 levels) in ActiveSupport::Cache::RedisCacheStore#change_counter')
+I, [2026-02-04T23:18:07.092703 #1]  INFO -- : [0cef70fa-ad1e-43cb-ab6c-2715194a02a6] Processing by DashboardController#index as HTML
+I, [2026-02-04T23:18:07.092810 #1]  INFO -- : [0cef70fa-ad1e-43cb-ab6c-2715194a02a6]   Parameters: {"params" => "auth/signup"}
+I, [2026-02-04T23:18:07.227161 #1]  INFO -- : [0cef70fa-ad1e-43cb-ab6c-2715194a02a6]   Rendered layout layouts/vueapp.html.erb (Duration: 11.6ms | Allocations: 2145)
+I, [2026-02-04T23:18:07.228262 #1]  INFO -- : [0cef70fa-ad1e-43cb-ab6c-2715194a02a6] Completed 200 OK in 135ms (Views: 13.0ms | ActiveRecord: 0.9ms | Allocations: 32643)
+I, [2026-02-04T23:18:07.584779 #1]  INFO -- : [2e9d1eda-fa30-4117-afbc-0d7a93bab63b] Started GET "/app/" for 167.249.191.135 at 2026-02-04 23:18:07 +0000
+Passing 'call' command to redis as is; blind passthrough has been deprecated and will be removed in redis-namespace 2.0 (at /gems/ruby/3.4.0/gems/activesupport-7.1.5.2/lib/active_support/cache/redis_cache_store.rb:454:in 'block (2 levels) in ActiveSupport::Cache::RedisCacheStore#change_counter')
+I, [2026-02-04T23:18:07.593828 #1]  INFO -- : [2e9d1eda-fa30-4117-afbc-0d7a93bab63b] Processing by DashboardController#index as HTML
+I, [2026-02-04T23:18:07.716908 #1]  INFO -- : [2e9d1eda-fa30-4117-afbc-0d7a93bab63b] Redirected to https://hsrbsistemas.hueltonsites.com.br/app/auth/signup
+I, [2026-02-04T23:18:07.717082 #1]  INFO -- : [2e9d1eda-fa30-4117-afbc-0d7a93bab63b] Filter chain halted as :redirect_to_signup_if_no_users rendered or redirected
+I, [2026-02-04T23:18:07.717677 #1]  INFO -- : [2e9d1eda-fa30-4117-afbc-0d7a93bab63b] Completed 302 Found in 122ms (ActiveRecord: 8.7ms | Allocations: 30388)
+I, [2026-02-04T23:18:07.862764 #1]  INFO -- : [d8b22c62-b2ac-4dbe-9fb6-b4e366817012] Started GET "/app/auth/signup" for 167.249.191.135 at 2026-02-04 23:18:07 +0000
+Passing 'call' command to redis as is; blind passthrough has been deprecated and will be removed in redis-namespace 2.0 (at /gems/ruby/3.4.0/gems/activesupport-7.1.5.2/lib/active_support/cache/redis_cache_store.rb:454:in 'block (2 levels) in ActiveSupport::Cache::RedisCacheStore#change_counter')
+I, [2026-02-04T23:18:07.869517 #1]  INFO -- : [d8b22c62-b2ac-4dbe-9fb6-b4e366817012] Processing by DashboardController#index as HTML
+I, [2026-02-04T23:18:07.869643 #1]  INFO -- : [d8b22c62-b2ac-4dbe-9fb6-b4e366817012]   Parameters: {"params" => "auth/signup"}
+I, [2026-02-04T23:18:08.010708 #1]  INFO -- : [d8b22c62-b2ac-4dbe-9fb6-b4e366817012]   Rendered layout layouts/vueapp.html.erb (Duration: 7.7ms | Allocations: 2145)
+I, [2026-02-04T23:18:08.011331 #1]  INFO -- : [d8b22c62-b2ac-4dbe-9fb6-b4e366817012] Completed 200 OK in 141ms (Views: 8.4ms | ActiveRecord: 0.9ms | Allocations: 32619)
+I, [2026-02-04T23:18:08.338265 #1]  INFO -- : [0da10784-47a7-489d-8ce1-77846a3ca300] Started GET "/app/" for 167.249.191.135 at 2026-02-04 23:18:08 +0000
+Passing 'call' command to redis as is; blind passthrough has been deprecated and will be removed in redis-namespace 2.0 (at /gems/ruby/3.4.0/gems/activesupport-7.1.5.2/lib/active_support/cache/redis_cache_store.rb:454:in 'block (2 levels) in ActiveSupport::Cache::RedisCacheStore#change_counter')
+I, [2026-02-04T23:18:08.343004 #1]  INFO -- : [0da10784-47a7-489d-8ce1-77846a3ca300] Processing by DashboardController#index as HTML
+I, [2026-02-04T23:18:08.472778 #1]  INFO -- : [0da10784-47a7-489d-8ce1-77846a3ca300] Redirected to https://hsrbsistemas.hueltonsites.com.br/app/auth/signup
+I, [2026-02-04T23:18:08.472968 #1]  INFO -- : [0da10784-47a7-489d-8ce1-77846a3ca300] Filter chain halted as :redirect_to_signup_if_no_users rendered or redirected
+I, [2026-02-04T23:18:08.473207 #1]  INFO -- : [0da10784-47a7-489d-8ce1-77846a3ca300] Completed 302 Found in 129ms (ActiveRecord: 1.8ms | Allocations: 30376)
+I, [2026-02-04T23:18:08.623052 #1]  INFO -- : [c655b245-1a16-4a63-b50c-92f9ab2e151a] Started GET "/app/auth/signup" for 167.249.191.135 at 2026-02-04 23:18:08 +0000
+Passing 'call' command to redis as is; blind passthrough has been deprecated and will be removed in redis-namespace 2.0 (at /gems/ruby/3.4.0/gems/activesupport-7.1.5.2/lib/active_support/cache/redis_cache_store.rb:454:in 'block (2 levels) in ActiveSupport::Cache::RedisCacheStore#change_counter')
+I, [2026-02-04T23:18:08.627844 #1]  INFO -- : [c655b245-1a16-4a63-b50c-92f9ab2e151a] Processing by DashboardController#index as HTML
+I, [2026-02-04T23:18:08.627965 #1]  INFO -- : [c655b245-1a16-4a63-b50c-92f9ab2e151a]   Parameters: {"params" => "auth/signup"}
+I, [2026-02-04T23:18:08.763905 #1]  INFO -- : [c655b245-1a16-4a63-b50c-92f9ab2e151a]   Rendered layout layouts/vueapp.html.erb (Duration: 6.9ms | Allocations: 2145)
+I, [2026-02-04T23:18:08.764455 #1]  INFO -- : [c655b245-1a16-4a63-b50c-92f9ab2e151a] Completed 200 OK in 136ms (Views: 7.9ms | ActiveRecord: 1.2ms | Allocations: 32647)
+I, [2026-02-04T23:18:09.101261 #1]  INFO -- : [b2a521b5-2053-4b2c-995c-3bd1908ad011] Started GET "/app/" for 167.249.191.135 at 2026-02-04 23:18:09 +0000
+Passing 'call' command to redis as is; blind passthrough has been deprecated and will be removed in redis-namespace 2.0 (at /gems/ruby/3.4.0/gems/activesupport-7.1.5.2/lib/active_support/cache/redis_cache_store.rb:454:in 'block (2 levels) in ActiveSupport::Cache::RedisCacheStore#change_counter')
+I, [2026-02-04T23:18:09.116761 #1]  INFO -- : [b2a521b5-2053-4b2c-995c-3bd1908ad011] Processing by DashboardController#index as HTML
+I, [2026-02-04T23:18:09.238195 #1]  INFO -- : [b2a521b5-2053-4b2c-995c-3bd1908ad011] Redirected to https://hsrbsistemas.hueltonsites.com.br/app/auth/signup
+I, [2026-02-04T23:18:09.238359 #1]  INFO -- : [b2a521b5-2053-4b2c-995c-3bd1908ad011] Filter chain halted as :redirect_to_signup_if_no_users rendered or redirected
+I, [2026-02-04T23:18:09.239100 #1]  INFO -- : [b2a521b5-2053-4b2c-995c-3bd1908ad011] Completed 302 Found in 122ms (ActiveRecord: 1.2ms | Allocations: 30372)
+I, [2026-02-04T23:18:09.391795 #1]  INFO -- : [7df0340b-21b8-4458-9b8f-08c5514abcdc] Started GET "/app/auth/signup" for 167.249.191.135 at 2026-02-04 23:18:09 +0000
+I, [2026-02-04T23:18:09.401812 #1]  INFO -- : [7df0340b-21b8-4458-9b8f-08c5514abcdc] Processing by DashboardController#index as HTML
+I, [2026-02-04T23:18:09.401923 #1]  INFO -- : [7df0340b-21b8-4458-9b8f-08c5514abcdc]   Parameters: {"params" => "auth/signup"}
+Passing 'call' command to redis as is; blind passthrough has been deprecated and will be removed in redis-namespace 2.0 (at /gems/ruby/3.4.0/gems/activesupport-7.1.5.2/lib/active_support/cache/redis_cache_store.rb:454:in 'block (2 levels) in ActiveSupport::Cache::RedisCacheStore#change_counter')
+I, [2026-02-04T23:18:09.577939 #1]  INFO -- : [7df0340b-21b8-4458-9b8f-08c5514abcdc]   Rendered layout layouts/vueapp.html.erb (Duration: 7.8ms | Allocations: 2145)
+I, [2026-02-04T23:18:09.578402 #1]  INFO -- : [7df0340b-21b8-4458-9b8f-08c5514abcdc] Completed 200 OK in 176ms (Views: 8.7ms | ActiveRecord: 5.4ms | Allocations: 32639)
+I, [2026-02-04T23:18:09.928200 #1]  INFO -- : [378ad5d8-89c7-4ccb-95fe-a71044af74e0] Started GET "/app/" for 167.249.191.135 at 2026-02-04 23:18:09 +0000
+Passing 'call' command to redis as is; blind passthrough has been deprecated and will be removed in redis-namespace 2.0 (at /gems/ruby/3.4.0/gems/activesupport-7.1.5.2/lib/active_support/cache/redis_cache_store.rb:454:in 'block (2 levels) in ActiveSupport::Cache::RedisCacheStore#change_counter')
+I, [2026-02-04T23:18:09.936792 #1]  INFO -- : [378ad5d8-89c7-4ccb-95fe-a71044af74e0] Processing by DashboardController#index as HTML
+I, [2026-02-04T23:18:10.067395 #1]  INFO -- : [378ad5d8-89c7-4ccb-95fe-a71044af74e0] Redirected to https://hsrbsistemas.hueltonsites.com.br/app/auth/signup
+I, [2026-02-04T23:18:10.067583 #1]  INFO -- : [378ad5d8-89c7-4ccb-95fe-a71044af74e0] Filter chain halted as :redirect_to_signup_if_no_users rendered or redirected
+I, [2026-02-04T23:18:10.067858 #1]  INFO -- : [378ad5d8-89c7-4ccb-95fe-a71044af74e0] Completed 302 Found in 131ms (ActiveRecord: 1.2ms | Allocations: 30378)
+I, [2026-02-04T23:18:10.222016 #1]  INFO -- : [a4a6435e-5ce4-4cf0-b913-b193a77c8ee2] Started GET "/app/auth/signup" for 167.249.191.135 at 2026-02-04 23:18:10 +0000
+Passing 'call' command to redis as is; blind passthrough has been deprecated and will be removed in redis-namespace 2.0 (at /gems/ruby/3.4.0/gems/activesupport-7.1.5.2/lib/active_support/cache/redis_cache_store.rb:454:in 'block (2 levels) in ActiveSupport::Cache::RedisCacheStore#change_counter')
+I, [2026-02-04T23:18:10.228158 #1]  INFO -- : [a4a6435e-5ce4-4cf0-b913-b193a77c8ee2] Processing by DashboardController#index as HTML
+I, [2026-02-04T23:18:10.228275 #1]  INFO -- : [a4a6435e-5ce4-4cf0-b913-b193a77c8ee2]   Parameters: {"params" => "auth/signup"}
+I, [2026-02-04T23:18:10.366120 #1]  INFO -- : [a4a6435e-5ce4-4cf0-b913-b193a77c8ee2]   Rendered layout layouts/vueapp.html.erb (Duration: 6.6ms | Allocations: 2145)
+I, [2026-02-04T23:18:10.366571 #1]  INFO -- : [a4a6435e-5ce4-4cf0-b913-b193a77c8ee2] Completed 200 OK in 138ms (Views: 7.5ms | ActiveRecord: 0.9ms | Allocations: 32668)
