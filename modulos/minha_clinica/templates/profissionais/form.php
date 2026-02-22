@@ -133,7 +133,11 @@ $(document).ready(function() {
     // Mascara para telefone
     if (typeof $.fn.mask === 'function') {
         var SPMaskBehavior = function (val) {
+<<<<<<< HEAD
             return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-0000';
+=======
+            return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
         };
         var spOptions = {
             onKeyPress: function(val, e, field, options) {

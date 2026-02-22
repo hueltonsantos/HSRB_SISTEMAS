@@ -20,6 +20,7 @@ $id = isset($_POST['id']) && !empty($_POST['id']) ? (int)$_POST['id'] : null;
 // Formatar valor
 $valor = $_POST['valor'] ?? 0;
 if (is_string($valor)) {
+<<<<<<< HEAD
     $valor = str_replace(['R$', ' '], '', $valor);
     if (strpos($valor, ',') !== false) {
         $valor = str_replace('.', '', $valor);
@@ -27,6 +28,11 @@ if (is_string($valor)) {
     }
 }
 $valor = floatval($valor);
+=======
+    $valor = str_replace('.', '', $valor);
+    $valor = str_replace(',', '.', $valor);
+}
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
 
 $data = [
     'id' => $id,

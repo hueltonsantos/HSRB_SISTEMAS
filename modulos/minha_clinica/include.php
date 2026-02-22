@@ -5,12 +5,16 @@
  */
 
 // Carregar model
+<<<<<<< HEAD
 // Carregar models
 require_once MODULES_PATH . '/minha_clinica/models/MinhaClinicaModel.php';
 require_once MODULES_PATH . '/minha_clinica/models/ConveniosModel.php';
 require_once MODULES_PATH . '/minha_clinica/models/FinanceiroModel.php';
 require_once MODULES_PATH . '/minha_clinica/models/ProfissionaisConfigModel.php';
 require_once MODULES_PATH . '/minha_clinica/models/ProntuarioModel.php';
+=======
+require_once MODULES_PATH . '/minha_clinica/models/MinhaClinicaModel.php';
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
 
 // Definir constantes do modulo
 define('MINHA_CLINICA_PATH', MODULES_PATH . '/minha_clinica');
@@ -105,6 +109,7 @@ function minha_clinicaProcessAction($action = '')
             $file = MINHA_CLINICA_CONTROLLERS_PATH . '/api.php';
             break;
 
+<<<<<<< HEAD
         // Convênios
         case 'convenios':
             $file = MINHA_CLINICA_CONTROLLERS_PATH . '/convenios/listar.php';
@@ -168,6 +173,8 @@ function minha_clinicaProcessAction($action = '')
             $file = MINHA_CLINICA_CONTROLLERS_PATH . '/financeiro/inadimplencia.php';
             break;
 
+=======
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
         default:
             $file = MINHA_CLINICA_CONTROLLERS_PATH . '/index.php';
             break;

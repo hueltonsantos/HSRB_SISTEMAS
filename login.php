@@ -4,6 +4,10 @@
  */
 require_once 'config.php';
 
+<<<<<<< HEAD
+=======
+// Verificar se precisa de configuração inicial (primeiro acesso sem admin)
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
 try {
     $pdoCheck = new PDO(
         'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4',
@@ -14,14 +18,25 @@ try {
     $stmtCheck = $pdoCheck->prepare("SELECT COUNT(*) as total FROM usuarios WHERE perfil_id = 1");
     $stmtCheck->execute();
     $resultCheck = $stmtCheck->fetch(PDO::FETCH_ASSOC);
+<<<<<<< HEAD
     if ((int) $resultCheck['total'] === 0) {
+=======
+    if ((int)$resultCheck['total'] === 0) {
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
         header('Location: setup.php');
         exit;
     }
     $pdoCheck = null;
 } catch (PDOException $e) {
+<<<<<<< HEAD
 }
 
+=======
+    // Tabela pode não existir ainda - ignora
+}
+
+// Verificar se já está logado
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
 if (isset($_SESSION['usuario_id'])) {
     header('Location: index.php');
     exit;
@@ -29,8 +44,14 @@ if (isset($_SESSION['usuario_id'])) {
 
 $mensagem = '';
 
+<<<<<<< HEAD
 if (isset($_SESSION['setup_success'])) {
     $mensagem = '<div class="alert alert-success">
+=======
+// Mensagem de sucesso da configuração inicial
+if (isset($_SESSION['setup_success'])) {
+    $mensagem = '<div class="alert alert-success" style="background-color: #d4edda; color: #155724; border-radius: 15px; padding: 15px 20px; border: none;">
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
         <i class="fas fa-check-circle mr-2"></i>
         Sistema configurado com sucesso! Faça login com as credenciais cadastradas.
     </div>';
@@ -51,7 +72,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 DB_PASS,
                 [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
             );
+<<<<<<< HEAD
 
+=======
+            
+            // Buscar usuário pelo email com perfil
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
             $stmt = $pdo->prepare("
                 SELECT u.*, p.nome as perfil_nome 
                 FROM usuarios u 
@@ -70,6 +96,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['clinica_id'] = $usuario['clinica_id'];
                 $_SESSION['usuario_foto'] = isset($usuario['foto']) ? $usuario['foto'] : null;
 
+<<<<<<< HEAD
+=======
+                // Buscar permissões do perfil
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                 $stmtPerm = $pdo->prepare("
                     SELECT pm.chave 
                     FROM permissoes pm
@@ -79,9 +109,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmtPerm->execute([$usuario['perfil_id']]);
                 $_SESSION['permissoes'] = $stmtPerm->fetchAll(PDO::FETCH_COLUMN);
 
+<<<<<<< HEAD
                 $stmt = $pdo->prepare("UPDATE usuarios SET ultimo_acesso = NOW() WHERE id = ?");
                 $stmt->execute([$usuario['id']]);
 
+=======
+                // Atualizar data do último acesso
+                $stmt = $pdo->prepare("UPDATE usuarios SET ultimo_acesso = NOW() WHERE id = ?");
+                $stmt->execute([$usuario['id']]);
+
+                // Registrar log de login (ignora se tabela não existir)
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                 try {
                     $stmtLog = $pdo->prepare("INSERT INTO logs_sistema (usuario_id, usuario_nome, acao, modulo, descricao, ip, user_agent, data_hora) VALUES (?, ?, 'login', 'auth', 'Login realizado com sucesso', ?, ?, NOW())");
                     $stmtLog->execute([
@@ -91,8 +129,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $_SERVER['HTTP_USER_AGENT'] ?? null
                     ]);
                 } catch (Exception $e) {
+<<<<<<< HEAD
                 }
 
+=======
+                    // Ignora erro de log - tabela pode não existir ainda
+                }
+
+                // Redirecionar para a página inicial
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                 header('Location: index.php');
                 exit;
             } else {
@@ -112,10 +157,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Login - <?php echo SYSTEM_NAME; ?></title>
+<<<<<<< HEAD
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
+=======
+    
+    <!-- Estilos -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <!-- SB Admin 2 CDN -->
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
     <link href="https://cdn.jsdelivr.net/npm/startbootstrap-sb-admin-2@4.1.4/css/sb-admin-2.min.css" rel="stylesheet">
     <style>
         :root {
@@ -166,6 +219,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .bg-login-image {
+<<<<<<< HEAD
+=======
+            /* Imagem de fundo via CDN ou cor sólida */
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
             background: url('https://images.unsplash.com/photo-1519494026892-8095a61a7c79?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80') center center no-repeat;
             background-size: cover;
             position: relative;
@@ -255,20 +312,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             .login-content {
                 padding: 2rem !important;
             }
+            .card-body {
+                padding: 0;
+            }
         }
 
         @media (max-width: 768px) {
             .bg-login-image {
+<<<<<<< HEAD
                 display: none !important;
             }
 
+=======
+                display: none !important; /* Hide image completely on mobile to save space */
+            }
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
             .card {
                 margin-top: 2rem !important;
                 margin-bottom: 2rem !important;
             }
+<<<<<<< HEAD
 
             .login-content {
                 padding: 1.5rem !important;
+=======
+            .login-content {
+                padding: 1.5rem !important;
+            }
+            .h4 {
+                font-size: 1.25rem;
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
             }
         }
 
@@ -316,6 +389,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="row">
                                 <div class="col-lg-6 d-none d-lg-block bg-login-image">
                                     <div class="d-flex h-100 align-items-center justify-content-center">
+<<<<<<< HEAD
+=======
+                                        <!-- Logo substituto usando ícone -->
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                                         <i class="fas fa-clinic-medical login-logo"></i>
                                     </div>
                                 </div>
@@ -358,6 +435,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                 </button>
                                             </div>
                                         </form>
+<<<<<<< HEAD
 
                                         <div class="mt-3 fade-in delay-3">
                                             <div class="text-center mb-2">
@@ -372,13 +450,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                         class="fas fa-envelope mr-1"></i> hsrbsistemas@gmail.com</small>
                                                 <small class="d-block text-gray-600"><i class="fas fa-key mr-1"></i>
                                                     123Mudar@</small>
+=======
+                                        
+                                        <!-- Credenciais de teste -->
+                                        <div class="mt-3 fade-in delay-3">
+                                            <div class="text-center mb-2">
+                                                <small class="text-muted font-weight-bold">Acesso de demonstração</small>
+                                            </div>
+                                            <div class="bg-light rounded p-2 text-center" style="border: 1px dashed #d1d3e2; cursor: pointer;" onclick="document.querySelector('[name=email]').value='hsrbsistemas@gmail.com'; document.querySelector('[name=senha]').value='123Mudar@';" title="Clique para preencher">
+                                                <small class="d-block text-gray-600"><i class="fas fa-envelope mr-1"></i> hsrbsistemas@gmail.com</small>
+                                                <small class="d-block text-gray-600"><i class="fas fa-key mr-1"></i> 123Mudar@</small>
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                                             </div>
                                         </div>
 
                                         <div class="text-center mt-4 fade-in delay-3">
                                             <p class="text-muted small">
+<<<<<<< HEAD
                                                 &copy; <?php echo date('Y'); ?> <?php echo SYSTEM_NAME; ?>. Todos os
                                                 direitos reservados.
+=======
+                                                &copy; <?php echo date('Y'); ?> <?php echo SYSTEM_NAME; ?>. Todos os direitos reservados.
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                                             </p>
                                         </div>
                                     </div>
@@ -391,10 +484,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
+<<<<<<< HEAD
+=======
+    <!-- Scripts via CDN -->
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/startbootstrap-sb-admin-2@4.1.4/js/sb-admin-2.min.js"></script>
+<<<<<<< HEAD
 
     <script>
         // ===== MATRIX RAIN =====
@@ -504,6 +602,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         draw();
     </script>
+=======
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
 </body>
 
 </html>

@@ -21,6 +21,7 @@ $id = isset($_POST['id']) ? (int) $_POST['id'] : null;
 // Procedimentos e Pagamento
 $procedimentos = isset($_POST['procedimentos']) ? $_POST['procedimentos'] : [];
 $valor_total = isset($_POST['valor_total']) ? $_POST['valor_total'] : 0;
+<<<<<<< HEAD
 // Limpar formato de moeda se necessário
 if (is_string($valor_total)) {
     $valor_total = str_replace(['R$', ' '], '', $valor_total);
@@ -32,6 +33,13 @@ if (is_string($valor_total)) {
     // Se não tem vírgula, já está no formato decimal (345.00) — não mexer
 }
 $valor_total = floatval($valor_total);
+=======
+// Se valor_total vier formatado (R$ 1.000,00), limpar
+if (is_string($valor_total)) {
+    $valor_total = str_replace('.', '', $valor_total); // Remove milhar
+    $valor_total = str_replace(',', '.', $valor_total); // Troca vírgula por ponto
+}
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
 
 $data = [
     'paciente_id' => isset($_POST['paciente_id']) ? (int) $_POST['paciente_id'] : null,

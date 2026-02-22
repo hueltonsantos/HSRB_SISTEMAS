@@ -3,11 +3,14 @@
  * API - Minha Clinica
  */
 
+<<<<<<< HEAD
 // Limpar buffers do roteador para retornar JSON puro
 while (ob_get_level()) {
     ob_end_clean();
 }
 
+=======
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
 header('Content-Type: application/json');
 
 $model = new MinhaClinicaModel();
@@ -16,6 +19,7 @@ $apiAction = $_GET['api_action'] ?? $_GET['action'] ?? '';
 switch ($apiAction) {
     case 'get_procedimentos':
         $especialidadeId = $_GET['especialidade_id'] ?? null;
+<<<<<<< HEAD
         $convenioId = isset($_GET['convenio_id']) && !empty($_GET['convenio_id']) ? (int)$_GET['convenio_id'] : null;
 
         if ($especialidadeId) {
@@ -33,6 +37,10 @@ switch ($apiAction) {
                 }
             }
             
+=======
+        if ($especialidadeId) {
+            $procedimentos = $model->getProcedimentos($especialidadeId, true);
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
             echo json_encode($procedimentos);
         } else {
             echo json_encode([]);
@@ -51,11 +59,18 @@ switch ($apiAction) {
         $ocupados = $model->getHorariosOcupados($data, $profissionalId);
 
         // Gerar horarios disponiveis (8h as 18h, de 30 em 30 min)
+<<<<<<< HEAD
         // TODO: Pegar configuração da clínica ou do profissional
         $todosHorarios = [];
         for ($h = 7; $h <= 20; $h++) { // Ampliando horário
             $todosHorarios[] = sprintf('%02d:00:00', $h);
             if ($h < 20) {
+=======
+        $todosHorarios = [];
+        for ($h = 8; $h <= 18; $h++) {
+            $todosHorarios[] = sprintf('%02d:00:00', $h);
+            if ($h < 18) {
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                 $todosHorarios[] = sprintf('%02d:30:00', $h);
             }
         }
@@ -65,6 +80,7 @@ switch ($apiAction) {
         break;
 
     case 'alterar_status':
+<<<<<<< HEAD
         $id = $_POST['id'] ?? $_GET['id'] ?? null;
         $status = $_POST['status'] ?? $_GET['status'] ?? null;
 
@@ -80,6 +96,21 @@ switch ($apiAction) {
                 'message' => 'ID e status são obrigatórios'
             ]);
         }
+=======
+        $id = $_GET['id'] ?? null;
+        $status = $_GET['status'] ?? null;
+
+        if ($id && $status) {
+            $result = $model->atualizarStatusAgendamento($id, $status);
+            if ($result) {
+                $_SESSION['mensagem'] = ['tipo' => 'success', 'texto' => 'Status atualizado com sucesso!'];
+            } else {
+                $_SESSION['mensagem'] = ['tipo' => 'danger', 'texto' => 'Erro ao atualizar status'];
+            }
+        }
+        header('Location: index.php?module=minha_clinica&action=agendamentos');
+        exit;
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
         break;
 
     case 'estatisticas':

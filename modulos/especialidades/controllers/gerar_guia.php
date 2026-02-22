@@ -34,6 +34,7 @@ try {
     $db = Database::getInstance()->getConnection();
 
 
+<<<<<<< HEAD
     // Busca procedimentos do agendamento se houver
     $procedimentosAgendamento = [];
     $clinicaData = null;
@@ -102,6 +103,21 @@ try {
             'especialidade_id' => 0 // Mock, não usado criticamente na view
         ];
     }
+=======
+    // Busca informações do procedimento e de UMA clínica associada (via especialidade)
+    $stmt = $db->prepare("
+        SELECT p.*, e.nome as especialidade_nome, c.nome as clinica_nome,
+               c.endereco, c.telefone
+        FROM valores_procedimentos p
+        INNER JOIN especialidades e ON p.especialidade_id = e.id
+        LEFT JOIN especialidades_clinicas ec ON e.id = ec.especialidade_id
+        LEFT JOIN clinicas_parceiras c ON ec.clinica_id = c.id
+        WHERE p.id = ?
+        LIMIT 1
+    ");
+    $stmt->execute([$procedimentoId]);
+    $procedimento = $stmt->fetch(PDO::FETCH_ASSOC);
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
 
     if (!$procedimento) {
         throw new Exception("Procedimento não encontrado");
@@ -163,15 +179,21 @@ try {
         // Gerar código único para a guia (opcional)
         $codigo = 'G' . date('Ymd') . str_pad(mt_rand(1, 9999), 4, '0', STR_PAD_LEFT);
 
+<<<<<<< HEAD
         $agendamentoId = isset($_REQUEST['agendamento_id']) ? (int) $_REQUEST['agendamento_id'] : (isset($_GET['agendamento_id']) ? (int) $_GET['agendamento_id'] : null);
 
+=======
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
         // Verificar se tabela existe, se não criar
         try {
             $db->exec("
                 CREATE TABLE IF NOT EXISTS `guias_encaminhamento` (
                     `id` int(11) NOT NULL AUTO_INCREMENT,
                     `paciente_id` int(11) NOT NULL,
+<<<<<<< HEAD
                     `agendamento_id` int(11) DEFAULT NULL,
+=======
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                     `procedimento_id` int(11) NOT NULL,
                     `data_agendamento` date NOT NULL,
                     `horario_agendamento` time DEFAULT NULL,
@@ -182,6 +204,7 @@ try {
                     PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
             ");
+<<<<<<< HEAD
 
             // Tenta adicionar a coluna se ela não existir (para tabelas antigas)
             try {
@@ -190,6 +213,8 @@ try {
                 // Coluna já existe, ignora
             }
 
+=======
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
         } catch (Exception $tableError) {
             // Ignora se já existe
         }
@@ -197,7 +222,11 @@ try {
         // Salvar a guia no banco
         $stmtSalvarGuia = $db->prepare("
             INSERT INTO guias_encaminhamento (
+<<<<<<< HEAD
                 paciente_id, agendamento_id, procedimento_id, data_agendamento,
+=======
+                paciente_id, procedimento_id, data_agendamento,
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                 horario_agendamento, observacoes, status,
                 data_emissao, codigo
             ) VALUES (
@@ -222,8 +251,18 @@ try {
             ob_end_clean();
         }
 
+<<<<<<< HEAD
         // Redirecionar para o controlador de impressão que já trata múltiplos procedimentos corretamente
         header("Location: index.php?module=guias&action=print&id={$guiaId}");
+=======
+        // Limpar todos os buffers de saída antes de renderizar a guia
+        while (ob_get_level()) {
+            ob_end_clean();
+        }
+
+        // Renderizar o template da guia para impressão
+        include __DIR__ . '/../templates/guia_impressao.php';
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
         exit;
     }
 

@@ -1,10 +1,14 @@
 <?php
 require_once 'auth.php';
+<<<<<<< HEAD
 
 // Permite se tiver permissão padrão OU permissão da Minha Clínica
 if (!hasPermission('appointment_view') && !hasPermission('minha_clinica_pacientes')) {
     verificar_acesso('appointment_view');
 }
+=======
+verificar_acesso('appointment_view');
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
 
 // Instancia o modelo de pacientes
 $pacienteModel = new PacienteModel();

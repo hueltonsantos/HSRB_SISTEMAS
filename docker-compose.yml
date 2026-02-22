@@ -48,6 +48,7 @@ services:
       - ./Banco_sql/migration_v6_procedimentos.sql:/docker-entrypoint-initdb.d/07-migration_v6.sql
       - ./Banco_sql/migration_v7_clinica_master.sql:/docker-entrypoint-initdb.d/08-migration_v7.sql
       - ./Banco_sql/migration_v8_setup.sql:/docker-entrypoint-initdb.d/09-migration_v8.sql
+<<<<<<< HEAD
       - ./Banco_sql/migration_v9_caixa.sql:/docker-entrypoint-initdb.d/10-migration_v9.sql
       - ./Banco_sql/migration_v10_minha_clinica.sql:/docker-entrypoint-initdb.d/11-migration_v10.sql
       - ./Banco_sql/migration_v11_fix_guias.sql:/docker-entrypoint-initdb.d/12-migration_v11.sql
@@ -55,6 +56,8 @@ services:
       - ./Banco_sql/migration_v13_add_dates_especialidades.sql:/docker-entrypoint-initdb.d/14-migration_v13.sql
       - ./Banco_sql/migration_v14_imprimir_evolucao.sql:/docker-entrypoint-initdb.d/15-migration_v14.sql
       - ./Banco_sql/migration_v15_log_permission.sql:/docker-entrypoint-initdb.d/16-migration_v15.sql
+=======
+>>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-root_password}"]
       interval: 10s

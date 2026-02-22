@@ -1,0 +1,140 @@
+--- NOVA EXECUÇÃO: 2026-02-04 00:35:36 ---
+REQUEST_METHOD: POST
+POST Data: Array
+(
+    [nome] => teste
+    [email] => teste@gmail.com
+    [senha] => 123456
+    [perfil_id] => 3
+    [clinica_id] => 
+    [parent_id] => 
+    [status] => 1
+)
+
+Dados capturados: id=0, nome=teste, email=teste@gmail.com, perfil=3, status=1
+Tentando conectar ao banco...
+Conexão estabelecida
+SQL: INSERT INTO usuarios (nome, email, senha, perfil_id, clinica_id, parent_id, status) VALUES (?, ?, ?, ?, ?, ?, ?)
+Resultado: SUCESSO
+Novo ID: 7
+Redirecionando para listagem
+--- NOVA EXECUÇÃO: 2026-02-04 00:38:10 ---
+REQUEST_METHOD: POST
+POST Data: Array
+(
+    [id] => 7
+    [nome] => teste
+    [email] => teste@gmail.com
+    [senha] => 
+    [perfil_id] => 3
+    [clinica_id] => 6
+    [parent_id] => 
+    [status] => 1
+)
+
+Dados capturados: id=7, nome=teste, email=teste@gmail.com, perfil=3, status=1
+Tentando conectar ao banco...
+Conexão estabelecida
+SQL: UPDATE usuarios SET nome = ?, email = ?, perfil_id = ?, clinica_id = ?, parent_id = ?, status = ? WHERE id = ?
+Resultado: SUCESSO
+Redirecionando para listagem
+--- NOVA EXECUÇÃO: 2026-02-04 00:49:28 ---
+REQUEST_METHOD: POST
+POST Data: Array
+(
+    [id] => 7
+    [nome] => teste
+    [email] => teste@gmail.com
+    [senha] => 
+    [perfil_id] => 3
+    [clinica_id] => 6
+    [parent_id] => 
+    [status] => 1
+)
+
+Dados capturados: id=7, nome=teste, email=teste@gmail.com, perfil=3, status=1
+Tentando conectar ao banco...
+Conexão estabelecida
+SQL: UPDATE usuarios SET nome = ?, email = ?, perfil_id = ?, clinica_id = ?, parent_id = ?, status = ? WHERE id = ?
+Resultado: SUCESSO
+Redirecionando para listagem
+--- NOVA EXECUÇÃO: 2026-02-04 00:50:16 ---
+REQUEST_METHOD: POST
+POST Data: Array
+(
+    [nome] => huelton
+    [email] => teste1@gmail.com
+    [senha] => 123456
+    [perfil_id] => 3
+    [clinica_id] => 
+    [parent_id] => 7
+    [status] => 1
+)
+
+Dados capturados: id=0, nome=huelton, email=teste1@gmail.com, perfil=3, status=1
+Tentando conectar ao banco...
+Conexão estabelecida
+SQL: INSERT INTO usuarios (nome, email, senha, perfil_id, clinica_id, parent_id, status) VALUES (?, ?, ?, ?, ?, ?, ?)
+Resultado: SUCESSO
+Novo ID: 8
+Redirecionando para listagem
+--- NOVA EXECUÇÃO: 2026-02-04 01:27:36 ---
+REQUEST_METHOD: POST
+POST Data: Array
+(
+    [id] => 7
+    [nome] => teste
+    [email] => teste@gmail.com
+    [senha] => 
+    [perfil_id] => 3
+    [clinica_id] => 
+    [parent_id] => 
+    [status] => 1
+)
+
+Dados capturados: id=7, nome=teste, email=teste@gmail.com, perfil=3, status=1
+Tentando conectar ao banco...
+Conexão estabelecida
+SQL: UPDATE usuarios SET nome = ?, email = ?, perfil_id = ?, clinica_id = ?, parent_id = ?, status = ? WHERE id = ?
+Resultado: SUCESSO
+Redirecionando para listagem
+--- NOVA EXECUÇÃO: 2026-02-11 21:12:18 ---
+REQUEST_METHOD: POST
+POST Data: Array
+(
+    [id] => 7
+    [nome] => Huelton S R Borges
+    [email] => hueltonti@gmail.com
+    [senha] => 123Mudar@
+    [perfil_id] => 1
+    [clinica_id] => 7
+    [parent_id] => 
+    [status] => 1
+)
+
+Dados capturados: id=7, nome=Huelton S R Borges, email=hueltonti@gmail.com, perfil=1, status=1
+Tentando conectar ao banco...
+Conexão estabelecida
+SQL: UPDATE usuarios SET nome = ?, email = ?, senha = ?, perfil_id = ?, clinica_id = ?, parent_id = ?, status = ? WHERE id = ?
+Resultado: SUCESSO
+Redirecionando para listagem
+--- NOVA EXECUÇÃO: 2026-02-11 23:36:35 ---
+REQUEST_METHOD: POST
+POST Data: Array
+(
+    [nome] => medico
+    [email] => medico@gmail.com
+    [senha] => 123456
+    [perfil_id] => 2
+    [clinica_id] => 
+    [parent_id] => 
+    [status] => 1
+)
+
+Dados capturados: id=0, nome=medico, email=medico@gmail.com, perfil=2, status=1
+Tentando conectar ao banco...
+Conexão estabelecida
+SQL: INSERT INTO usuarios (nome, email, senha, perfil_id, clinica_id, parent_id, status) VALUES (?, ?, ?, ?, ?, ?, ?)
+Resultado: SUCESSO
+Novo ID: 9
+Redirecionando para listagem
