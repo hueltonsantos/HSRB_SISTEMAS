@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `kanban_membros` (
 INSERT INTO `permissoes` (`nome`, `chave`, `descricao`) VALUES
 ('Visualizar Kanban', 'kanban_view', 'Permite visualizar quadros Kanban'),
 ('Gerenciar Kanban', 'kanban_manage', 'Permite criar/editar quadros, colunas e cards')
-ON DUPLICATE KEY UPDATE `nome` = VALUES(`nome`);
+ON DUPLICATE KEY UPDATE `nome` = VALUES(nome), `descricao` = VALUES(descricao);
 
 -- Quadro de exemplo
 INSERT INTO `kanban_quadros` (`nome`, `descricao`, `cor`) VALUES
