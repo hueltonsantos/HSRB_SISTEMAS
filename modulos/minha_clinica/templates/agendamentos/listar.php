@@ -139,17 +139,10 @@
                                                     Status
                                                 </button>
                                                 <div class="dropdown-menu">
-<<<<<<< HEAD
                                                     <a class="dropdown-item btn-status" href="#" data-id="<?= $ag['id'] ?>" data-status="confirmado">Confirmar</a>
                                                     <a class="dropdown-item btn-status" href="#" data-id="<?= $ag['id'] ?>" data-status="realizado">Realizado</a>
                                                     <a class="dropdown-item btn-status" href="#" data-id="<?= $ag['id'] ?>" data-status="cancelado">Cancelar</a>
                                                     <a class="dropdown-item btn-status" href="#" data-id="<?= $ag['id'] ?>" data-status="faltou">Faltou</a>
-=======
-                                                    <a class="dropdown-item" href="index.php?module=minha_clinica&action=api&api_action=alterar_status&id=<?= $ag['id'] ?>&status=confirmado">Confirmar</a>
-                                                    <a class="dropdown-item" href="index.php?module=minha_clinica&action=api&api_action=alterar_status&id=<?= $ag['id'] ?>&status=realizado">Realizado</a>
-                                                    <a class="dropdown-item" href="index.php?module=minha_clinica&action=api&api_action=alterar_status&id=<?= $ag['id'] ?>&status=cancelado">Cancelar</a>
-                                                    <a class="dropdown-item" href="index.php?module=minha_clinica&action=api&api_action=alterar_status&id=<?= $ag['id'] ?>&status=faltou">Faltou</a>
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                                                 </div>
                                             </div>
                                         </div>
@@ -173,7 +166,6 @@ $(document).ready(function() {
         "order": [[1, "asc"]],
         "pageLength": 25
     });
-<<<<<<< HEAD
 
     // Alterar status via AJAX
     $(document).on('click', '.btn-status', function(e) {
@@ -216,7 +208,5 @@ $(document).ready(function() {
             alert('Erro de comunicacao com o servidor.');
         });
     });
-=======
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
 });
 </script>

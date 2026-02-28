@@ -20,16 +20,10 @@ $estatisticasMes = $model->getEstatisticasMes();
 // Proximos agendamentos
 $proximosAgendamentos = $model->getAgendamentosProximos(8);
 
-<<<<<<< HEAD
 // Especialidades, procedimentos e profissionais para contagem
 $especialidades = $model->getEspecialidades(true);
 $profissionais = $model->getProfissionais(null, true);
 $procedimentos = $model->getProcedimentos(null, true);
-=======
-// Especialidades e profissionais para contagem
-$especialidades = $model->getEspecialidades(true);
-$profissionais = $model->getProfissionais(null, true);
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
 
 // Carregar template
 require_once MINHA_CLINICA_TEMPLATES_PATH . '/dashboard.php';

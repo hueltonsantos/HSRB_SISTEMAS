@@ -12,11 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 // Garante que o usuário só pode editar seu próprio perfil
 $id = isset($_POST['id']) ? intval($_POST['id']) : 0;
-<<<<<<< HEAD
 if ($id != $_SESSION['usuario_id']) {
-=======
-if ($id !== $_SESSION['usuario_id']) {
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
     $_SESSION['erro'] = 'Você só pode editar seu próprio perfil.';
     header('Location: index.php?module=dashboard');
     exit;

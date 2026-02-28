@@ -10,7 +10,6 @@ if (isset($_SESSION['mensagem']) && isset($_SESSION['mensagem']['popup']) && $_S
 ?>
 
 <?php if ($showPopup): ?>
-<<<<<<< HEAD
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             Swal.fire({
@@ -22,19 +21,6 @@ if (isset($_SESSION['mensagem']) && isset($_SESSION['mensagem']['popup']) && $_S
             });
         });
     </script>
-=======
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    Swal.fire({
-        icon: 'success',
-        title: 'Sucesso!',
-        text: '<?= addslashes($popupMsg) ?>',
-        confirmButtonText: 'OK',
-        confirmButtonColor: '#4e73df'
-    });
-});
-</script>
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
 <?php endif; ?>
 
 <div class="container-fluid">
@@ -56,15 +42,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-<<<<<<< HEAD
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Agendamentos Hoje
                             </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $estatisticasHoje['total'] ?? 0 ?>
                             </div>
-=======
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Agendamentos Hoje</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $estatisticasHoje['total'] ?? 0 ?></div>
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-calendar-day fa-2x text-gray-300"></i>
@@ -81,12 +62,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Confirmados</div>
-<<<<<<< HEAD
                             <div class="h5 mb-0 font-weight-bold text-gray-800">
                                 <?= $estatisticasHoje['confirmados'] ?? 0 ?></div>
-=======
-                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $estatisticasHoje['confirmados'] ?? 0 ?></div>
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-check-circle fa-2x text-gray-300"></i>
@@ -103,12 +80,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Realizados</div>
-<<<<<<< HEAD
                             <div class="h5 mb-0 font-weight-bold text-gray-800">
                                 <?= $estatisticasHoje['realizados'] ?? 0 ?></div>
-=======
-                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $estatisticasHoje['realizados'] ?? 0 ?></div>
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-clipboard-check fa-2x text-gray-300"></i>
@@ -124,15 +97,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-<<<<<<< HEAD
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Fat. Particular Hoje
                             </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">R$
                                 <?= number_format($estatisticasHoje['faturamento'] ?? 0, 2, ',', '.') ?></div>
-=======
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Faturamento Hoje</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">R$ <?= number_format($estatisticasHoje['faturamento'] ?? 0, 2, ',', '.') ?></div>
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -141,7 +109,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </div>
         </div>
-<<<<<<< HEAD
 
         <!-- Producao Convenio Hoje -->
         <div class="col-xl-3 col-md-6 mb-4">
@@ -161,8 +128,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </div>
         </div>
-=======
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
     </div>
 
     <!-- Cards do Mes -->
@@ -176,7 +141,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div class="card-body">
                     <div class="row text-center">
-<<<<<<< HEAD
                         <div class="col-3">
                             <h4 class="text-primary"><?= $estatisticasMes['total'] ?? 0 ?></h4>
                             <small class="text-muted">Total</small>
@@ -194,19 +158,6 @@ document.addEventListener('DOMContentLoaded', function() {
                             <h4 class="text-info">R$
                                 <?= number_format($estatisticasMes['faturamento_convenio'] ?? 0, 2, ',', '.') ?></h4>
                             <small class="text-muted">Convênio</small>
-=======
-                        <div class="col-4">
-                            <h4 class="text-primary"><?= $estatisticasMes['total'] ?? 0 ?></h4>
-                            <small class="text-muted">Total</small>
-                        </div>
-                        <div class="col-4">
-                            <h4 class="text-success"><?= $estatisticasMes['realizados'] ?? 0 ?></h4>
-                            <small class="text-muted">Realizados</small>
-                        </div>
-                        <div class="col-4">
-                            <h4 class="text-warning">R$ <?= number_format($estatisticasMes['faturamento'] ?? 0, 2, ',', '.') ?></h4>
-                            <small class="text-muted">Faturamento</small>
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                         </div>
                     </div>
                 </div>
@@ -230,11 +181,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                         <div class="col-4">
                             <a href="index.php?module=minha_clinica&action=procedimentos" class="text-decoration-none">
-<<<<<<< HEAD
                                 <h4 class="text-info"><?= count($procedimentos) ?></h4>
-=======
-                                <h4 class="text-info"><?= count($model->getProcedimentos(null, true)) ?></h4>
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                                 <small class="text-muted">Procedimentos</small>
                             </a>
                         </div>
@@ -305,19 +252,12 @@ document.addEventListener('DOMContentLoaded', function() {
                                         <span class="badge badge-<?= $class ?>"><?= ucfirst($ag['status']) ?></span>
                                     </td>
                                     <td>
-<<<<<<< HEAD
                                         <a href="index.php?module=minha_clinica&action=ver_agendamento&id=<?= $ag['id'] ?>"
                                             class="btn btn-sm btn-info" title="Ver">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                         <a href="index.php?module=minha_clinica&action=editar_agendamento&id=<?= $ag['id'] ?>"
                                             class="btn btn-sm btn-warning" title="Editar">
-=======
-                                        <a href="index.php?module=minha_clinica&action=ver_agendamento&id=<?= $ag['id'] ?>" class="btn btn-sm btn-info" title="Ver">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                        <a href="index.php?module=minha_clinica&action=editar_agendamento&id=<?= $ag['id'] ?>" class="btn btn-sm btn-warning" title="Editar">
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                                             <i class="fas fa-edit"></i>
                                         </a>
                                     </td>
@@ -333,12 +273,8 @@ document.addEventListener('DOMContentLoaded', function() {
     <!-- Acesso Rapido -->
     <div class="row">
         <div class="col-lg-3 col-md-6 mb-4">
-<<<<<<< HEAD
             <a href="index.php?module=minha_clinica&action=agendamentos"
                 class="card bg-primary text-white shadow text-decoration-none">
-=======
-            <a href="index.php?module=minha_clinica&action=agendamentos" class="card bg-primary text-white shadow text-decoration-none">
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                 <div class="card-body text-center">
                     <i class="fas fa-calendar-alt fa-3x mb-2"></i>
                     <h5>Agendamentos</h5>
@@ -346,12 +282,8 @@ document.addEventListener('DOMContentLoaded', function() {
             </a>
         </div>
         <div class="col-lg-3 col-md-6 mb-4">
-<<<<<<< HEAD
             <a href="index.php?module=minha_clinica&action=especialidades"
                 class="card bg-success text-white shadow text-decoration-none">
-=======
-            <a href="index.php?module=minha_clinica&action=especialidades" class="card bg-success text-white shadow text-decoration-none">
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                 <div class="card-body text-center">
                     <i class="fas fa-stethoscope fa-3x mb-2"></i>
                     <h5>Especialidades</h5>
@@ -359,12 +291,8 @@ document.addEventListener('DOMContentLoaded', function() {
             </a>
         </div>
         <div class="col-lg-3 col-md-6 mb-4">
-<<<<<<< HEAD
             <a href="index.php?module=minha_clinica&action=procedimentos"
                 class="card bg-info text-white shadow text-decoration-none">
-=======
-            <a href="index.php?module=minha_clinica&action=procedimentos" class="card bg-info text-white shadow text-decoration-none">
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                 <div class="card-body text-center">
                     <i class="fas fa-notes-medical fa-3x mb-2"></i>
                     <h5>Procedimentos</h5>
@@ -372,12 +300,8 @@ document.addEventListener('DOMContentLoaded', function() {
             </a>
         </div>
         <div class="col-lg-3 col-md-6 mb-4">
-<<<<<<< HEAD
             <a href="index.php?module=minha_clinica&action=profissionais"
                 class="card bg-warning text-white shadow text-decoration-none">
-=======
-            <a href="index.php?module=minha_clinica&action=profissionais" class="card bg-warning text-white shadow text-decoration-none">
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                 <div class="card-body text-center">
                     <i class="fas fa-user-md fa-3x mb-2"></i>
                     <h5>Profissionais</h5>
@@ -385,8 +309,4 @@ document.addEventListener('DOMContentLoaded', function() {
             </a>
         </div>
     </div>
-<<<<<<< HEAD
 </div>
-=======
-</div>
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750

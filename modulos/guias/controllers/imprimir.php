@@ -50,11 +50,7 @@ try {
     require_once CONFIGURACOES_MODEL_PATH . 'ConfiguracaoModel.php';
     $configModel = new ConfiguracaoModel();
     $configs = [];
-<<<<<<< HEAD
     foreach ($configModel->listar() as $c) {
-=======
-    foreach($configModel->listar() as $c) {
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
         $configs[$c['chave']] = $c['valor'];
     }
 
@@ -63,20 +59,12 @@ try {
         SELECT g.*, p.nome as paciente_nome, p.cpf as paciente_documento,
                vp.procedimento as procedimento_nome, vp.valor_paciente as procedimento_valor,
                e.nome as especialidade_nome, cp.nome as clinica_nome,
-<<<<<<< HEAD
                cp.endereco, cp.telefone,
                vp.id as procedimento_id_orig
         FROM guias_encaminhamento g
         INNER JOIN pacientes p ON g.paciente_id = p.id
         LEFT JOIN valores_procedimentos vp ON g.procedimento_id = vp.id
         LEFT JOIN especialidades e ON vp.especialidade_id = e.id
-=======
-               cp.endereco, cp.telefone
-        FROM guias_encaminhamento g
-        INNER JOIN pacientes p ON g.paciente_id = p.id
-        INNER JOIN valores_procedimentos vp ON g.procedimento_id = vp.id
-        INNER JOIN especialidades e ON vp.especialidade_id = e.id
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
         LEFT JOIN clinicas_parceiras cp ON e.id = cp.id
         WHERE g.id = ?
         LIMIT 1

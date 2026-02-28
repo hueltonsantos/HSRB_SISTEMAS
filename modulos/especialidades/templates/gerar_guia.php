@@ -23,7 +23,6 @@
         <div class="card-body">
             <div class="row mb-4">
                 <div class="col-md-6">
-<<<<<<< HEAD
                     <h5>Procedimento(s)</h5>
                     <?php foreach($procedimentosAgendamento as $proc): ?>
                         <div class="mb-2 pb-2 border-bottom">
@@ -32,12 +31,6 @@
                             <p class="mb-0"><strong>Especialidade:</strong> <?php echo htmlspecialchars($proc['especialidade_nome']); ?></p>
                         </div>
                     <?php endforeach; ?>
-=======
-                    <h5>Procedimento</h5>
-                    <p><strong><?php echo htmlspecialchars($procedimento['procedimento']); ?></strong></p>
-                    <!-- Preço ocultado no encaminhamento -->
-                    <p><strong>Especialidade:</strong> <?php echo htmlspecialchars($procedimento['especialidade_nome']); ?></p>
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                 </div>
                 <div class="col-md-6">
                     <h5>Clínica</h5>

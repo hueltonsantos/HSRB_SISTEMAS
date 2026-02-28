@@ -19,7 +19,6 @@ require_once MODULES_PATH . '/pacientes/models/PacienteModel.php';
 $pacienteModel = new PacienteModel();
 $pacientes = $pacienteModel->getAll();
 
-<<<<<<< HEAD
 // Buscar convenios
 require_once MINHA_CLINICA_PATH . '/models/ConveniosModel.php';
 $conveniosModel = new ConveniosModel();
@@ -44,20 +43,6 @@ $agendamento = [
     'valor' => $formData['valor_total'] ?? '',
     'forma_pagamento' => $formData['forma_pagamento'] ?? '',
     'observacoes' => $formData['observacoes'] ?? ''
-=======
-// Agendamento vazio
-$agendamento = [
-    'id' => '',
-    'paciente_id' => $_GET['paciente_id'] ?? '',
-    'especialidade_id' => '',
-    'procedimento_id' => '',
-    'profissional_id' => '',
-    'data_consulta' => $_GET['data'] ?? date('Y-m-d'),
-    'hora_consulta' => $_GET['hora'] ?? '',
-    'valor' => '',
-    'forma_pagamento' => '',
-    'observacoes' => ''
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
 ];
 
 $titulo = 'Novo Agendamento';

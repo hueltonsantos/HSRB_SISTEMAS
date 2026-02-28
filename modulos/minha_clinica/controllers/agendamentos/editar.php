@@ -40,17 +40,12 @@ $procedimentos = $model->getProcedimentos($agendamento['especialidade_id'], true
 $db = Database::getInstance();
 $pacientes = $db->fetchAll("SELECT id, nome, celular FROM pacientes WHERE status = 1 ORDER BY nome ASC LIMIT 500");
 
-<<<<<<< HEAD
 // Buscar convenios
 $conveniosModel = new ConveniosModel();
 $convenios = $conveniosModel->getAll(['ativo' => 1], 'nome_fantasia');
 
 $titulo = 'Editar Agendamento #' . $id;
 $actionUrl = 'index.php?module=minha_clinica&action=salvar_agendamento';
-=======
-$pageTitle = 'Editar Agendamento #' . $id;
-$formAction = 'index.php?module=minha_clinica&action=salvar_agendamento';
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
 $isEdit = true;
 
 require_once MINHA_CLINICA_TEMPLATES_PATH . '/agendamentos/form.php';

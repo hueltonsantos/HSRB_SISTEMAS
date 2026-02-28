@@ -74,12 +74,8 @@
                                     </thead>
                                     <tbody>
                                         <tr id="linha_vazia">
-<<<<<<< HEAD
                                             <td colspan="3" class="text-center text-muted">Nenhum procedimento
                                                 selecionado</td>
-=======
-                                            <td colspan="3" class="text-center text-muted">Nenhum procedimento selecionado</td>
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                                         </tr>
                                     </tbody>
                                     <tfoot>
@@ -105,12 +101,7 @@
                         <select name="profissional_id" id="profissional_id" class="form-control">
                             <option value="">Selecione o profissional</option>
                             <?php foreach ($profissionais as $prof): ?>
-<<<<<<< HEAD
                                 <option value="<?= $prof['id'] ?>" data-especialidade="<?= $prof['especialidade_id'] ?>"
-=======
-                                <option value="<?= $prof['id'] ?>"
-                                    data-especialidade="<?= $prof['especialidade_id'] ?>"
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                                     <?= ($agendamento['profissional_id'] ?? '') == $prof['id'] ? 'selected' : '' ?>>
                                     <?= htmlspecialchars($prof['nome']) ?>
                                 </option>
@@ -121,29 +112,20 @@
                     <!-- Data -->
                     <div class="col-md-4 mb-3">
                         <label class="font-weight-bold">Data <span class="text-danger">*</span></label>
-<<<<<<< HEAD
                         <input type="date" name="data_consulta" class="form-control"
                             value="<?= $agendamento['data_consulta'] ?? date('Y-m-d') ?>" required>
-=======
-                        <input type="date" name="data_consulta" class="form-control" value="<?= $agendamento['data_consulta'] ?? date('Y-m-d') ?>" required>
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                     </div>
 
                     <!-- Hora -->
                     <div class="col-md-4 mb-3">
                         <label class="font-weight-bold">Hora <span class="text-danger">*</span></label>
-<<<<<<< HEAD
                         <input type="time" name="hora_consulta" class="form-control"
                             value="<?= isset($agendamento['hora_consulta']) ? substr($agendamento['hora_consulta'], 0, 5) : '' ?>"
                             required>
-=======
-                        <input type="time" name="hora_consulta" class="form-control" value="<?= isset($agendamento['hora_consulta']) ? substr($agendamento['hora_consulta'], 0, 5) : '' ?>" required>
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                     </div>
                 </div>
 
                 <div class="row">
-<<<<<<< HEAD
                     <!-- Convênio e Guia -->
                     <div class="col-md-4 mb-3">
                         <label class="font-weight-bold">Convênio</label>
@@ -165,37 +147,22 @@
 
                     <!-- Forma de Pagamento -->
                     <div class="col-md-4 mb-3" id="div_forma_pagamento">
-=======
-                    <!-- Forma de Pagamento -->
-                    <div class="col-md-4 mb-3">
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                         <label class="font-weight-bold">Forma de Pagamento</label>
                         <select name="forma_pagamento" class="form-control">
                             <option value="">Selecione</option>
                             <option value="Dinheiro" <?= ($agendamento['forma_pagamento'] ?? '') == 'Dinheiro' ? 'selected' : '' ?>>Dinheiro</option>
-<<<<<<< HEAD
                             <option value="PIX" <?= ($agendamento['forma_pagamento'] ?? '') == 'PIX' ? 'selected' : '' ?>>
                                 PIX</option>
                             <option value="Cartao Debito" <?= ($agendamento['forma_pagamento'] ?? '') == 'Cartao Debito' ? 'selected' : '' ?>>Cartao Debito</option>
                             <option value="Cartao Credito" <?= ($agendamento['forma_pagamento'] ?? '') == 'Cartao Credito' ? 'selected' : '' ?>>Cartao Credito</option>
-=======
-                            <option value="PIX" <?= ($agendamento['forma_pagamento'] ?? '') == 'PIX' ? 'selected' : '' ?>>PIX</option>
-                            <option value="Cartao Debito" <?= ($agendamento['forma_pagamento'] ?? '') == 'Cartao Debito' ? 'selected' : '' ?>>Cartao Debito</option>
-                            <option value="Cartao Credito" <?= ($agendamento['forma_pagamento'] ?? '') == 'Cartao Credito' ? 'selected' : '' ?>>Cartao Credito</option>
-                            <option value="Convenio" <?= ($agendamento['forma_pagamento'] ?? '') == 'Convenio' ? 'selected' : '' ?>>Convenio</option>
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                         </select>
                     </div>
 
                     <!-- Observacoes -->
                     <div class="col-md-8 mb-3">
                         <label class="font-weight-bold">Observacoes</label>
-<<<<<<< HEAD
                         <textarea name="observacoes" class="form-control"
                             rows="2"><?= htmlspecialchars($agendamento['observacoes'] ?? '') ?></textarea>
-=======
-                        <textarea name="observacoes" class="form-control" rows="2"><?= htmlspecialchars($agendamento['observacoes'] ?? '') ?></textarea>
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                     </div>
                 </div>
 
@@ -215,7 +182,6 @@
 </div>
 
 <script>
-<<<<<<< HEAD
     $(document).ready(function () {
         // Select2 para pacientes
         if ($.fn.select2) {
@@ -329,95 +295,6 @@
                     var valorFormatado = proc.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
 
                     tbody.append(`
-=======
-$(document).ready(function() {
-    // Select2 para pacientes
-    if ($.fn.select2) {
-        $('.select2').select2({
-            placeholder: 'Selecione...',
-            allowClear: true,
-            width: '100%'
-        });
-    }
-
-    // Variavel para armazenar procedimentos selecionados
-    var procedimentosSelecionados = [];
-
-    // Carregar procedimentos ao mudar especialidade
-    $('#especialidade_id').change(function() {
-        var espId = $(this).val();
-        var $procSelect = $('#procedimento_select');
-        var $prof = $('#profissional_id');
-
-        $procSelect.html('<option value="">Carregando...</option>');
-
-        if (espId) {
-            $.get('index.php?module=minha_clinica&action=api&api_action=get_procedimentos&especialidade_id=' + espId, function(data) {
-                var options = '<option value="">Selecione um procedimento</option>';
-                if (data && data.length > 0) {
-                    data.forEach(function(p) {
-                        var valorFormatado = parseFloat(p.valor).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
-                        options += '<option value="' + p.id + '" data-valor="' + p.valor + '" data-nome="' + p.procedimento + '">' + p.procedimento + ' - R$ ' + valorFormatado + '</option>';
-                    });
-                }
-                $procSelect.html(options);
-            });
-
-            // Filtrar profissionais
-            $prof.find('option').each(function() {
-                var profEsp = $(this).data('especialidade');
-                if (profEsp && profEsp != espId) {
-                    $(this).hide();
-                } else {
-                    $(this).show();
-                }
-            });
-        } else {
-            $procSelect.html('<option value="">Selecione uma especialidade primeiro</option>');
-            $prof.find('option').show();
-        }
-    });
-
-    // Adicionar procedimento a tabela
-    $('#btn_add_procedimento').click(function() {
-        var select = $('#procedimento_select option:selected');
-        var id = select.val();
-        var nome = select.data('nome');
-        var valor = parseFloat(select.data('valor'));
-
-        if (!id) {
-            alert('Selecione um procedimento para adicionar.');
-            return;
-        }
-
-        // Verifica se ja existe
-        if (procedimentosSelecionados.find(p => p.id == id)) {
-            alert('Este procedimento ja foi adicionado.');
-            return;
-        }
-
-        procedimentosSelecionados.push({ id: id, nome: nome, valor: valor });
-        atualizarTabelaProcedimentos();
-    });
-
-    // Atualizar tabela e total
-    function atualizarTabelaProcedimentos() {
-        var tbody = $('#tabela_procedimentos tbody');
-        var container = $('#procedimentos_container');
-        var total = 0;
-
-        tbody.empty();
-        container.empty();
-
-        if (procedimentosSelecionados.length === 0) {
-            tbody.html('<tr id="linha_vazia"><td colspan="3" class="text-center text-muted">Nenhum procedimento selecionado</td></tr>');
-        } else {
-            procedimentosSelecionados.forEach(function(proc, index) {
-                total += proc.valor;
-                var valorFormatado = proc.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
-
-                tbody.append(`
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                     <tr data-id="${proc.id}">
                         <td>${proc.nome}</td>
                         <td>R$ ${valorFormatado}</td>
@@ -429,7 +306,6 @@ $(document).ready(function() {
                     </tr>
                 `);
 
-<<<<<<< HEAD
                     container.append(`<input type="hidden" name="procedimentos[]" value="${proc.id}">`);
                 });
             }
@@ -452,27 +328,3 @@ $(document).ready(function() {
         }
     });
 </script>
-=======
-                container.append(`<input type="hidden" name="procedimentos[]" value="${proc.id}">`);
-            });
-        }
-
-        var totalFormatado = total.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
-        $('#valor_total_display').text('R$ ' + totalFormatado);
-        $('#valor_total_input').val(total.toFixed(2));
-    }
-
-    // Remover procedimento
-    $(document).on('click', '.btn-remover-proc', function() {
-        var id = $(this).data('id');
-        procedimentosSelecionados = procedimentosSelecionados.filter(p => p.id != id);
-        atualizarTabelaProcedimentos();
-    });
-
-    // Trigger para carregar procedimentos se especialidade ja selecionada
-    if ($('#especialidade_id').val()) {
-        $('#especialidade_id').trigger('change');
-    }
-});
-</script>
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750

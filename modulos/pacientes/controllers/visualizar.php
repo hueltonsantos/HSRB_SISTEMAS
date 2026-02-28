@@ -51,7 +51,6 @@ if (isset($paciente['ultima_atualizacao']) && !empty($paciente['ultima_atualizac
     $paciente['ultima_atualizacao_formatada'] = $pacienteModel->formatDateForDisplay($paciente['ultima_atualizacao'], true);
 }
 
-<<<<<<< HEAD
 // Inclui o arquivo de autenticação para verificação de permissões
 require_once 'auth.php';
 
@@ -60,8 +59,6 @@ if (!hasPermission('appointment_view') && !hasPermission('minha_clinica_paciente
     verificar_acesso('appointment_view');
 }
 
-=======
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
 // Inclui o modelo AgendamentoModel
 require_once MODULES_PATH . '/agendamentos/models/AgendamentoModel.php';
 $agendamentoModel = new AgendamentoModel();

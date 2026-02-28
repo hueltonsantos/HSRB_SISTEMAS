@@ -16,11 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $model = new MinhaClinicaModel();
 
 // Preparar dados
-<<<<<<< HEAD
 $id = isset($_POST['id']) && !empty($_POST['id']) ? (int) $_POST['id'] : null;
-=======
-$id = isset($_POST['id']) && !empty($_POST['id']) ? (int)$_POST['id'] : null;
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
 
 // Procedimentos (multiplos)
 $procedimentos = isset($_POST['procedimentos']) ? $_POST['procedimentos'] : [];
@@ -28,7 +24,6 @@ $procedimentos = isset($_POST['procedimentos']) ? $_POST['procedimentos'] : [];
 // Formatar valor total
 $valor_total = $_POST['valor_total'] ?? 0;
 if (is_string($valor_total)) {
-<<<<<<< HEAD
     $valor_total = str_replace(['R$', ' '], '', $valor_total);
     if (strpos($valor_total, ',') !== false) {
         $valor_total = str_replace('.', '', $valor_total);
@@ -46,28 +41,12 @@ $data = [
     'data_consulta' => $_POST['data_consulta'],
     'hora_consulta' => $_POST['hora_consulta'] . ':00',
     'valor' => (float) $valor_total,
-=======
-    $valor_total = str_replace('.', '', $valor_total);
-    $valor_total = str_replace(',', '.', $valor_total);
-}
-
-$data = [
-    'id' => $id,
-    'paciente_id' => (int)$_POST['paciente_id'],
-    'especialidade_id' => (int)$_POST['especialidade_id'],
-    'procedimento_id' => !empty($procedimentos) ? (int)$procedimentos[0] : null,
-    'profissional_id' => !empty($_POST['profissional_id']) ? (int)$_POST['profissional_id'] : null,
-    'data_consulta' => $_POST['data_consulta'],
-    'hora_consulta' => $_POST['hora_consulta'] . ':00',
-    'valor' => (float)$valor_total,
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
     'forma_pagamento' => $_POST['forma_pagamento'] ?? null,
     'observacoes' => $_POST['observacoes'] ?? null
 ];
 
 // Validar campos obrigatorios
 $errors = [];
-<<<<<<< HEAD
 if (empty($data['paciente_id']))
     $errors[] = 'Paciente obrigatorio';
 if (empty($data['especialidade_id']))
@@ -76,12 +55,6 @@ if (empty($data['data_consulta']))
     $errors[] = 'Data obrigatoria';
 if (empty($data['hora_consulta']))
     $errors[] = 'Hora obrigatoria';
-=======
-if (empty($data['paciente_id'])) $errors[] = 'Paciente obrigatorio';
-if (empty($data['especialidade_id'])) $errors[] = 'Especialidade obrigatoria';
-if (empty($data['data_consulta'])) $errors[] = 'Data obrigatoria';
-if (empty($data['hora_consulta'])) $errors[] = 'Hora obrigatoria';
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
 
 if (!empty($errors)) {
     $_SESSION['mensagem'] = [
@@ -93,13 +66,10 @@ if (!empty($errors)) {
     exit;
 }
 
-<<<<<<< HEAD
 $data['convenio_id'] = !empty($_POST['convenio_id']) ? (int) $_POST['convenio_id'] : null;
 $db = Database::getInstance();
 $guiaId = null;
 
-=======
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
 try {
     $agendamentoId = $model->salvarAgendamento($data);
 
@@ -108,7 +78,6 @@ try {
         $model->salvarAgendamentoProcedimentos($agendamentoId, $procedimentos);
     }
 
-<<<<<<< HEAD
     // Gerar Guia (se informado e se for convênio)
     if ($data['convenio_id'] && !empty($_POST['numero_guia'])) {
         // Verifica se guia ja existe para este agendamento
@@ -157,10 +126,6 @@ try {
 
     // Registrar log
     require_once MODULES_PATH . '/log/models/LogModel.php';
-=======
-    // Registrar log
-    require_once ROOT_PATH . '/modulos/log/models/LogModel.php';
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
     $acao = $id ? 'editar' : 'criar';
     $descricao = $id
         ? "Agendamento master #{$agendamentoId} atualizado para {$data['data_consulta']} as {$data['hora_consulta']}"
@@ -174,10 +139,7 @@ try {
     ];
 
     header('Location: index.php?module=minha_clinica');
-<<<<<<< HEAD
 
-=======
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
 } catch (Exception $e) {
     $_SESSION['mensagem'] = [
         'tipo' => 'danger',

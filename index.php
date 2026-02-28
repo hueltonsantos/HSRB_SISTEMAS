@@ -196,7 +196,6 @@ $pageTitle = SYSTEM_NAME;
             <!-- Divisor -->
             <hr class="sidebar-divider">
 
-<<<<<<< HEAD
             <?php if (hasPermission('master_dashboard') || hasPermission('painel_profissional')): ?>
                 <!-- Minha Clinica (Master) -->
                 <div class="sidebar-heading">
@@ -334,95 +333,6 @@ $pageTitle = SYSTEM_NAME;
                         <span>Agendamentos</span>
                     </a>
                 </li>
-=======
-            <?php if (hasPermission('master_dashboard')): ?>
-            <!-- Minha Clinica (Master) -->
-            <div class="sidebar-heading">
-                Minha Clinica
-            </div>
-
-            <li class="nav-item <?php echo $module == 'minha_clinica' ? 'active' : ''; ?>">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMaster"
-                    aria-expanded="true" aria-controls="collapseMaster">
-                    <i class="fas fa-fw fa-clinic-medical"></i>
-                    <span>Minha Clinica</span>
-                </a>
-                <div id="collapseMaster" class="collapse <?php echo $module == 'minha_clinica' ? 'show' : ''; ?>" aria-labelledby="headingMaster">
-                    <div class="py-2 collapse-inner rounded">
-                        <a class="collapse-item <?php echo $module == 'minha_clinica' && $action == 'index' ? 'active' : ''; ?>" href="index.php?module=minha_clinica">
-                            <i class="fas fa-tachometer-alt"></i> Dashboard
-                        </a>
-                        <?php if (hasPermission('master_agendamentos')): ?>
-                        <a class="collapse-item <?php echo $module == 'minha_clinica' && $action == 'agendamentos' ? 'active' : ''; ?>" href="index.php?module=minha_clinica&action=agendamentos">
-                            <i class="fas fa-calendar-alt"></i> Agendamentos
-                        </a>
-                        <?php endif; ?>
-                        <?php if (hasPermission('master_especialidades')): ?>
-                        <a class="collapse-item <?php echo $module == 'minha_clinica' && $action == 'especialidades' ? 'active' : ''; ?>" href="index.php?module=minha_clinica&action=especialidades">
-                            <i class="fas fa-stethoscope"></i> Especialidades
-                        </a>
-                        <?php endif; ?>
-                        <?php if (hasPermission('master_procedimentos')): ?>
-                        <a class="collapse-item <?php echo $module == 'minha_clinica' && $action == 'procedimentos' ? 'active' : ''; ?>" href="index.php?module=minha_clinica&action=procedimentos">
-                            <i class="fas fa-notes-medical"></i> Procedimentos
-                        </a>
-                        <?php endif; ?>
-                        <?php if (hasPermission('master_profissionais')): ?>
-                        <a class="collapse-item <?php echo $module == 'minha_clinica' && $action == 'profissionais' ? 'active' : ''; ?>" href="index.php?module=minha_clinica&action=profissionais">
-                            <i class="fas fa-user-md"></i> Profissionais
-                        </a>
-                        <?php endif; ?>
-                    </div>
-                </div>
-            </li>
-
-            <hr class="sidebar-divider">
-            <?php endif; ?>
-
-            <!-- Cabeçalho - Módulos -->
-            <div class="sidebar-heading">
-                Modulos
-            </div>
-
-            <?php if (hasPermission('appointment_view') || hasPermission('appointment_create')): ?>
-            <!-- Módulo de Pacientes -->
-            <li class="nav-item <?php echo $module == 'pacientes' ? 'active' : ''; ?>">
-                <a class="nav-link" href="index.php?module=pacientes">
-                    <i class="fas fa-fw fa-user"></i>
-                    <span>Pacientes</span>
-                </a>
-            </li>
-            <?php endif; ?>
-
-            <?php if (hasPermission('role_manage')): // Usando role_manage como proxy para admin em clínicas ?>
-            <!-- Módulo de Clínicas -->
-            <li class="nav-item <?php echo $module == 'clinicas' ? 'active' : ''; ?>">
-                <a class="nav-link" href="index.php?module=clinicas">
-                    <i class="fas fa-fw fa-hospital"></i>
-                    <span>Clínicas Parceiras</span>
-                </a>
-            </li>
-            <?php endif; ?>
-
-            <?php if (hasPermission('role_manage')): // Especialidades restrito a admin/gestor ?>
-            <!-- Módulo de Especialidades -->
-            <li class="nav-item <?php echo $module == 'especialidades' ? 'active' : ''; ?>">
-                <a class="nav-link" href="index.php?module=especialidades">
-                    <i class="fas fa-fw fa-stethoscope"></i>
-                    <span>Especialidades</span>
-                </a>
-            </li>
-            <?php endif; ?>
-
-            <?php if (hasPermission('appointment_view') || hasPermission('appointment_create')): ?>
-            <!-- Módulo de Agendamentos -->
-            <li class="nav-item <?php echo $module == 'agendamentos' ? 'active' : ''; ?>">
-                <a class="nav-link" href="index.php?module=agendamentos">
-                    <i class="fas fa-fw fa-calendar-alt"></i>
-                    <span>Agendamentos</span>
-                </a>
-            </li>
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
             <?php endif; ?>
             <!-- Módulo de Procedimentos -->
             <!-- <li class="nav-item <?php echo $module == 'procedimentos' ? 'active' : ''; ?>">
@@ -433,7 +343,6 @@ $pageTitle = SYSTEM_NAME;
             </li> -->
 
             <?php if (hasPermission('price_manage')): ?>
-<<<<<<< HEAD
                 <!-- Módulo de Tabela de Preços -->
                 <li class="nav-item <?php echo $module == 'tabela_precos' ? 'active' : ''; ?>">
                     <a class="nav-link" href="index.php?module=tabela_precos">
@@ -473,16 +382,6 @@ $pageTitle = SYSTEM_NAME;
                 </li>
             <?php endif; ?>
 
-=======
-            <!-- Módulo de Tabela de Preços -->
-            <li class="nav-item <?php echo $module == 'tabela_precos' ? 'active' : ''; ?>">
-                <a class="nav-link" href="index.php?module=tabela_precos">
-                    <i class="fas fa-fw fa-search-dollar"></i>
-                    <span>Consulta de Preços</span>
-                </a>
-            </li>
-            <?php endif; ?>
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
             <!-- Divisor -->
             <hr class="sidebar-divider">
 
@@ -492,7 +391,6 @@ $pageTitle = SYSTEM_NAME;
             </div> -->
 
             <?php if (hasPermission('user_manage')): ?>
-<<<<<<< HEAD
                 <!-- Módulo de Usuários -->
                 <li class="nav-item <?php echo $module == 'usuarios' ? 'active' : ''; ?>">
                     <a class="nav-link" href="index.php?module=usuarios">
@@ -560,75 +458,6 @@ $pageTitle = SYSTEM_NAME;
                         <span>Kanban</span>
                     </a>
                 </li>
-=======
-            <!-- Módulo de Usuários -->
-            <li class="nav-item <?php echo $module == 'usuarios' ? 'active' : ''; ?>">
-                <a class="nav-link" href="index.php?module=usuarios">
-                    <i class="fas fa-fw fa-users-cog"></i>
-                    <span>Usuários</span>
-                </a>
-            </li>
-            <?php endif; ?>
-
-            <?php if (hasPermission('role_manage')): ?>
-            <!-- Módulo de Perfis (Permissões) -->
-            <li class="nav-item <?php echo $module == 'perfis' ? 'active' : ''; ?>">
-                <a class="nav-link" href="index.php?module=perfis">
-                    <i class="fas fa-fw fa-id-card"></i>
-                    <span>Permissões</span>
-                </a>
-            </li>
-            <?php endif; ?>
-
-            <?php if (hasPermission('appointment_view') || hasPermission('appointment_create')): ?>
-            <!-- Módulo de Guias de Encaminhamento -->
-            <li class="nav-item <?php echo $module == 'guias' ? 'active' : ''; ?>">
-                <a class="nav-link" href="index.php?module=guias">
-                    <i class="fas fa-fw fa-file-medical"></i>
-                    <span>Guias de Encaminhamento</span>
-                </a>
-            </li>
-            <?php endif; ?>
-
-            <?php if (hasPermission('role_manage')): // Configurações restrito a admin ?>
-            <!-- Módulo de Configurações -->
-            <li class="nav-item <?php echo $module == 'configuracoes' ? 'active' : ''; ?>">
-                <a class="nav-link" href="index.php?module=configuracoes">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Configurações</span>
-                </a>
-            </li>
-            <?php endif; ?>
-
-            <?php if (hasPermission('report_view')): ?>
-            <!-- Módulo de Relatórios -->
-            <li class="nav-item <?php echo $module == 'relatorios' ? 'active' : ''; ?>">
-                <a class="nav-link" href="index.php?module=relatorios">
-                    <i class="fas fa-fw fa-chart-line"></i>
-                    <span>Relatórios</span>
-                </a>
-            </li>
-            <?php endif; ?>
-
-            <?php if (hasPermission('dashboard_realtime')): ?>
-            <!-- Painel em Tempo Real -->
-            <li class="nav-item <?php echo $module == 'dashboard_realtime' ? 'active' : ''; ?>">
-                <a class="nav-link" href="index.php?module=dashboard_realtime">
-                    <i class="fas fa-fw fa-chart-bar"></i>
-                    <span>Painel Tempo Real</span>
-                </a>
-            </li>
-            <?php endif; ?>
-
-            <?php if (hasPermission('kanban_view')): ?>
-            <!-- Módulo Kanban -->
-            <li class="nav-item <?php echo $module == 'kanban' ? 'active' : ''; ?>">
-                <a class="nav-link" href="index.php?module=kanban">
-                    <i class="fas fa-fw fa-columns"></i>
-                    <span>Kanban</span>
-                </a>
-            </li>
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
             <?php endif; ?>
 
             <!-- Divisor -->
@@ -672,7 +501,6 @@ $pageTitle = SYSTEM_NAME;
                         </div>
                     </form>
 
-<<<<<<< HEAD
                     <!-- Perfil/Cargo do Usuário -->
                     <?php if (isset($_SESSION['perfil_nome'])): ?>
                         <div class="d-none d-md-flex align-items-center">
@@ -687,10 +515,6 @@ $pageTitle = SYSTEM_NAME;
                     <!-- Clock/Date Placeholder -->
                     <div class="d-none d-md-block mx-3 text-gray-600 small font-weight-bold topbar-clock"
                         id="clock-date" style="text-align: right;"></div>
-=======
-                    <!-- Clock/Date Placeholder -->
-                    <div class="d-none d-md-block mx-3 text-gray-600 small font-weight-bold topbar-clock" id="clock-date" style="text-align: right;"></div>
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
 
                     <!-- Itens da barra superior -->
                     <ul class="navbar-nav ml-auto">
@@ -855,7 +679,6 @@ $pageTitle = SYSTEM_NAME;
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-<<<<<<< HEAD
                                 <span
                                     class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?></span>
                                 <?php
@@ -863,13 +686,6 @@ $pageTitle = SYSTEM_NAME;
                                 ?>
                                 <img class="img-profile rounded-circle" src="<?php echo $userFoto; ?>"
                                     style="width: 32px; height: 32px; object-fit: cover;">
-=======
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?></span>
-                                <?php
-                                $userFoto = isset($_SESSION['usuario_foto']) && $_SESSION['usuario_foto'] ? 'uploads/usuarios/' . $_SESSION['usuario_foto'] : 'assents/img/user.png';
-                                ?>
-                                <img class="img-profile rounded-circle" src="<?php echo $userFoto; ?>" style="width: 32px; height: 32px; object-fit: cover;">
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                             </a>
 
                             <!-- Dropdown de usuário -->
@@ -988,26 +804,16 @@ $pageTitle = SYSTEM_NAME;
 
 
     <script>
-<<<<<<< HEAD
         $(document).ready(function () {
             // Marcar todas como lidas via AJAX
             $(document).on('click', '#marcar-todas-link', function (e) {
-=======
-        $(document).ready(function() {
-            // Marcar todas como lidas via AJAX
-            $(document).on('click', '#marcar-todas-link', function(e) {
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                 e.preventDefault();
 
                 if (confirm('Marcar todas as notificações como lidas?')) {
                     $.ajax({
                         url: 'index.php?module=sistema&action=notificacoes&acao=marcar_todas&ajax=1',
                         type: 'GET',
-<<<<<<< HEAD
                         success: function (response) {
-=======
-                        success: function(response) {
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                             $('.dropdown-list[aria-labelledby="alertsDropdown"] .dropdown-item:not(.text-center)').remove();
                             $('.dropdown-list[aria-labelledby="alertsDropdown"] h6').after(
                                 '<span class="dropdown-item text-center small text-gray-500">Não há novas notificações</span>'
@@ -1022,20 +828,12 @@ $pageTitle = SYSTEM_NAME;
             });
 
             // Polling de notificações a cada 30 segundos
-<<<<<<< HEAD
             setInterval(function () {
-=======
-            setInterval(function() {
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                 $.ajax({
                     url: 'index.php?module=sistema&action=notificacoes&acao=contar&ajax=1',
                     type: 'GET',
                     dataType: 'json',
-<<<<<<< HEAD
                     success: function (response) {
-=======
-                    success: function(response) {
->>>>>>> acfed81619c575d93a5d861738c0a6b65ada5750
                         var badge = $('.badge-counter');
                         if (response.total > 0) {
                             var texto = response.total > 9 ? '9+' : response.total;
