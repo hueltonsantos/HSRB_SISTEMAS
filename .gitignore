@@ -1,0 +1,49 @@
+# ============================================================
+# .gitignore - HSRB SISTEMAS
+# ============================================================
+
+# Variáveis de ambiente (NUNCA subir credenciais)
+.env
+.env.prod
+.env.local
+.env.*.local
+
+# IDEs e editores
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+
+# Logs e arquivos de debug
+*.log
+*.txt
+debug_*
+salvar_debug.*
+
+# Uploads de usuários (dados sensíveis)
+uploads/usuarios/
+
+# Banco de dados local / dumps antigos
+Banco_atual/
+*.sql.bak
+
+# Screenshots / imagens de desenvolvimento
+screenshots/
+
+# Cache e temporários
+.cache/
+tmp/
+temp/
+
+# Node (caso futuramente use)
+node_modules/
+
+# Composer (descomentar se usar)
+# vendor/
+
+# OS
+Thumbs.db
+.DS_Store
+Desktop.ini
