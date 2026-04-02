@@ -8,7 +8,7 @@ if (!isset($_SESSION['usuario_id'])) {
     exit;
 }
 
-if (function_exists('hasPermission') && !hasPermission('prontuario_paciente')) {
+if (function_exists('hasPermission') && !hasPermission('prontuario_paciente') && !hasPermission('minha_clinica_pacientes') && !hasPermission('painel_profissional')) {
     header('Location: acesso_negado.php');
     exit;
 }
