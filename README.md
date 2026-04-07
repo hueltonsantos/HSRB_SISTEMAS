@@ -168,3 +168,14 @@ O perfil **Administrador** recebe automaticamente todas as permissoes basicas vi
 ## Licenca
 
 Projeto proprietario. Todos os direitos reservados.
+
+Desenvolvido por **Huelton Santos**.
+
+---
+
+## Contato
+
+- LinkedIn: https://www.linkedin.com/in/huelton-santosdvs/
+- Docker Hub: https://hub.docker.com/r/notleuh/hsrb_sistemas_clinicas
+- WhatsApp: (77) 99988-2930
+- E-mail: hueltonti@gmail.com
