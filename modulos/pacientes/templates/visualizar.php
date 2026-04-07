@@ -210,27 +210,22 @@
                         </div>
                     </div>
                     
-                    <div class="card border-left-warning shadow h-100 py-2 mt-4">
+                    <div class="card border-left-warning shadow mt-4">
                         <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                        Ações Disponíveis
-                                    </div>
-                                    <div class="mb-0 mt-3">
-                                        <a href="index.php?module=agendamentos&action=new&paciente_id=<?php echo $paciente['id']; ?>" class="btn btn-primary btn-block">
-                                            <i class="fas fa-calendar-plus"></i> Novo Agendamento
-                                        </a>
-                                        
-                                        <a href="index.php?module=agendamentos&action=list&paciente_id=<?php echo $paciente['id']; ?>" class="btn btn-info btn-block mt-2">
-                                            <i class="fas fa-calendar"></i> Ver Agendamentos
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-clipboard-check fa-2x text-gray-300"></i>
-                                </div>
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-3">
+                                <i class="fas fa-clipboard-check mr-1"></i> Ações Disponíveis
                             </div>
+                            <a href="index.php?module=agendamentos&action=new&paciente_id=<?php echo $paciente['id']; ?>" class="btn btn-primary btn-block mb-2">
+                                <i class="fas fa-calendar-plus"></i> Novo Agendamento
+                            </a>
+                            <a href="index.php?module=agendamentos&action=list&paciente_id=<?php echo $paciente['id']; ?>" class="btn btn-info btn-block mb-2">
+                                <i class="fas fa-calendar"></i> Ver Agendamentos
+                            </a>
+                            <?php if (hasPermission('ver_prontuario') || hasPermission('painel_profissional')): ?>
+                            <a href="index.php?module=minha_clinica&action=prontuario_visualizar&paciente_id=<?php echo $paciente['id']; ?>" class="btn btn-success btn-block">
+                                <i class="fas fa-notes-medical"></i> Ver Prontuário
+                            </a>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

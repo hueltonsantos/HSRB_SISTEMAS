@@ -126,10 +126,17 @@
                                     </td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <a href="index.php?module=pacientes&action=view&id=<?php echo $paciente['id']; ?>" 
+                                            <a href="index.php?module=pacientes&action=view&id=<?php echo $paciente['id']; ?>"
                                                 class="btn btn-info btn-sm" title="Visualizar">
                                                 <i class="fas fa-eye"></i>
                                             </a>
+
+                                            <?php if (hasPermission('ver_prontuario') || hasPermission('painel_profissional')): ?>
+                                            <a href="index.php?module=minha_clinica&action=prontuario_visualizar&paciente_id=<?php echo $paciente['id']; ?>"
+                                                class="btn btn-success btn-sm" title="Ver Prontuário">
+                                                <i class="fas fa-notes-medical"></i>
+                                            </a>
+                                            <?php endif; ?>
                                             
                                             <?php if (hasPermission('appointment_edit') || (hasPermission('minha_clinica_pacientes') && hasPermission('minha_clinica_editar'))): ?>
                                             <a href="index.php?module=pacientes&action=edit&id=<?php echo $paciente['id']; ?>" 

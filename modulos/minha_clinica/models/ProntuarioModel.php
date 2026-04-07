@@ -79,6 +79,37 @@ class ProntuarioModel extends Model {
         return $this->db->fetchAll($sql, [$rootId, $rootId]);
     }
     
+    public function getEvolucoesFiltradas($pacienteId, $de = '', $ate = '') {
+        $sql = "SELECT e.*, p.nome as profissional_nome, p.registro_profissional
+                FROM master_evolucoes e
+                JOIN master_profissionais p ON e.profissional_id = p.id
+                WHERE e.paciente_id = ? AND e.ativo = 1";
+        $params = [$pacienteId];
+        if (!empty($de)) {
+            $sql .= " AND DATE(e.data_registro) >= ?";
+            $params[] = $de;
+        }
+        if (!empty($ate)) {
+            $sql .= " AND DATE(e.data_registro) <= ?";
+            $params[] = $ate;
+        }
+        $sql .= " ORDER BY e.data_registro DESC";
+        return $this->db->fetchAll($sql, $params);
+    }
+
+    public function getEvolucoesByIds(array $ids) {
+        if (empty($ids)) return [];
+        $placeholders = implode(',', array_fill(0, count($ids), '?'));
+        $sql = "SELECT e.*, p.nome as profissional_nome, p.registro_profissional,
+                       pac.nome as paciente_nome, pac.data_nascimento, pac.cpf
+                FROM master_evolucoes e
+                JOIN master_profissionais p ON e.profissional_id = p.id
+                JOIN pacientes pac ON e.paciente_id = pac.id
+                WHERE e.id IN ($placeholders) AND e.ativo = 1
+                ORDER BY e.data_registro ASC";
+        return $this->db->fetchAll($sql, $ids);
+    }
+
     public function getEvolucao($id) {
         $sql = "SELECT e.*, p.nome as profissional_nome, p.registro_profissional, 
                        pac.nome as paciente_nome

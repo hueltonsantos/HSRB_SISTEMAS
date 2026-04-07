@@ -153,6 +153,13 @@ function minha_clinicaProcessAction($action = '')
             require_once MINHA_CLINICA_CONTROLLERS_PATH . '/prontuario/imprimir_evolucao.php';
             exit; // Interrompe para não carregar o layout do dashboard
             break;
+        case 'prontuario_visualizar':
+            $file = MINHA_CLINICA_CONTROLLERS_PATH . '/prontuario/visualizar.php';
+            break;
+        case 'imprimir_prontuario':
+            require_once MINHA_CLINICA_CONTROLLERS_PATH . '/prontuario/imprimir_prontuario.php';
+            exit;
+            break;
 
         // Financeiro
         case 'repasses':
